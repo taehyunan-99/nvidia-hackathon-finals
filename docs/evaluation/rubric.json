@@ -1,0 +1,54 @@
+{
+  "version": "finals-v1",
+  "official": false,
+  "readiness_target": 80,
+  "criteria": [
+    {
+      "id": "problem",
+      "label": "문제·미션 적합성",
+      "weight": 15
+    },
+    {
+      "id": "agency",
+      "label": "에이전트 판단 가치",
+      "weight": 20
+    },
+    {
+      "id": "nvidia",
+      "label": "NVIDIA의 실질 기여",
+      "weight": 15
+    },
+    {
+      "id": "quality",
+      "label": "결과 정확성·근거",
+      "weight": 15
+    },
+    {
+      "id": "reliability",
+      "label": "완주·복구·지연",
+      "weight": 10
+    },
+    {
+      "id": "ux",
+      "label": "UI/UX·결과 이해",
+      "weight": 10
+    },
+    {
+      "id": "reproducibility",
+      "label": "재현·운영·통합",
+      "weight": 10
+    },
+    {
+      "id": "pitch",
+      "label": "차별점·데모 전달",
+      "weight": 5
+    }
+  ],
+  "gates": [
+    "mission_rules",
+    "live_path",
+    "evidence_integrity",
+    "failure_handling",
+    "submission"
+  ]
+}

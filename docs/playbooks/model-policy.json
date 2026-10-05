@@ -1,0 +1,12 @@
+{
+  "version": "finals-v1",
+  "request_limit": 40,
+  "daily_request_limit": 4000,
+  "request_interval_seconds": 15,
+  "request_timeout_seconds": 60,
+  "max_output_tokens": 1024,
+  "max_steps": 10,
+  "max_attempts": 3,
+  "max_retry_wait_seconds": 120,
+  "max_runtime_seconds": 900
+}

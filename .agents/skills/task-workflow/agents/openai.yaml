@@ -1,0 +1,6 @@
+interface:
+  display_name: "Task Workflow"
+  short_description: "원격 main 확인 후 새 작업 브랜치 생성 또는 기존 작업 재개"
+  default_prompt: "$task-workflow를 사용해 원격 main을 확인하고 이 작업의 브랜치를 생성하거나 재개한다."
+policy:
+  allow_implicit_invocation: false

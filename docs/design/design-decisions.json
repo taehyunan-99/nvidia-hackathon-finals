@@ -1,0 +1,544 @@
+{
+  "version": 1,
+  "decisions": {
+    "button.height": {
+      "value": "36px",
+      "reason": "높이 비교에서 사용자가 A안을 선택함.",
+      "applies_to": "데스크톱 서비스의 기본 텍스트 버튼",
+      "status": "confirmed"
+    },
+    "button.width": {
+      "value": "content",
+      "reason": "텍스트에 맞춘 조밀한 폭이 더 NVIDIA스럽다는 사용자 선호.",
+      "applies_to": "기본 텍스트 버튼은 고정 폭 없이 텍스트와 좌우 여백으로 폭 결정",
+      "status": "confirmed"
+    },
+    "button.radius": {
+      "value": "0px",
+      "reason": "사용자가 NVIDIA에 더 가까운 각진 느낌을 선호하여 A안을 선택함.",
+      "applies_to": "데스크톱 서비스의 기본·보조·비활성 버튼",
+      "status": "confirmed"
+    },
+    "button.paddingInline": {
+      "value": "12px",
+      "reason": "조밀한 폭을 선호하여 사용자가 좌우 여백 A안을 선택함.",
+      "applies_to": "데스크톱 서비스의 기본 텍스트 버튼; 왼쪽·오른쪽 각각 12px",
+      "status": "confirmed"
+    },
+    "button.fontSize": {
+      "value": "14px",
+      "reason": "글자 크기 비교에서 사용자가 B안을 선택함.",
+      "applies_to": "데스크톱 서비스의 기본 텍스트 버튼",
+      "status": "confirmed"
+    },
+    "button.fontWeight": {
+      "value": 600,
+      "reason": "글자 굵기 비교에서 사용자가 B안을 선택함.",
+      "applies_to": "데스크톱 서비스의 기본 텍스트 버튼; 실제 글꼴에서 600 지원 확인",
+      "status": "confirmed"
+    },
+    "button.secondary.borderColor": {
+      "value": "#d4d7cf",
+      "reason": "보조 버튼 테두리 색 비교에서 사용자가 연한 A안을 선택함.",
+      "applies_to": "밝은 배경의 보조 버튼; 카드·입력창·다크 테마에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "button.secondary.borderWidth": {
+      "value": "1px",
+      "reason": "보조 버튼 테두리 두께 비교에서 사용자가 A안을 선택함.",
+      "applies_to": "보조 버튼; 카드·입력창 테두리에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "input.radius": {
+      "value": "0px",
+      "reason": "각진 버튼과의 일관성을 위해 사용자가 A안을 선택함.",
+      "applies_to": "데스크톱 서비스의 입력창; 카드 등 다른 요소에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "input.height": {
+      "value": "36px",
+      "reason": "버튼과 높이가 같은 B안을 사용자가 선택함.",
+      "applies_to": "데스크톱 서비스의 한 줄 입력창 기본 높이; 여러 줄 입력창에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "input.paddingInline": {
+      "value": "12px",
+      "reason": "버튼과의 일관성을 위해 사용자가 B안을 선택함.",
+      "applies_to": "데스크톱 서비스의 한 줄 입력창; 왼쪽·오른쪽 각각 12px",
+      "status": "confirmed"
+    },
+    "input.fontSize": {
+      "value": "14px",
+      "reason": "버튼과 글자 크기를 맞추기로 사용자가 동의함.",
+      "applies_to": "데스크톱 서비스의 한 줄 입력창; 레이블·도움말·본문에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "input.fontWeight": {
+      "value": 400,
+      "reason": "입력창 글자 굵기 비교에서 사용자가 A안을 선택함.",
+      "applies_to": "데스크톱 서비스의 한 줄 입력창; 레이블·도움말·본문에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "input.borderColor": {
+      "value": "#d4d7cf",
+      "reason": "보조 버튼과 같은 연한 테두리인 A안을 사용자가 선택함.",
+      "applies_to": "밝은 배경의 입력창 기본 테두리; 초점·오류·다크 테마에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "input.borderWidth": {
+      "value": "1px",
+      "reason": "보조 버튼과 일관된 얇은 테두리인 A안을 사용자가 선택함.",
+      "applies_to": "입력창 기본 테두리; 초점·오류 상태의 표현에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "input.focusWidth": {
+      "value": "2px",
+      "reason": "입력창 초점 표시 두께 비교에서 사용자가 B안을 선택함.",
+      "applies_to": "입력창 초점 선의 두께; 색상·거리와 다른 요소의 초점 표시는 별도 결정",
+      "status": "confirmed"
+    },
+    "input.focusOffset": {
+      "value": "2px",
+      "reason": "입력창과 초점 선 사이 간격 비교에서 사용자가 B안을 선택함.",
+      "applies_to": "입력창 초점 선의 바깥 간격; 다른 요소에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "input.focusColor": {
+      "value": "#426700",
+      "reason": "녹색 느낌과 선명함을 살리는 짙은 녹색 A안을 사용자가 선택함.",
+      "applies_to": "밝은 배경의 입력창 초점 선; 다크 테마·버튼·오류 상태에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "card.radius": {
+      "value": "0px",
+      "reason": "버튼·입력창과 일관된 각진 A안을 사용자가 선택함.",
+      "applies_to": "데스크톱 서비스의 기본 카드 모서리; 다른 컨테이너에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "card.padding": {
+      "value": "20px",
+      "reason": "카드 내부 여백 비교에서 사용자가 B안을 선택함.",
+      "applies_to": "데스크톱 서비스의 기본 카드 내부 여백; 요소 사이 간격·페이지 여백에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "card.borderColor": {
+      "value": "#d4d7cf",
+      "reason": "입력창·보조 버튼과 일관된 연한 A안을 사용자가 선택함.",
+      "applies_to": "밝은 배경의 기본 카드 테두리; 다크 테마에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "card.borderWidth": {
+      "value": "1px",
+      "reason": "입력창·보조 버튼과 일관된 얇은 A안을 사용자가 선택함.",
+      "applies_to": "데스크톱 서비스의 기본 카드 테두리",
+      "status": "confirmed"
+    },
+    "card.shadow": {
+      "value": "none",
+      "reason": "예선의 일반 카드처럼 그림자 없는 A안을 사용자가 선택함.",
+      "applies_to": "데스크톱 서비스의 기본 카드; 분석 시작 영역·팝오버 등 특수 요소에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "card.background": {
+      "value": "#ffffff",
+      "reason": "밝은 테마 카드 배경 비교에서 사용자가 흰색 A안을 선택함.",
+      "applies_to": "밝은 테마의 기본 카드 배경; 페이지·입력창·버튼 배경과 다크 테마에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "card.title.fontSize": {
+      "value": "18px",
+      "reason": "카드 제목 크기 비교에서 사용자가 B안을 선택함.",
+      "applies_to": "기본 카드 제목; 페이지 제목·본문·레이블에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "card.title.fontWeight": {
+      "value": 600,
+      "reason": "예선의 기본 카드 제목 굵기를 확인한 뒤 사용자가 B안을 선택함.",
+      "applies_to": "기본 카드 제목; 실제 글꼴의 600 지원 확인, 페이지 제목·본문·레이블에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "card.title.lineHeight": {
+      "value": "26px",
+      "reason": "두 줄 카드 제목의 줄 높이 비교에서 사용자가 B안을 선택함.",
+      "applies_to": "기본 카드 제목; 제목 아래 간격·본문 줄 높이에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "card.titleDescriptionGap": {
+      "value": "8px",
+      "reason": "카드 제목과 설명 사이 간격 비교에서 사용자가 B안을 선택함.",
+      "applies_to": "기본 카드 제목과 설명 사이; 설명 아래 간격·다른 요소 사이 간격에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "card.description.fontSize": {
+      "value": "14px",
+      "reason": "예선의 카드 설명 크기를 확인한 뒤 사용자가 B안을 선택함.",
+      "applies_to": "기본 카드 설명; 서비스 전체 본문·도움말·레이블에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "card.description.fontWeight": {
+      "value": 400,
+      "reason": "카드 설명 굵기 비교에서 사용자가 A안을 선택함.",
+      "applies_to": "기본 카드 설명; 서비스 전체 본문·도움말·레이블에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "card.description.lineHeight": {
+      "value": "22px",
+      "reason": "카드 설명 줄 높이 비교에서 사용자가 B안을 선택함.",
+      "applies_to": "기본 카드 설명; 설명 아래 간격·서비스 전체 본문·도움말에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "card.description.color": {
+      "value": "#555555",
+      "reason": "흰 카드의 설명 글자 색 비교에서 사용자가 중간 회색 B안을 선택함.",
+      "applies_to": "밝은 테마의 기본 카드 설명; 서비스 전체 본문·도움말·다크 테마에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "card.descriptionContentGap": {
+      "value": "20px",
+      "reason": "입력이 적은 작은 기본 카드는 20px를 적용하기로 사용자와 합의함.",
+      "applies_to": "기본 카드의 설명과 다음 입력 영역 사이; 제목 아래·레이블과 필드·버튼 위 간격에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "form.descriptionContentGap": {
+      "value": "32px",
+      "reason": "예선처럼 설명 아래 여러 입력 항목이 이어지는 복잡한 입력폼에는 32px를 적용하기로 사용자와 합의함.",
+      "applies_to": "복잡한 입력폼의 소개 설명과 폼 시작 사이; 폼 내부 항목 간격에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "input.labelGap": {
+      "value": "8px",
+      "reason": "예선 입력폼의 간격을 확인한 뒤 사용자가 B안을 선택함.",
+      "applies_to": "입력창 레이블과 필드 사이; 레이블 글자·필드 간 간격에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "input.label.fontSize": {
+      "value": "13px",
+      "reason": "입력창 레이블 글자 크기 비교에서 사용자가 B안을 선택함.",
+      "applies_to": "입력창 레이블; 도움말·본문·다른 요소의 레이블에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "input.label.fontWeight": {
+      "value": 600,
+      "reason": "예선 입력폼의 레이블 굵기를 확인한 뒤 사용자가 C안을 선택함.",
+      "applies_to": "입력창 레이블; 실제 글꼴의 600 지원 확인, 도움말·다른 요소에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "input.label.color": {
+      "value": "#555555",
+      "reason": "입력창 레이블 색 비교에서 사용자가 중간 회색 B안을 선택함.",
+      "applies_to": "밝은 배경의 입력창 레이블; 도움말·다크 테마에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "input.label.lineHeight": {
+      "value": "20px",
+      "reason": "두 줄 입력창 레이블의 줄 높이 비교에서 사용자가 B안을 선택함.",
+      "applies_to": "입력창 레이블; 도움말·입력 내용·본문 줄 높이에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "card.actionsGap": {
+      "value": "20px",
+      "reason": "입력과 실행이 한 작업인 작은 카드에서는 가까이 묶도록 20px를 적용하기로 사용자와 합의함.",
+      "applies_to": "작은 기본 카드의 입력 영역과 버튼 영역 사이; 버튼끼리 간격에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "form.submitSection": {
+      "value": {
+        "gapBefore": "32px",
+        "borderWidth": "1px",
+        "paddingTop": "24px"
+      },
+      "reason": "여러 입력을 마친 뒤 실행하는 복잡한 폼은 예선처럼 최종 제출 영역을 분리하기로 사용자와 합의함.",
+      "applies_to": "복잡한 폼의 최종 제출 영역: 앞 영역과 32px 간격, 1px 구분선, 선 아래 24px 여백; 구분선 색은 미정",
+      "status": "confirmed"
+    },
+    "button.groupGap": {
+      "value": "12px",
+      "reason": "같은 버튼 영역 안의 가로 간격 비교에서 사용자가 B안을 선택함.",
+      "applies_to": "같은 영역에서 나란히 배치한 버튼의 가로 간격; 세로 버튼 간격·입력 항목 간격에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "button.primary.background": {
+      "value": "#76b900",
+      "reason": "예선과 NVIDIA 공식 홈페이지의 기본 녹색 버튼 스타일을 확인한 뒤 사용자가 해당 방향에 동의함.",
+      "applies_to": "기본 버튼 평상시 배경; 전체 강조색·hover·비활성 상태에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "button.primary.color": {
+      "value": "#000000",
+      "reason": "사용자가 동의한 NVIDIA 공식 홈페이지 기본 버튼의 검정 글자 적용.",
+      "applies_to": "기본 버튼 글자; 보조 버튼과 다른 텍스트에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "button.primary.borderWidth": {
+      "value": "0px",
+      "reason": "사용자가 동의한 NVIDIA 공식 홈페이지 기본 버튼의 테두리 없음 적용.",
+      "applies_to": "기본 버튼 테두리; 보조 버튼 테두리 1px는 유지",
+      "status": "confirmed"
+    },
+    "button.primary.hoverBackground": {
+      "value": "#91d514",
+      "reason": "예선에서 사용한 밝아지는 hover 방향인 B안을 사용자가 선택함.",
+      "applies_to": "활성 기본 버튼에 마우스를 올렸을 때 배경; 보조 버튼·키보드 초점·비활성 상태에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "button.primary.transitionDuration": {
+      "value": "120ms",
+      "reason": "기본 버튼 배경 전환 시간 비교에서 사용자가 B안을 선택함.",
+      "applies_to": "활성 기본 버튼의 평상시와 hover 배경 전환; reduced-motion에서는 생략, 전환 방식과 다른 애니메이션에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "button.primary.focusWidth": {
+      "value": "2px",
+      "reason": "입력창과 일관된 키보드 초점 선 두께인 B안을 사용자가 선택함.",
+      "applies_to": "기본 버튼의 키보드 초점 선 두께; 초점 색·간격과 보조 버튼에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "button.primary.focusOffset": {
+      "value": "2px",
+      "reason": "입력창과 일관된 키보드 초점 선 간격인 B안을 사용자가 선택함.",
+      "applies_to": "기본 버튼과 키보드 초점 선 사이 간격; 초점 색과 보조 버튼에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "button.primary.focusColor": {
+      "value": "#426700",
+      "reason": "입력창과 일관되고 선명한 짙은 녹색 A안을 적용하기로 사용자가 동의함.",
+      "applies_to": "밝은 배경의 기본 버튼 키보드 초점 선; 보조 버튼·다크 테마에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "button.secondary.background": {
+      "value": "#ffffff",
+      "reason": "녹색 기본 버튼을 강조하고 보조 행동은 가볍게 두는 흰색 A안을 사용자가 선택함.",
+      "applies_to": "밝은 카드 위 보조 버튼의 평상시 배경; hover·비활성·다크 테마에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "button.secondary.color": {
+      "value": "#111111",
+      "reason": "흰 배경에서 행동 문구가 선명하게 읽히는 거의 검정 A안을 사용자가 선택함.",
+      "applies_to": "흰 배경의 보조 버튼 글자; 다른 텍스트·비활성·다크 테마에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "button.secondary.hoverBackground": {
+      "value": "#eeeeee",
+      "reason": "예선 방식처럼 흰색에서 #eeeeee 회색으로 바뀌고 테두리는 유지하는 제안에 사용자가 동의함.",
+      "applies_to": "밝은 배경의 활성 보조 버튼 hover 배경; 전환 시간·초점·비활성·다크 테마에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "button.secondary.transitionDuration": {
+      "value": "120ms",
+      "reason": "기본 버튼과 전환 시간을 맞추는 B안을 사용자가 선택함.",
+      "applies_to": "활성 보조 버튼의 평상시와 hover 배경 전환; reduced-motion에서는 생략, 전환 방식과 다른 애니메이션에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "button.secondary.focusWidth": {
+      "value": "2px",
+      "reason": "기본 버튼·입력창과 일관된 키보드 초점 선 두께인 B안을 사용자가 선택함.",
+      "applies_to": "보조 버튼의 키보드 초점 선 두께; 초점 색·간격은 별도 결정",
+      "status": "confirmed"
+    },
+    "button.secondary.focusOffset": {
+      "value": "2px",
+      "reason": "기본 버튼·입력창과 일관된 초점 선 간격인 B안을 사용자가 선택함.",
+      "applies_to": "보조 버튼과 키보드 초점 선 사이 간격; 초점 색은 별도 결정",
+      "status": "confirmed"
+    },
+    "button.secondary.focusColor": {
+      "value": "#426700",
+      "reason": "기본 버튼·입력창과 일관된 짙은 녹색 A안을 사용자가 선택함.",
+      "applies_to": "밝은 배경의 보조 버튼 키보드 초점 선; 비활성 상태·다크 테마에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "button.primary.disabledBackground": {
+      "value": "#cccccc",
+      "reason": "NVIDIA 공식 비활성 기본 버튼의 반투명 회색을 흰 바탕에서 본 색인 #cccccc를 적용하기로 사용자가 동의함.",
+      "applies_to": "밝은 배경의 비활성 기본 버튼; 불투명 #cccccc 사용, 글자 색·보조 버튼·입력창·다크 테마에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "button.primary.disabledColor": {
+      "value": "#999999",
+      "reason": "NVIDIA 공식 비활성 버튼 글자와 같은 A안을 사용자가 선택함.",
+      "applies_to": "밝은 배경의 비활성 기본 버튼 글자; 보조 버튼·입력창·다크 테마에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "button.secondary.disabledBackground": {
+      "value": "transparent",
+      "reason": "가능한 NVIDIA 공식 사이트 느낌을 살리고 다른 배경에서도 바탕이 비치도록 투명 배경을 적용하기로 사용자가 동의함.",
+      "applies_to": "비활성 보조 버튼 배경; 흰 카드에서는 흰색으로 보임, 비활성 글자·테두리 색은 별도 결정",
+      "status": "confirmed"
+    },
+    "button.secondary.disabledColor": {
+      "value": "#999999",
+      "reason": "NVIDIA 공식 비활성 글자 색과 기본 버튼의 비활성 글자 색을 맞추는 A안을 사용자가 선택함.",
+      "applies_to": "밝은 배경의 비활성 보조 버튼 글자; 비활성 테두리·입력창·다크 테마에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "button.secondary.disabledBorderColor": {
+      "value": "rgba(153,153,153,0.5)",
+      "reason": "NVIDIA 공식 비활성 외곽선 버튼의 반투명 회색인 A안을 사용자가 선택함.",
+      "applies_to": "비활성 보조 버튼 테두리 색; 확정한 두께 1px는 유지, 흰 바탕에서 #cccccc로 합성",
+      "status": "confirmed"
+    },
+    "button.transitionTimingFunction": {
+      "value": "ease-out",
+      "reason": "공식 사이트처럼 처음 빠르게 반응하고 끝에서 부드럽게 멈추는 A안을 사용자가 선택함.",
+      "applies_to": "기본·보조 버튼의 배경 전환; 확정한 120ms 유지, reduced-motion에서는 생략, 다른 애니메이션에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "input.background": {
+      "value": "#ffffff",
+      "reason": "공식 검색 입력창과 예선 일반 입력폼 모두 사용하는 흰색 A안을 사용자가 선택함.",
+      "applies_to": "밝은 카드 위 입력창 기본 배경; 비활성·오류·다크 테마에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "input.color": {
+      "value": "#414347",
+      "reason": "공식 검색 입력창의 차분한 진회색 A안을 사용자가 선택함.",
+      "applies_to": "밝은 배경에서 입력된 글자의 기본 색; placeholder·비활성·오류·다크 테마에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "input.placeholderColor": {
+      "value": "#757575",
+      "reason": "입력값과 구분되면서 흰 바탕에서 읽기 쉬운 자체 제안 A안을 사용자가 선택함.",
+      "applies_to": "밝은 배경의 입력창 placeholder; opacity 1로 지정색 유지, 비활성·오류·다크 테마에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "page.background": {
+      "value": "#ffffff",
+      "reason": "공식의 밝은 영역과 예선 기본 배경에 가까운 흰색 A안을 사용자가 선택함.",
+      "applies_to": "밝은 테마의 페이지 기본 배경; hero·강조 영역·다크 테마에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "card.title.color": {
+      "value": "#000000",
+      "reason": "공식 밝은 영역 제목과 같은 검정 A안을 사용자가 선택함.",
+      "applies_to": "밝은 카드의 기본 제목; 페이지 제목·본문·다크 테마에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "card.horizontalGap": {
+      "value": "30px",
+      "reason": "공식 고정 폭 카드 캐러셀을 참고한 일반 카드 가로 간격 A안을 사용자가 선택함.",
+      "applies_to": "나란히 놓인 일반 카드의 기본 가로 간격; 세로 간격·밀집 목록·캐러셀 기능에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "card.verticalGap": {
+      "value": "32px",
+      "reason": "공식 콘텐츠 목록과 예선 작업 패널의 용도를 비교한 뒤 사용자가 예선 작업용 간격인 B안을 선택함.",
+      "applies_to": "일반 작업 카드의 기본 세로 간격; 가로 30px 유지, 홍보 콘텐츠·밀집 목록에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "card.description.wordBreak": {
+      "value": "keep-all",
+      "reason": "좁은 한글 카드에서 단어가 중간에 끊기지 않는 예선 후보 설명 방식 B안을 사용자가 선택함.",
+      "applies_to": "한글 카드 설명; 긴 연속 문자열은 overflow-wrap:anywhere로 넘침 방지, 제목·코드·전체 본문에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "technicalText.display": {
+      "value": {
+        "whiteSpace": "normal",
+        "overflowWrap": "anywhere"
+      },
+      "reason": "공식 표 셀과 예선 파일 정보처럼 긴 값을 생략 없이 바로 확인하는 A안을 사용자가 선택함.",
+      "applies_to": "파일명·식별자 같은 기술 정보의 기본 표시; 일반 제목·한글 설명·코드 블록에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "table.cell.paddingBlock": {
+      "value": "16px",
+      "reason": "일반 업무 표의 가독성과 밀도를 고려한 예선 리포트 방식 B안을 사용자가 선택함.",
+      "applies_to": "일반 업무 표 헤더·본문 셀의 위아래 여백 각각 16px; 가로 여백·글자·행 상태에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "table.cell.paddingInline": {
+      "value": "16px",
+      "reason": "공식 공통 CSS 기본값과 예선 리포트가 모두 사용하는 B안을 사용자가 선택함.",
+      "applies_to": "일반 업무 표 헤더·본문 셀의 좌우 여백 각각 16px; 글자·테두리·행 상태에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "table.body.fontSize": {
+      "value": "14px",
+      "reason": "공식 nv-table 기본값과 입력창·카드 설명의 크기에 맞추는 A안을 사용자가 선택함.",
+      "applies_to": "일반 업무 표 본문 td의 기본 글자 크기; 헤더·별도 행 제목·본문 굵기·줄 높이에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "table.body.fontWeight": {
+      "value": 400,
+      "reason": "공식·예선 일반 본문과 같이 일반 값과 강조 값을 구분하기 좋은 A안을 사용자가 선택함.",
+      "applies_to": "일반 업무 표 본문 td의 기본 굵기; 헤더·별도 강조 값·줄 높이·행 상태에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "table.body.lineHeight": {
+      "value": 1.4,
+      "reason": "공식의 조밀함과 예선의 여유를 절충하는 C안을 사용자가 선택함.",
+      "applies_to": "일반 업무 표 본문 td의 줄 높이 비율; 확정 14px에서 19.6px, 헤더·강제 줄바꿈·행 상태에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "table.header.fontSize": {
+      "value": "14px",
+      "reason": "공식 일반 표처럼 본문과 크기를 맞추는 A안을 사용자가 선택함.",
+      "applies_to": "일반 업무 표 열 헤더 thead th의 글자 크기; 행 제목·그룹 헤더·굵기·줄 높이·배경에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "table.header.fontWeight": {
+      "value": 700,
+      "reason": "공식·예선 모두 사용하는 표 열 헤더 굵기 C안을 사용자가 선택함.",
+      "applies_to": "일반 업무 표 열 헤더 thead th의 굵기; 행 제목·그룹 헤더·줄 높이·배경에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "table.header.lineHeight": {
+      "value": 1.4,
+      "reason": "두 줄 한글 헤더의 가독성과 본문과의 일관성을 위한 B안을 사용자가 선택함.",
+      "applies_to": "일반 업무 표 열 헤더 thead th의 줄 높이 비율; 실제 강제 줄바꿈·그룹 헤더·배경에는 자동 적용하지 않음",
+      "status": "confirmed"
+    },
+    "state.presentation": {
+      "value": {
+        "states": {
+          "empty": {
+            "label": "입력 전",
+            "color": "#555555",
+            "icon": "○",
+            "behavior": "입력 안내와 시작 행동"
+          },
+          "running": {
+            "label": "진행 중",
+            "color": "#426700",
+            "icon": "…",
+            "behavior": "실제 관측 단계·도구 선택 이유; 추정 백분율 금지"
+          },
+          "completed": {
+            "label": "완료",
+            "color": "#426700",
+            "icon": "✓",
+            "behavior": "검증한 범위의 결과와 근거"
+          },
+          "hold": {
+            "label": "보류",
+            "color": "#8a5800",
+            "icon": "!",
+            "behavior": "확인된 부분 유지·추가 자료·다음 행동"
+          },
+          "failed": {
+            "label": "실패",
+            "color": "#b42318",
+            "icon": "×",
+            "behavior": "실패 이유·재시도 또는 대안; 결과 없음 명시"
+          }
+        },
+        "common": [
+          "색과 아이콘·문구를 함께 사용",
+          "mock/replay/live 구분",
+          "상태 변경을 보조 기술에 알림",
+          "실제 지원하는 다음 행동만 제공"
+        ]
+      },
+      "status": "confirmed",
+      "reason": "사용자가 대표 데스크톱 화면의 마지막 상태 표시 묶음을 그대로 확정함.",
+      "applies_to": "밝은 데스크톱 서비스의 입력 전·진행 중·완료·보류·실패; 실제 검증 범위와 다음 행동을 표시, 다크 테마·미션별 업무 로직에는 자동 적용하지 않음"
+    }
+  },
+  "unresolved": {
+    "font": "최종 글꼴·제공 방식 미정; 현재 로컬 SUIT가 없으면 시스템 대체",
+    "tableDecoration": "헤더 배경·글자 색·구분선·정렬·행 상태 미정; 마지막 비교에서 확정하지 않음",
+    "inputOtherStates": "오류·비활성 세부 색과 복합 입력 요소는 미정",
+    "layout": "페이지 구조·폭·상단 여백·특수 요소·다크 테마는 미션에 따라 결정",
+    "scope": "이외 decisions에 없는 장식값은 미정; 현재 추가 선택 질문 대상이 아님"
+  }
+}

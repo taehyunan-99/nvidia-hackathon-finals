@@ -1,0 +1,16 @@
+# Adapted from NVIDIA NAT configuration; no credentials stored here.
+functions:
+  current_datetime:
+    _type: current_datetime
+llms:
+  nim_llm:
+    _type: nim
+    model_name: ${MODEL_ID}
+    temperature: 0.0
+    max_tokens: 1024
+workflow:
+  _type: tool_calling_agent
+  llm_name: nim_llm
+  tool_names: [current_datetime]
+  max_iterations: 10
+# Physical request caps/pacing need the shared budget adapter; built-in nim alone does not enforce them.

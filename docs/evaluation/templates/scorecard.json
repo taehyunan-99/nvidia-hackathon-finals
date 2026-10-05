@@ -1,0 +1,69 @@
+{
+  "rubric_version": "finals-v1",
+  "subject": "미션 확정 후 작성",
+  "assessment_mode": "draft",
+  "criteria": {
+    "problem": {
+      "rating": null,
+      "evidence": [],
+      "note": ""
+    },
+    "agency": {
+      "rating": null,
+      "evidence": [],
+      "note": ""
+    },
+    "nvidia": {
+      "rating": null,
+      "evidence": [],
+      "note": ""
+    },
+    "quality": {
+      "rating": null,
+      "evidence": [],
+      "note": ""
+    },
+    "reliability": {
+      "rating": null,
+      "evidence": [],
+      "note": ""
+    },
+    "ux": {
+      "rating": null,
+      "evidence": [],
+      "note": ""
+    },
+    "reproducibility": {
+      "rating": null,
+      "evidence": [],
+      "note": ""
+    },
+    "pitch": {
+      "rating": null,
+      "evidence": [],
+      "note": ""
+    }
+  },
+  "gates": {
+    "mission_rules": {
+      "status": "unknown",
+      "evidence": []
+    },
+    "live_path": {
+      "status": "unknown",
+      "evidence": []
+    },
+    "evidence_integrity": {
+      "status": "unknown",
+      "evidence": []
+    },
+    "failure_handling": {
+      "status": "unknown",
+      "evidence": []
+    },
+    "submission": {
+      "status": "unknown",
+      "evidence": []
+    }
+  }
+}

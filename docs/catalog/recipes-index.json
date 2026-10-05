@@ -1,0 +1,201 @@
+[
+  {
+    "id": "recipe:documents",
+    "name": "문서·규정 검토",
+    "description": "3개 문서에서 인용 있는 검토표와 자료 없음 판정",
+    "keywords": "문서 규정 서류 pdf rag document compliance",
+    "agent_id": "agent:tool-calling",
+    "tool_ids": [
+      "tool:nim",
+      "tool:nat",
+      "tool:retriever"
+    ],
+    "skill_folders": [
+      "nat-installation",
+      "nat-tools-and-functions",
+      "nemo-retriever"
+    ],
+    "guide": "docs/playbooks/missions/documents.md",
+    "quickstart": "docs/playbooks/quickstarts/retrieval.md",
+    "validator": "원문 위치 대조·미지원 주장 거부",
+    "flow": "원문 문서→검색 근거→판단→항목별 검토표"
+  },
+  {
+    "id": "recipe:research",
+    "name": "조사·대안 비교",
+    "description": "두 출처를 비교하고 근거 충돌을 드러내는 보고",
+    "keywords": "조사 검색 리서치 research search compare 입출력 계약 schema contract",
+    "agent_id": "agent:react",
+    "tool_ids": [
+      "tool:nim",
+      "tool:nat",
+      "tool:retriever"
+    ],
+    "skill_folders": [
+      "nat-agent-configuration",
+      "nat-mcp-and-serving"
+    ],
+    "guide": "docs/playbooks/missions/research.md",
+    "quickstart": "docs/playbooks/quickstarts/nat.md",
+    "validator": "출처/날짜/상충 내용 확인",
+    "flow": "허용 검색/MCP→출처 수집→추가 조사/종료→근거 보고",
+    "contract": "docs/catalog/contracts.md",
+    "fixtures": "docs/playbooks/examples/research/fixtures.json",
+    "preview": "design/agent-flow.html"
+  },
+  {
+    "id": "recipe:routing",
+    "name": "배송·배차·경로",
+    "description": "5개 방문지의 제약을 만족하는 경로",
+    "keywords": "배송 배차 경로 최적화 routing logistics vrp tsp",
+    "agent_id": "agent:tool-calling",
+    "tool_ids": [
+      "tool:nim",
+      "tool:nat",
+      "tool:cuopt"
+    ],
+    "skill_folders": [
+      "cuopt-install",
+      "cuopt-routing-api-python"
+    ],
+    "guide": "docs/playbooks/missions/routing.md",
+    "quickstart": "docs/playbooks/quickstarts/optimization.md",
+    "validator": "차량 용량·시간창·방문 누락 독립 검사",
+    "flow": "요청→제약 schema→solver→검산→불가능 사유/계획"
+  },
+  {
+    "id": "recipe:allocation",
+    "name": "자원·일정 최적화",
+    "description": "작은 작업 배분표와 목적값",
+    "keywords": "자원 일정 배분 생산 스케줄 scheduling allocation milp lp",
+    "agent_id": "agent:tool-calling",
+    "tool_ids": [
+      "tool:nim",
+      "tool:nat",
+      "tool:cuopt"
+    ],
+    "skill_folders": [
+      "cuopt-numerical-optimization-formulation",
+      "cuopt-numerical-optimization-api"
+    ],
+    "guide": "docs/playbooks/missions/allocation.md",
+    "quickstart": "docs/playbooks/quickstarts/optimization.md",
+    "validator": "변수 범위·제약·목적값 독립 재계산",
+    "flow": "목표→수학 모델→solver→검산→계획"
+  },
+  {
+    "id": "recipe:operations",
+    "name": "장애·업무 처리",
+    "description": "상태 조회와 근거 있는 다음 조치",
+    "keywords": "장애 티켓 운영 incident ticket operations",
+    "agent_id": "agent:tool-calling",
+    "tool_ids": [
+      "tool:nim",
+      "tool:nat"
+    ],
+    "skill_folders": [
+      "nat-tools-and-functions",
+      "nat-telemetry"
+    ],
+    "guide": "docs/playbooks/missions/operations.md",
+    "quickstart": "docs/playbooks/quickstarts/nat.md",
+    "validator": "재조회·권한 범위·중복 변경 차단",
+    "flow": "조회→진단→허용된 조치→재조회→기록"
+  },
+  {
+    "id": "recipe:video",
+    "name": "영상 검색·검토",
+    "description": "clip의 사건과 실제 시간 구간",
+    "keywords": "영상 비디오 cctv video clip visual",
+    "agent_id": "agent:tool-calling",
+    "tool_ids": [
+      "tool:nim",
+      "tool:vss"
+    ],
+    "skill_folders": [
+      "vss-deploy-profile",
+      "vss-ask-video",
+      "vss-search-archive"
+    ],
+    "guide": "docs/playbooks/missions/video.md",
+    "quickstart": "docs/playbooks/quickstarts/video.md",
+    "validator": "프레임·시간 직접 확인",
+    "flow": "영상→검색/시각 확인→구간 근거→답"
+  },
+  {
+    "id": "recipe:voice",
+    "name": "음성 업무",
+    "description": "발화→전사→업무 결과",
+    "keywords": "음성 전사 회의 voice speech asr tts",
+    "agent_id": "agent:tool-calling",
+    "tool_ids": [
+      "tool:speech",
+      "tool:nim",
+      "tool:nat"
+    ],
+    "skill_folders": [
+      "nemotron-speech",
+      "nemotron-voice-agent-builder"
+    ],
+    "guide": "docs/playbooks/missions/voice.md",
+    "quickstart": "docs/playbooks/quickstarts/speech.md",
+    "validator": "전사 정확성·도구 결과·무음 입력",
+    "flow": "오디오→전사→도구 선택→업무 실행→텍스트/음성"
+  },
+  {
+    "id": "recipe:biology",
+    "name": "분자·구조 검토",
+    "description": "형식과 출처가 검증된 구조 결과",
+    "keywords": "생명 바이오 단백질 분자 biology protein molecule",
+    "agent_id": "agent:tool-calling",
+    "tool_ids": [
+      "tool:nim",
+      "tool:nat",
+      "tool:bionemo"
+    ],
+    "skill_folders": [
+      "bionemo-boltz2-nim"
+    ],
+    "guide": "docs/playbooks/missions/biology.md",
+    "quickstart": "docs/playbooks/quickstarts/biology.md",
+    "validator": "사슬/서열/좌표/신뢰도 구분",
+    "flow": "입력 검증→공개 근거→필요 시 예측→좌표 검증→보고"
+  },
+  {
+    "id": "recipe:data",
+    "name": "표 데이터 분석",
+    "description": "질문에 답하는 재현 가능한 표/계산",
+    "keywords": "데이터 표 csv dataframe analytics cudf",
+    "agent_id": "agent:tool-calling",
+    "tool_ids": [
+      "tool:nim",
+      "tool:nat",
+      "tool:rapids"
+    ],
+    "skill_folders": [
+      "accelerated-computing-cudf"
+    ],
+    "guide": "docs/playbooks/missions/data.md",
+    "quickstart": "docs/playbooks/quickstarts/specialized.md",
+    "validator": "CPU 기준 결과와 일치",
+    "flow": "데이터 schema→계산 계획→실행→검산→표"
+  },
+  {
+    "id": "recipe:sandbox",
+    "name": "격리된 에이전트 운영",
+    "description": "허용 영역에서 파일 작업 완료",
+    "keywords": "격리 파일 sandbox runtime openshell nemoclaw",
+    "agent_id": "agent:tool-calling",
+    "tool_ids": [
+      "tool:nemoclaw",
+      "tool:openshell"
+    ],
+    "skill_folders": [
+      "nemoclaw-user-guide"
+    ],
+    "guide": "docs/playbooks/missions/sandbox.md",
+    "quickstart": "docs/playbooks/quickstarts/runtime.md",
+    "validator": "허용/차단 경계와 산출물 검사",
+    "flow": "정책→sandbox→agent 작업→결과/접근 검증"
+  }
+]

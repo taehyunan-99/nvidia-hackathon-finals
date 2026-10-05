@@ -1,0 +1,320 @@
+{
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "research-v1"
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "mode": {
+      "enum": [
+        "mock",
+        "replay",
+        "live"
+      ]
+    },
+    "model_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "http_requests": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "input_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "input": {
+      "type": "object",
+      "properties": {
+        "goal": {
+          "type": "string",
+          "minLength": 1
+        },
+        "case": {
+          "enum": [
+            "existing",
+            "supplement",
+            "hold",
+            "failure",
+            "retry",
+            "conflict"
+          ]
+        },
+        "limits": {
+          "type": "object",
+          "properties": {
+            "max_steps": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "max_attempts_per_tool": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "required": [
+            "max_steps",
+            "max_attempts_per_tool"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "goal",
+        "case",
+        "limits"
+      ],
+      "additionalProperties": false
+    },
+    "status": {
+      "enum": [
+        "running",
+        "completed",
+        "partial",
+        "failed",
+        "cancelled"
+      ]
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "seq": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "kind": {
+            "enum": [
+              "decision",
+              "tool",
+              "validation",
+              "result"
+            ]
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "enum": [
+              "running",
+              "completed",
+              "hold",
+              "failed"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "tool": {
+            "enum": [
+              "check_existing",
+              "collect_more",
+              null
+            ]
+          },
+          "attempt": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1
+          },
+          "error_code": {
+            "enum": [
+              "invalid_input",
+              "unavailable",
+              "timeout",
+              "rate_limited",
+              "invalid_output",
+              null
+            ]
+          },
+          "evidence_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "required": [
+          "seq",
+          "kind",
+          "label",
+          "status",
+          "reason",
+          "tool",
+          "attempt",
+          "error_code",
+          "evidence_ids"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source": {
+            "type": "string",
+            "minLength": 1
+          },
+          "topic": {
+            "type": "string",
+            "minLength": 1
+          },
+          "supported": {
+            "type": "boolean"
+          },
+          "quote": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "id",
+          "source",
+          "topic",
+          "supported",
+          "quote"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "artifact": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "summary": {
+              "type": "string",
+              "minLength": 1
+            },
+            "evidence_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "required": [
+            "summary",
+            "evidence_ids"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "next_action": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "run_id",
+    "mode",
+    "model_id",
+    "http_requests",
+    "input_hash",
+    "input",
+    "status",
+    "events",
+    "evidence",
+    "artifact",
+    "limitations",
+    "next_action"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Research service adapter v1 (project contract)",
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "completed"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "artifact": {
+            "type": "object",
+            "properties": {
+              "summary": {
+                "type": "string",
+                "minLength": 1
+              },
+              "evidence_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "required": [
+              "summary",
+              "evidence_ids"
+            ],
+            "additionalProperties": false
+          },
+          "evidence": {
+            "minItems": 2
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "artifact": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "mode": {
+            "const": "mock"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "model_id": {
+            "type": "null"
+          },
+          "http_requests": {
+            "const": 0
+          }
+        }
+      }
+    }
+  ]
+}

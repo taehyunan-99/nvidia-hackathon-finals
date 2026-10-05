@@ -1,0 +1,23 @@
+# 에이전트·평가·정책 / 구현·연결 / 1
+
+[도메인으로](../domains/agent-workflows.md)
+
+| 스킬 | 사용 목적 | 고정 원문 |
+|---|---|---|
+| `data-designer` | Use when the user wants to create a dataset, generate synthetic data, or build a data generation pipeline. | [SKILL.md](https://github.com/NVIDIA/skills/blob/0e0d506f4eb67204a62586ac5f19df3cb7ad9b1f/skills/data-designer/SKILL.md) |
+| `nat-agent-configuration` | Use when selecting, configuring, composing, or troubleshooting NeMo Agent Toolkit agents and control-flow components, including ReAct, tool-calling, R… | [SKILL.md](https://github.com/NVIDIA/NeMo-Agent-Toolkit/blob/c7e1162a1c7ff18bbd797e090a56cad97c281c92/skills/nat-agent-configuration/SKILL.md) |
+| `nat-mcp-and-serving` | Use when serving NeMo Agent Toolkit workflows, exposing workflows through FastAPI, configuring MCP clients or servers, or troubleshooting transport an… | [SKILL.md](https://github.com/NVIDIA/NeMo-Agent-Toolkit/blob/c7e1162a1c7ff18bbd797e090a56cad97c281c92/skills/nat-mcp-and-serving/SKILL.md) |
+| `nat-tools-and-functions` | Use when authoring, registering, composing, or testing custom NeMo Agent Toolkit tools, functions, function groups, Python components, custom agents, … | [SKILL.md](https://github.com/NVIDIA/NeMo-Agent-Toolkit/blob/c7e1162a1c7ff18bbd797e090a56cad97c281c92/skills/nat-tools-and-functions/SKILL.md) |
+| `nat-workflow-creation` | Use when creating, editing, validating, running, or troubleshooting NeMo Agent Toolkit workflow YAML, component discovery, LLM configuration, and comm… | [SKILL.md](https://github.com/NVIDIA/NeMo-Agent-Toolkit/blob/c7e1162a1c7ff18bbd797e090a56cad97c281c92/skills/nat-workflow-creation/SKILL.md) |
+| `nemo-fabric-build-adapter` | Build, migrate, review, and maintain third-party NVIDIA NeMo Fabric adapters against the public adapter contract. Use when creating adapter or target … | [SKILL.md](https://github.com/NVIDIA/skills/blob/0e0d506f4eb67204a62586ac5f19df3cb7ad9b1f/skills/nemo-fabric-build-adapter/SKILL.md) |
+| `nemo-fabric-integrate` | Use this skill when integrating NVIDIA NeMo Fabric into a consumer application, service, evaluation harness, or platform through the typed Python SDK … | [SKILL.md](https://github.com/NVIDIA/skills/blob/0e0d506f4eb67204a62586ac5f19df3cb7ad9b1f/skills/nemo-fabric-integrate/SKILL.md) |
+| `nemo-relay-debug-runtime-integration` | Use this skill when NeMo Relay is installed or imported but application-side runtime behavior is missing or incorrect, including load failures, inacti… | [SKILL.md](https://github.com/NVIDIA/skills/blob/0e0d506f4eb67204a62586ac5f19df3cb7ad9b1f/skills/nemo-relay-debug-runtime-integration/SKILL.md) |
+| `nemo-relay-migrate-from-flow` | Use this skill when migrating applications, examples, integrations, documentation, manifests, or repository code from NeMo Flow to NeMo Relay across P… | [SKILL.md](https://github.com/NVIDIA/skills/blob/0e0d506f4eb67204a62586ac5f19df3cb7ad9b1f/skills/nemo-relay-migrate-from-flow/SKILL.md) |
+| `nemo-relay-plugin-build` | Use this skill when building or packaging reusable NeMo Relay runtime behavior as an embedded configuration component or a manifest-backed `rust_dynam… | [SKILL.md](https://github.com/NVIDIA/skills/blob/0e0d506f4eb67204a62586ac5f19df3cb7ad9b1f/skills/nemo-relay-plugin-build/SKILL.md) |
+| `nemo-relay-plugin-observability` | Use this skill when choosing or configuring NeMo Relay 0.6 or 0.7 observability through the built-in plugin, subscribers, or exporters, including raw … | [SKILL.md](https://github.com/NVIDIA/skills/blob/0e0d506f4eb67204a62586ac5f19df3cb7ad9b1f/skills/nemo-relay-plugin-observability/SKILL.md) |
+| `nemo-retriever-mcp` | Use when a task needs to search or add documents through NeMo Retriever MCP. | [SKILL.md](https://github.com/NVIDIA/skills/blob/0e0d506f4eb67204a62586ac5f19df3cb7ad9b1f/skills/nemo-retriever-mcp/SKILL.md) |
+| `nemotron-policy-generator` | Generates BYO custom safety policies for NVIDIA Nemotron content-safety guardrails — Nemotron-Content-Safety-Reasoning-4B (text) and multimodal Nemotr… | [SKILL.md](https://github.com/NVIDIA/skills/blob/0e0d506f4eb67204a62586ac5f19df3cb7ad9b1f/skills/nemotron-policy-generator/SKILL.md) |
+| `rag-blueprint` | NVIDIA RAG Blueprint — deploy, configure, troubleshoot, and manage. Handles any RAG action: deploy, install, start, enable, disable, toggle, change, c… | [SKILL.md](https://github.com/NVIDIA/skills/blob/0e0d506f4eb67204a62586ac5f19df3cb7ad9b1f/skills/rag-blueprint/SKILL.md) |
+
+설치/환경/실행 정보: `python3 scripts/lookup.py --show "skill:nvidia/skills/data-designer"` 형식으로 조회한다.
+공통 [확보 절차](../../../playbooks/skill-setup.md). 검색 결과가 부족하면 domain/function 필터를 풀어 전체 원문 설명에서 찾는다.

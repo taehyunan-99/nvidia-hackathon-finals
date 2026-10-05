@@ -1,0 +1,62 @@
+{
+  "verification": "documentation-only; synthetic example; not sent",
+  "source": "https://docs.nvidia.com/nim/large-language-models/1.15.0/function-calling.html",
+  "request": {
+    "model": "<verified-model-id>",
+    "messages": [
+      {
+        "role": "user",
+        "content": "샘플 서비스의 로컬 실행 지원 여부를 근거로 확인해줘."
+      }
+    ],
+    "tools": [
+      {
+        "type": "function",
+        "function": {
+          "name": "check_existing",
+          "description": "기존 자료 조회",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false
+          }
+        }
+      }
+    ],
+    "tool_choice": "auto",
+    "stream": false
+  },
+  "response_example": {
+    "choices": [
+      {
+        "message": {
+          "role": "assistant",
+          "content": null,
+          "tool_calls": [
+            {
+              "id": "call_example_1",
+              "type": "function",
+              "function": {
+                "name": "check_existing",
+                "arguments": "{\"query\":\"로컬 실행 지원\"}"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "tool_reply_example": {
+    "role": "tool",
+    "tool_call_id": "call_example_1",
+    "name": "check_existing",
+    "content": "{\"evidence\": []}"
+  }
+}

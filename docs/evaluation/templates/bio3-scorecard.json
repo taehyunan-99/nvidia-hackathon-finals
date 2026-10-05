@@ -1,0 +1,85 @@
+{
+  "rubric_version": "finals-v1",
+  "subject": "Bio-3: 52f6be2 기준 자료 기반 잠정 평가",
+  "assessment_mode": "historical-review",
+  "criteria": {
+    "problem": {
+      "rating": 3,
+      "evidence": [
+        "https://github.com/taehyunan-99/nvidia-hackathon/blob/52f6be29e432b1fa660e2a9b3b6b7556d04793d4/docs/topics/her2/overview.md"
+      ],
+      "note": "비교 사용자·실패 상태·산출물은 명확. 실제 연구자 효용은 미검증."
+    },
+    "agency": {
+      "rating": 3,
+      "evidence": [
+        "https://github.com/taehyunan-99/nvidia-hackathon/blob/52f6be29e432b1fa660e2a9b3b6b7556d04793d4/logic/agent_session.py"
+      ],
+      "note": "분기·재개·종료 관문 구현과 과거 trace. 규칙 대비 결과 정확도 우위는 미입증."
+    },
+    "nvidia": {
+      "rating": 4,
+      "evidence": [
+        "https://github.com/taehyunan-99/nvidia-hackathon/blob/52f6be29e432b1fa660e2a9b3b6b7556d04793d4/logic/runtime_skill.py"
+      ],
+      "note": "NAT/Nemotron/Boltz의 역할과 과거 실호출·고정 스킬 근거를 함께 확인. 공식 필수 충족 여부는 별도."
+    },
+    "quality": {
+      "rating": 2,
+      "evidence": [
+        "https://github.com/taehyunan-99/nvidia-hackathon/blob/52f6be29e432b1fa660e2a9b3b6b7556d04793d4/docs/topics/her2/agent-benchmark-report.md"
+      ],
+      "note": "독립 접촉 검산과 보류 경계는 있으나 신규 두 항체 예측 F1=0, 업무 효용 미검증."
+    },
+    "reliability": {
+      "rating": 3,
+      "evidence": [
+        "https://github.com/taehyunan-99/nvidia-hackathon/blob/52f6be29e432b1fa660e2a9b3b6b7556d04793d4/docs/topics/her2/assets/goldset/generated/paced-agent-summary.json"
+      ],
+      "note": "과거 6/6 완주·429 복구 기록, 지연과 현재 계정 반복 가용성 미확인."
+    },
+    "ux": {
+      "rating": 3,
+      "evidence": [
+        "https://github.com/taehyunan-99/nvidia-hackathon/blob/52f6be29e432b1fa660e2a9b3b6b7556d04793d4/docs/frontend-hosting/design-guide.md"
+      ],
+      "note": "입력/비교/3D/보고·테마/좁은 화면 검사 기록. 새 사용자 과업 시험 없음."
+    },
+    "reproducibility": {
+      "rating": 3,
+      "evidence": [
+        "https://github.com/taehyunan-99/nvidia-hackathon/blob/52f6be29e432b1fa660e2a9b3b6b7556d04793d4/docs/topics/her2/agent-improvement-review.md"
+      ],
+      "note": "버전/테스트/임시DB·화면 검증 기록. 새 환경 전체 재현은 이번 미실행."
+    },
+    "pitch": {
+      "rating": 2,
+      "evidence": [
+        "https://github.com/taehyunan-99/nvidia-hackathon/blob/52f6be29e432b1fa660e2a9b3b6b7556d04793d4/README.md"
+      ],
+      "note": "문제→실행→결과 스토리와 배포 링크 존재. 실제 제출 영상/심사평/발표 리허설 미확인."
+    }
+  },
+  "gates": {
+    "mission_rules": {
+      "status": "unknown",
+      "evidence": []
+    },
+    "live_path": {
+      "status": "unknown",
+      "evidence": []
+    },
+    "evidence_integrity": {
+      "status": "unknown",
+      "evidence": []
+    },
+    "failure_handling": {
+      "status": "unknown",
+      "evidence": []
+    },
+    "submission": {
+      "status": "unknown",
+      "evidence": []
+    }
+  }
+}

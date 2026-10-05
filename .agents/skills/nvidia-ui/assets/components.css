@@ -1,0 +1,43 @@
+/* Load tokens.css first. Values not confirmed in decisions are labeled provisional. */
+.nv-ui{font-family:var(--font);color:var(--ink);background:var(--page-background);line-height:1.6}
+.nv-ui *{box-sizing:border-box}
+.nv-ui .nv-button{display:inline-flex;align-items:center;justify-content:center;height:var(--button-height);width:max-content;padding:0 var(--button-padding-inline);font-family:var(--font);font-size:var(--button-font-size);font-weight:var(--button-font-weight);line-height:22px;border-radius:var(--button-radius);cursor:pointer}
+.nv-ui .nv-primary{background:var(--button-primary-background);color:var(--button-primary-color);border:var(--button-primary-border-width) solid transparent;transition:background-color var(--button-primary-transition-duration) var(--button-transition-easing)}
+.nv-ui .nv-primary:enabled:hover{background:var(--button-primary-hover-background)}
+.nv-ui .nv-primary:focus-visible{outline:var(--button-primary-focus-width) solid var(--button-primary-focus-color);outline-offset:var(--button-primary-focus-offset)}
+.nv-ui .nv-primary:disabled{background:var(--button-primary-disabled-background);color:var(--button-primary-disabled-color);cursor:default}
+.nv-ui .nv-secondary{background:var(--button-secondary-background);color:var(--button-secondary-color);border:var(--button-secondary-border-width) solid var(--button-secondary-border);transition:background-color var(--button-secondary-transition-duration) var(--button-transition-easing)}
+.nv-ui .nv-secondary:enabled:hover{background:var(--button-secondary-hover-background)}
+.nv-ui .nv-secondary:focus-visible{outline:var(--button-secondary-focus-width) solid var(--button-secondary-focus-color);outline-offset:var(--button-secondary-focus-offset)}
+.nv-ui .nv-secondary:disabled{background:var(--button-secondary-disabled-background);color:var(--button-secondary-disabled-color);border-color:var(--button-secondary-disabled-border);cursor:default}
+.nv-ui .nv-actions{display:flex;flex-wrap:wrap;gap:var(--button-group-gap)}
+.nv-ui .nv-label{display:block;margin-bottom:var(--input-label-gap);font-size:var(--input-label-font-size);font-weight:var(--input-label-font-weight);line-height:var(--input-label-line-height);color:var(--input-label-color)}
+.nv-ui .nv-input{display:block;width:100%;height:var(--input-height);padding:0 var(--input-padding-inline);background:var(--input-background);color:var(--input-color);font-family:var(--font);font-size:var(--input-font-size);font-weight:var(--input-font-weight);line-height:22px;border:var(--input-border-width) solid var(--input-border);border-radius:var(--input-radius)}
+.nv-ui .nv-input::placeholder{color:var(--input-placeholder-color);opacity:1}
+.nv-ui .nv-input:focus-visible{outline:var(--input-focus-width) solid var(--input-focus-color);outline-offset:var(--input-focus-offset)}
+.nv-ui .nv-card{min-width:0;background:var(--card-background);border:var(--card-border-width) solid var(--card-border);padding:var(--card-padding);border-radius:var(--card-radius);box-shadow:var(--card-shadow)}
+.nv-ui .nv-card-title{margin:0 0 var(--card-title-description-gap);font-size:var(--card-title-font-size);font-weight:var(--card-title-font-weight);line-height:var(--card-title-line-height);color:var(--card-title-color)}
+.nv-ui .nv-description{margin:0;color:var(--card-description-color);font-size:var(--card-description-font-size);font-weight:var(--card-description-font-weight);line-height:var(--card-description-line-height);word-break:var(--card-description-word-break);overflow-wrap:anywhere}
+.nv-ui .nv-card-content{margin-top:var(--card-description-content-gap)}
+.nv-ui .nv-card-actions{margin-top:var(--card-actions-gap)}
+.nv-ui .nv-card-grid{display:grid;column-gap:var(--card-horizontal-gap);row-gap:var(--card-vertical-gap)}
+.nv-ui .nv-form-content{margin-top:var(--form-description-content-gap)}
+/* Submit border color is provisional. */
+.nv-ui .nv-form-submit{margin-top:var(--form-submit-gap);padding-top:var(--form-submit-padding-top);border-top:var(--form-submit-border-width) solid var(--line)}
+.nv-ui .nv-technical{white-space:var(--technical-white-space);overflow-wrap:var(--technical-overflow-wrap);word-break:normal}
+.nv-ui .nv-table-wrap{overflow-x:auto}
+/* Table ink, header background, rules and alignment remain provisional. */
+.nv-ui .nv-table{width:100%;border-collapse:collapse;text-align:left;color:var(--ink)}
+.nv-ui .nv-table th,.nv-ui .nv-table td{padding:var(--table-cell-padding-block) var(--table-cell-padding-inline);border-bottom:1px solid var(--line);vertical-align:top;overflow-wrap:anywhere}
+.nv-ui .nv-table thead{background:transparent;font-size:var(--table-header-font-size);font-weight:var(--table-header-font-weight);line-height:var(--table-header-line-height)}
+.nv-ui .nv-table th{font-weight:inherit}
+.nv-ui .nv-table tbody{font-size:var(--table-body-font-size);font-weight:var(--table-body-font-weight);line-height:var(--table-body-line-height)}
+@media(prefers-reduced-motion:reduce){.nv-ui .nv-button{transition:none}}
+
+/* Confirmed state palette. Use icons and text together; color is not the only signal. */
+.nv-ui [data-state="empty"]{--state-ink:var(--state-empty-color)}
+.nv-ui [data-state="running"]{--state-ink:var(--state-running-color)}
+.nv-ui [data-state="completed"]{--state-ink:var(--state-completed-color)}
+.nv-ui [data-state="hold"]{--state-ink:var(--state-hold-color)}
+.nv-ui [data-state="failed"]{--state-ink:var(--state-failed-color)}
+.nv-ui .nv-status{font-size:13px;font-weight:600;color:var(--state-ink);display:inline-flex;gap:6px;align-items:center;white-space:nowrap}

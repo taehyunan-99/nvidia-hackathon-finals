@@ -1,0 +1,297 @@
+[
+  {
+    "id": "tool:nim",
+    "name": "Nemotron / NIM",
+    "description": "목표와 관측에서 다음 행동을 선택하는 모델·추론 endpoint",
+    "prerequisites": "hosted: API 권한·모델별 tool-calling 확인. self-host: 모델별 GPU/메모리·라이선스 확인.",
+    "skill_folders": [
+      "nat-agent-configuration"
+    ],
+    "source": "https://build.nvidia.com/explore/discover",
+    "guide": "docs/catalog/tools/nim.md",
+    "quickstart": "docs/playbooks/quickstarts/nat.md",
+    "success": "실제 tool call 인자·반환 관측·종료와 모델 ID를 기록",
+    "fallback": "같은 endpoint에서 사용 가능한 모델을 확인; 연결 실패를 mock 성공으로 대체하지 않음",
+    "runtime_status": "not-tested-in-finals-environment",
+    "contract": "docs/catalog/contracts.md",
+    "keywords": "입출력 계약 schema contract"
+  },
+  {
+    "id": "tool:nat",
+    "name": "NeMo Agent Toolkit",
+    "description": "모델·함수·MCP를 workflow로 연결하고 실행/관측",
+    "prerequisites": "Python 호환 버전+langchain extra. 예선 설치는 1.9.0 확인, 새 환경 호환성은 별도.",
+    "skill_folders": [
+      "nat-installation",
+      "nat-workflow-creation",
+      "nat-tools-and-functions"
+    ],
+    "source": "https://github.com/NVIDIA/NeMo-Agent-Toolkit",
+    "guide": "docs/catalog/tools/nat.md",
+    "quickstart": "docs/playbooks/quickstarts/nat.md",
+    "success": "nat CLI, 구성 로딩, 실제 도구 호출 후 종료",
+    "fallback": "단일 agent·함수 1개부터. 프레임워크 교체보다 버전/등록 문제 해결",
+    "runtime_status": "not-tested-in-finals-environment",
+    "contract": "docs/catalog/contracts.md",
+    "keywords": "입출력 계약 schema contract"
+  },
+  {
+    "id": "tool:retriever",
+    "name": "NeMo Retriever",
+    "description": "문서·표·이미지를 추출하고 출처가 있는 검색 결과 생성",
+    "prerequisites": "원격 NIM/service client와 local GPU 모드 구분. 선택한 모델 접근 확인.",
+    "skill_folders": [
+      "nemo-retriever",
+      "nemo-retriever-mcp"
+    ],
+    "source": "https://github.com/NVIDIA/NeMo-Retriever",
+    "guide": "docs/catalog/tools/retriever.md",
+    "quickstart": "docs/playbooks/quickstarts/retrieval.md",
+    "success": "관련 문서/페이지와 답 없는 질문의 빈 결과를 확인",
+    "fallback": "문서 3개와 단순 검색으로 축소하고 원문 위치 유지",
+    "runtime_status": "not-tested-in-finals-environment"
+  },
+  {
+    "id": "tool:rag",
+    "name": "RAG Blueprint",
+    "description": "검색·생성·검증을 묶은 참조 애플리케이션",
+    "prerequisites": "별도 blueprint checkout, Docker/Compose 또는 library 경로. GPU/remote NIM 선택.",
+    "skill_folders": [
+      "rag-blueprint",
+      "rag-eval",
+      "rag-perf"
+    ],
+    "source": "https://github.com/NVIDIA-AI-Blueprints/rag",
+    "guide": "docs/catalog/tools/rag.md",
+    "quickstart": "docs/playbooks/quickstarts/retrieval.md",
+    "success": "ingest 완료→query→원문 인용 대조; quality와 latency 분리",
+    "fallback": "전체 stack 설치가 지연되면 Retriever+작은 agent 조합",
+    "runtime_status": "not-tested-in-finals-environment"
+  },
+  {
+    "id": "tool:guardrails",
+    "name": "NeMo Guardrails",
+    "description": "입력·출력·대화 정책을 검사",
+    "prerequisites": "지원 Python 환경, 모델 제공자 설정, Colang/정책과 정상·거부 입력 쌍.",
+    "skill_folders": [
+      "nemotron-policy-generator"
+    ],
+    "source": "https://github.com/NVIDIA-NeMo/Guardrails",
+    "guide": "docs/catalog/tools/guardrails.md",
+    "quickstart": "docs/playbooks/quickstarts/validation.md",
+    "success": "정상 입력 유지·정책 위반 차단. 업무 수치/제약은 별도 검산",
+    "fallback": "최소 JSON schema·허용 도구·업무 validator로 시작",
+    "runtime_status": "not-tested-in-finals-environment"
+  },
+  {
+    "id": "tool:data-designer",
+    "name": "NeMo Data Designer",
+    "description": "schema·생성 규칙으로 합성 평가 데이터 작성",
+    "prerequisites": "Python 패키지와 모델 provider. 생성 비용/원본 자료 사용 범위 확인.",
+    "skill_folders": [
+      "data-designer"
+    ],
+    "source": "https://github.com/NVIDIA-NeMo/DataDesigner",
+    "guide": "docs/catalog/tools/data-designer.md",
+    "quickstart": "docs/playbooks/quickstarts/validation.md",
+    "success": "작은 생성 결과의 schema·검증기·수동 의미 검사",
+    "fallback": "수동 8사례부터 시작; 합성 데이터를 독립 실험 정답으로 취급하지 않음",
+    "runtime_status": "not-tested-in-finals-environment"
+  },
+  {
+    "id": "tool:evaluation",
+    "name": "NAT evaluation / telemetry",
+    "description": "고정 입력으로 작업 성공·도구 경로·지연 비교",
+    "prerequisites": "nat eval은 해당 버전 eval extra 필요. evaluator와 데이터 형식 확인.",
+    "skill_folders": [
+      "nat-evaluation",
+      "nat-telemetry",
+      "nat-optimization"
+    ],
+    "source": "https://docs.nvidia.com/nemo/agent-toolkit/latest/improve-workflows/evaluate.html",
+    "guide": "docs/catalog/tools/evaluation.md",
+    "quickstart": "docs/playbooks/quickstarts/validation.md",
+    "success": "실패를 분모에 유지, baseline과 동일 입력, trace→판정 연결",
+    "fallback": "JSONL과 결정적 검사부터; LLM judge만으로 성공 확정하지 않음",
+    "runtime_status": "not-tested-in-finals-environment"
+  },
+  {
+    "id": "tool:nemoclaw",
+    "name": "NemoClaw",
+    "description": "선택한 agent를 관리된 inference·격리 환경에서 운영",
+    "prerequisites": "지원 host/container·agent variant·provider, 해당 variant의 quickstart 확인.",
+    "skill_folders": [
+      "nemoclaw-user-guide"
+    ],
+    "source": "https://github.com/NVIDIA/NemoClaw",
+    "guide": "docs/catalog/tools/nemoclaw.md",
+    "quickstart": "docs/playbooks/quickstarts/runtime.md",
+    "success": "sandbox에서 허용된 작업 한 건과 차단 동작 확인",
+    "fallback": "NAT 웹 agent만 필요한 경우 런타임 계층 추가를 미룸",
+    "runtime_status": "not-tested-in-finals-environment"
+  },
+  {
+    "id": "tool:openshell",
+    "name": "OpenShell",
+    "description": "agent 실행의 파일/네트워크/프로세스 경계를 관리",
+    "prerequisites": "host/runtime 정책, provider, 파일·네트워크 허용 범위 확인.",
+    "skill_folders": [
+      "nemotron-policy-generator"
+    ],
+    "source": "https://github.com/NVIDIA/OpenShell",
+    "guide": "docs/catalog/tools/openshell.md",
+    "quickstart": "docs/playbooks/quickstarts/runtime.md",
+    "success": "허용 파일/도메인은 동작하고 금지된 접근은 거부",
+    "fallback": "코드 실행이 없는 읽기 전용 도구로 범위 축소",
+    "runtime_status": "not-tested-in-finals-environment"
+  },
+  {
+    "id": "tool:brev",
+    "name": "Brev",
+    "description": "GPU 환경을 마련해 원격 개발·컨테이너 실행",
+    "prerequisites": "지급 계정/크레딧·GPU·디스크·포트·종료 조건 확인.",
+    "skill_folders": [
+      "tao-run-on-brev"
+    ],
+    "source": "https://docs.nvidia.com/brev/getting-started/overview",
+    "guide": "docs/catalog/tools/brev.md",
+    "quickstart": "docs/playbooks/quickstarts/runtime.md",
+    "success": "SSH/컨테이너/GPU 확인 후 해당 도구의 최소 추론",
+    "fallback": "hosted API 우선. GPU 미지급이면 GPU 전용 조합 보류",
+    "runtime_status": "not-tested-in-finals-environment"
+  },
+  {
+    "id": "tool:cuopt",
+    "name": "cuOpt",
+    "description": "배차·경로 또는 LP/MILP/QP 제약 최적화",
+    "prerequisites": "Linux NVIDIA GPU/remote server. CUDA 12/13 패키지와 runtime 일치, solver 종류 선택.",
+    "skill_folders": [
+      "cuopt-install",
+      "cuopt-numerical-optimization-formulation",
+      "cuopt-numerical-optimization-api",
+      "cuopt-routing-api-python"
+    ],
+    "source": "https://github.com/NVIDIA/cuopt",
+    "guide": "docs/catalog/tools/cuopt.md",
+    "quickstart": "docs/playbooks/quickstarts/optimization.md",
+    "success": "feasible 상태와 목적값·각 제약을 독립적으로 다시 계산",
+    "fallback": "작은 문제/규칙 baseline. 자연어 추천을 최적화 완료로 표시하지 않음",
+    "runtime_status": "not-tested-in-finals-environment"
+  },
+  {
+    "id": "tool:vss",
+    "name": "Video Search and Summarization",
+    "description": "영상 검색·시각 질의·시간 구간 요약",
+    "prerequisites": "실행 중인 VSS profile, 모델/저장소/영상 접근·GPU 조건 확인.",
+    "skill_folders": [
+      "vss-deploy-profile",
+      "vss-search-archive",
+      "vss-ask-video",
+      "vss-summarize-video"
+    ],
+    "source": "https://github.com/NVIDIA-AI-Blueprints/video-search-and-summarization",
+    "guide": "docs/catalog/tools/vss.md",
+    "quickstart": "docs/playbooks/quickstarts/video.md",
+    "success": "질문에 해당하는 프레임·시간 구간을 사람이 대조",
+    "fallback": "짧은 clip 한 개로 축소. 메타데이터 조회를 시각 확인이라고 부르지 않음",
+    "runtime_status": "not-tested-in-finals-environment"
+  },
+  {
+    "id": "tool:speech",
+    "name": "Nemotron Speech / Riva",
+    "description": "음성 인식·합성·번역을 업무 도구와 연결",
+    "prerequisites": "선택 모델의 한국어·오디오 포맷·sample rate·hosted/self-host 지원 확인.",
+    "skill_folders": [
+      "nemotron-speech",
+      "nemotron-voice-agent-builder"
+    ],
+    "source": "https://docs.nvidia.com/nim/speech/latest/",
+    "guide": "docs/catalog/tools/speech.md",
+    "quickstart": "docs/playbooks/quickstarts/speech.md",
+    "success": "짧은 발화 전사와 실제 업무 처리; 무음/잡음·언어 실패 확인",
+    "fallback": "텍스트 입력 경로 유지; ASR 성공만으로 업무 완료를 선언하지 않음",
+    "runtime_status": "not-tested-in-finals-environment"
+  },
+  {
+    "id": "tool:bionemo",
+    "name": "BioNeMo NIM",
+    "description": "구조/분자 생성·예측 전문 도구",
+    "prerequisites": "모델별 endpoint·입력 제약·키·좌표 파서 및 독립 검증 자료.",
+    "skill_folders": [
+      "bionemo-boltz2-nim",
+      "bionemo-diffdock-nim",
+      "bionemo-genmol-nim"
+    ],
+    "source": "https://build.nvidia.com/explore/discover",
+    "guide": "docs/catalog/tools/bionemo.md",
+    "quickstart": "docs/playbooks/quickstarts/biology.md",
+    "success": "구조·사슬·서열 대응과 출처를 검사; 추론 한계 표시",
+    "fallback": "공개 구조 재사용/분자 규칙 검산. 새 예측 성능은 별도 평가",
+    "runtime_status": "not-tested-in-finals-environment"
+  },
+  {
+    "id": "tool:deepstream",
+    "name": "DeepStream",
+    "description": "실시간 영상의 decode·추론·추적 pipeline",
+    "prerequisites": "지원 Linux/Jetson·GPU·SDK·stream/모델 포맷 확인.",
+    "skill_folders": [
+      "deepstream-dev",
+      "deepstream-generate-pipeline",
+      "deepstream-profile-pipeline"
+    ],
+    "source": "https://github.com/NVIDIA/skills/tree/main/skills/deepstream-dev",
+    "guide": "docs/catalog/tools/deepstream.md",
+    "quickstart": "docs/playbooks/quickstarts/video.md",
+    "success": "샘플 stream 한 개 처리, 프레임/탐지/지연 확인",
+    "fallback": "실시간이 필수가 아니면 녹화 clip 기반 검토",
+    "runtime_status": "not-tested-in-finals-environment"
+  },
+  {
+    "id": "tool:dynamo",
+    "name": "Dynamo",
+    "description": "여러 inference 요청의 서빙/라우팅 성능 조정",
+    "prerequisites": "GPU·선택 backend·배포 recipe 및 실측 부하가 필요.",
+    "skill_folders": [
+      "dynamo-recipe-runner",
+      "dynamo-router-starter",
+      "dynamo-troubleshoot"
+    ],
+    "source": "https://github.com/NVIDIA/skills/tree/main/skills/dynamo-recipe-runner",
+    "guide": "docs/catalog/tools/dynamo.md",
+    "quickstart": "docs/playbooks/quickstarts/specialized.md",
+    "success": "동일 입력 부하에서 오류율·지연·처리량 기록",
+    "fallback": "단일 endpoint가 충분하면 추가하지 않음",
+    "runtime_status": "not-tested-in-finals-environment"
+  },
+  {
+    "id": "tool:rapids",
+    "name": "RAPIDS / cuDF",
+    "description": "대규모 표 데이터 처리 가속",
+    "prerequisites": "GPU 지원 환경과 데이터 규모. 기존 CPU 결과를 기준선으로 확보.",
+    "skill_folders": [
+      "accelerated-computing-cudf"
+    ],
+    "source": "https://rapids.ai/",
+    "guide": "docs/catalog/tools/rapids.md",
+    "quickstart": "docs/playbooks/quickstarts/specialized.md",
+    "success": "CPU와 결과 일치 및 전처리 전체 시간 비교",
+    "fallback": "작은 데이터는 pandas/SQL로 검산 가능한 결과부터",
+    "runtime_status": "not-tested-in-finals-environment"
+  },
+  {
+    "id": "tool:physical-ai",
+    "name": "Physical AI / Isaac / Cosmos",
+    "description": "물리 환경·로봇·영상 생성/시뮬레이션 미션 탐색",
+    "prerequisites": "미션에 필요한 simulator/scene/센서/모델 가용성이 선행. 일괄 설치하지 않음.",
+    "skill_folders": [
+      "isaac-mission-control-showcase",
+      "paidf-cosmos-predict"
+    ],
+    "source": "https://github.com/NVIDIA/skills",
+    "guide": "docs/catalog/tools/physical-ai.md",
+    "quickstart": "docs/playbooks/quickstarts/specialized.md",
+    "success": "관련 샘플 scene·입출력·검증기를 먼저 확인",
+    "fallback": "장비/scene 없이 현장 즉시 완료를 약속하지 않음; 해당 원문에서 feasibility 판단",
+    "runtime_status": "not-tested-in-finals-environment"
+  }
+]

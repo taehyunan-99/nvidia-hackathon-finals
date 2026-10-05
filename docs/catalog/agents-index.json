@@ -1,0 +1,128 @@
+[
+  {
+    "id": "agent:tool-calling",
+    "name": "Tool Calling",
+    "nat_type": "tool_calling_agent",
+    "description": "명확한 schema 도구에서 다음 행동을 선택",
+    "prerequisites": "native tool calling 모델·함수 등록",
+    "success": "모델이 실제 도구 인자를 생성하고 반환 결과를 사용해 종료; structured output도 별도 schema 검사",
+    "guide": "docs/catalog/agent-types.md",
+    "quickstart": "docs/playbooks/quickstarts/nat.md",
+    "skill_folders": [
+      "nat-agent-configuration"
+    ],
+    "runtime_status": "documentation-reviewed; individual types not runtime-tested"
+  },
+  {
+    "id": "agent:react",
+    "name": "ReAct",
+    "nat_type": "react_agent",
+    "description": "관측→다음 호출을 반복하며 조사",
+    "prerequisites": "선택 모델의 텍스트/네이티브 모드 지원",
+    "success": "Action 파싱/도구 선택/종료 확인; 모델이 도구 호출 없이 답만 만들면 통과 아님",
+    "guide": "docs/catalog/agent-types.md",
+    "quickstart": "docs/playbooks/quickstarts/nat.md",
+    "skill_folders": [
+      "nat-agent-configuration"
+    ],
+    "runtime_status": "documentation-reviewed; individual types not runtime-tested"
+  },
+  {
+    "id": "agent:router",
+    "name": "Router",
+    "nat_type": "router_agent",
+    "description": "요청을 하나의 전문 분기로 분류",
+    "prerequisites": "분기 목록과 경계/모호 입력 정책",
+    "success": "서로 다른 두 입력이 적절한 분기로 가는지; 여러 분기 실행용이 아님",
+    "guide": "docs/catalog/agent-types.md",
+    "quickstart": "docs/playbooks/quickstarts/nat.md",
+    "skill_folders": [
+      "nat-agent-configuration"
+    ],
+    "runtime_status": "documentation-reviewed; individual types not runtime-tested"
+  },
+  {
+    "id": "agent:sequential",
+    "name": "Sequential Executor",
+    "nat_type": "sequential_executor",
+    "description": "고정 순서 변환·검산",
+    "prerequisites": "각 단계 입력/출력 호환",
+    "success": "중간 실패가 뒤 단계에 성공값으로 전달되지 않음; executor 자체는 LLM 판단 없음",
+    "guide": "docs/catalog/agent-types.md",
+    "quickstart": "docs/playbooks/quickstarts/nat.md",
+    "skill_folders": [
+      "nat-agent-configuration"
+    ],
+    "runtime_status": "documentation-reviewed; individual types not runtime-tested"
+  },
+  {
+    "id": "agent:parallel",
+    "name": "Parallel Executor",
+    "nat_type": "parallel_executor",
+    "description": "독립 조회/분석을 동시에 실행",
+    "prerequisites": "독립 도구·공유 호출 예산",
+    "success": "부분 실패·순서 비의존·한도 준수; 앞 단계 출력이 필요하면 순차 실행",
+    "guide": "docs/catalog/agent-types.md",
+    "quickstart": "docs/playbooks/quickstarts/nat.md",
+    "skill_folders": [
+      "nat-agent-configuration"
+    ],
+    "runtime_status": "documentation-reviewed; individual types not runtime-tested"
+  },
+  {
+    "id": "agent:reasoning",
+    "name": "Reasoning",
+    "nat_type": "reasoning_agent",
+    "description": "먼저 계획하고 내부 agent에 위임",
+    "prerequisites": "thinking 지원 모델·내부 함수",
+    "success": "추가 계획 비용 대비 결과 이득을 기준선으로 검증",
+    "guide": "docs/catalog/agent-types.md",
+    "quickstart": "docs/playbooks/quickstarts/nat.md",
+    "skill_folders": [
+      "nat-agent-configuration"
+    ],
+    "runtime_status": "documentation-reviewed; individual types not runtime-tested"
+  },
+  {
+    "id": "agent:rewoo",
+    "name": "ReWOO",
+    "nat_type": "rewoo_agent",
+    "description": "계획/도구 실행/결과 합성을 분리",
+    "prerequisites": "사전 분해 가능한 작업과 도구 입력",
+    "success": "계획의 의존성·중간 실패 확인; 관측마다 계획 변경이 핵심이면 다른 패턴 검토",
+    "guide": "docs/catalog/agent-types.md",
+    "quickstart": "docs/playbooks/quickstarts/nat.md",
+    "skill_folders": [
+      "nat-agent-configuration"
+    ],
+    "runtime_status": "documentation-reviewed; individual types not runtime-tested"
+  },
+  {
+    "id": "agent:responses",
+    "name": "Responses API Agent",
+    "nat_type": "responses_api_agent",
+    "description": "Responses 호환 모델의 내장/MCP 도구 연결",
+    "prerequisites": "해당 endpoint가 Responses API 지원",
+    "success": "chat-completions 호환만으로 가정 금지; 서버 도구 호출·응답 지원을 확인",
+    "guide": "docs/catalog/agent-types.md",
+    "quickstart": "docs/playbooks/quickstarts/nat.md",
+    "skill_folders": [
+      "nat-agent-configuration"
+    ],
+    "runtime_status": "documentation-reviewed; individual types not runtime-tested"
+  },
+  {
+    "id": "agent:memory",
+    "name": "Auto Memory Wrapper",
+    "nat_type": "auto_memory_agent",
+    "description": "여러 턴/세션에 이전 정보를 유지",
+    "prerequisites": "memory backend·저장 범위·세션 분리",
+    "success": "새 세션 간 데이터 혼합 없는지·삭제 정책·history가 결과를 바꾸는지 확인",
+    "guide": "docs/catalog/agent-types.md",
+    "quickstart": "docs/playbooks/quickstarts/nat.md",
+    "skill_folders": [
+      "nat-agent-configuration"
+    ],
+    "runtime_status": "documentation-reviewed; individual types not runtime-tested"
+  }
+]

@@ -1,0 +1,25 @@
+# 배포·서빙·인프라 / 설치·배포 / 2
+
+[도메인으로](../domains/infrastructure.md)
+
+| 스킬 | 사용 목적 | 고정 원문 |
+|---|---|---|
+| `doca-spcx-cc` | Use this skill when the user is invoking `doca_spcx_cc` (the host-side CLI under /opt/mellanox/doca/tools/) to load, parameterize, start, observe, or … | [SKILL.md](https://github.com/NVIDIA/skills/blob/0e0d506f4eb67204a62586ac5f19df3cb7ad9b1f/skills/doca-spcx-cc/SKILL.md) |
+| `doca-sta` | Use this skill when the user is doing hands-on NVMe-over-Fabrics storage-target work on a BlueField DPU or ConnectX NIC with DOCA STA — standing up a … | [SKILL.md](https://github.com/NVIDIA/skills/blob/0e0d506f4eb67204a62586ac5f19df3cb7ad9b1f/skills/doca-sta/SKILL.md) |
+| `doca-structured-tools-contract` | Use this skill whenever another DOCA skill says "prefer the structured tool per doca-structured-tools-contract", or when the user wants a one-shot ans… | [SKILL.md](https://github.com/NVIDIA/skills/blob/0e0d506f4eb67204a62586ac5f19df3cb7ad9b1f/skills/doca-structured-tools-contract/SKILL.md) |
+| `doca-telemetry` | Use this skill to read DOCA hardware-counter events from a `doca_dev` through the per-domain Telemetry reader libraries: `doca_telemetry_pcc`, `_dpa`,… | [SKILL.md](https://github.com/NVIDIA/skills/blob/0e0d506f4eb67204a62586ac5f19df3cb7ad9b1f/skills/doca-telemetry/SKILL.md) |
+| `doca-telemetry-utils` | Use this skill when the user is invoking `doca_telemetry_utils` on a host with DOCA installed — discovering the diagnostic-counter schema, translating… | [SKILL.md](https://github.com/NVIDIA/skills/blob/0e0d506f4eb67204a62586ac5f19df3cb7ad9b1f/skills/doca-telemetry-utils/SKILL.md) |
+| `dynamo-router-starter` | Start or patch Dynamo router modes and run router endpoint smoke checks. Use for round-robin, KV-aware, least-loaded, or device-aware routing setup; u… | [SKILL.md](https://github.com/NVIDIA/skills/blob/0e0d506f4eb67204a62586ac5f19df3cb7ad9b1f/skills/dynamo-router-starter/SKILL.md) |
+| `holoscan-install-conda` | Install Holoscan SDK v4.3+ via Conda in a CUDA 13 environment. Use for Conda installs; redirect CUDA 12 hosts to container/wheel. | [SKILL.md](https://github.com/NVIDIA/skills/blob/0e0d506f4eb67204a62586ac5f19df3cb7ad9b1f/skills/holoscan-install-conda/SKILL.md) |
+| `holoscan-install-container` | Install Holoscan SDK via the NGC Docker container. Use for container-based installs; not for native apt/pip/Conda installs. | [SKILL.md](https://github.com/NVIDIA/skills/blob/0e0d506f4eb67204a62586ac5f19df3cb7ad9b1f/skills/holoscan-install-container/SKILL.md) |
+| `holoscan-install-debian` | Install Holoscan SDK natively on Ubuntu via apt. Use for C++ installs on Ubuntu; pair with /holoscan-install-wheel for Python. | [SKILL.md](https://github.com/NVIDIA/skills/blob/0e0d506f4eb67204a62586ac5f19df3cb7ad9b1f/skills/holoscan-install-debian/SKILL.md) |
+| `holoscan-install-source` | Build Holoscan SDK from source via the in-tree ./run script. Use only when published packages don't meet the user's needs. | [SKILL.md](https://github.com/NVIDIA/skills/blob/0e0d506f4eb67204a62586ac5f19df3cb7ad9b1f/skills/holoscan-install-source/SKILL.md) |
+| `holoscan-install-wheel` | Install Holoscan SDK Python wheel via pip into a venv. Use for Python installs; not for native C++/apt or Conda installs. | [SKILL.md](https://github.com/NVIDIA/skills/blob/0e0d506f4eb67204a62586ac5f19df3cb7ad9b1f/skills/holoscan-install-wheel/SKILL.md) |
+| `holoscan-setup` | Guides Holoscan SDK installation: inspects the host, assesses platform compatibility, recommends an install method, and delegates to the matching inst… | [SKILL.md](https://github.com/NVIDIA/skills/blob/0e0d506f4eb67204a62586ac5f19df3cb7ad9b1f/skills/holoscan-setup/SKILL.md) |
+| `i4h-workflow-setup` | Preflight and set up the root-level workflow runtime. Use for installation, missing component environments, or third-party failures; do not use for ro… | [SKILL.md](https://github.com/NVIDIA/skills/blob/0e0d506f4eb67204a62586ac5f19df3cb7ad9b1f/skills/i4h-workflow-setup/SKILL.md) |
+| `jetson-customize-clocks` | Use to lock/cap Jetson CPU/GPU/EMC clocks, toggle EMC/CPU DVFS, or change cpufreq governors by editing BPMP DTB and nvpower.sh pre-flash. Do NOT use f… | [SKILL.md](https://github.com/NVIDIA/skills/blob/0e0d506f4eb67204a62586ac5f19df3cb7ad9b1f/skills/jetson-customize-clocks/SKILL.md) |
+| `jetson-promote-image` | Use to promote overlay files and built artifacts into the staged BSP image. Do NOT use to flash or build. Triggers: promote bsp image. | [SKILL.md](https://github.com/NVIDIA/skills/blob/0e0d506f4eb67204a62586ac5f19df3cb7ad9b1f/skills/jetson-promote-image/SKILL.md) |
+| `tao-setup-nvidia-gpu-host` | Host setup for TAO GPU backends. Checks and, after user approval, installs minimum-compatible NVIDIA driver, CUDA Toolkit, and NVIDIA Container Toolki… | [SKILL.md](https://github.com/NVIDIA/skills/blob/0e0d506f4eb67204a62586ac5f19df3cb7ad9b1f/skills/tao-setup-nvidia-gpu-host/SKILL.md) |
+
+설치/환경/실행 정보: `python3 scripts/lookup.py --show "skill:nvidia/skills/doca-spcx-cc"` 형식으로 조회한다.
+공통 [확보 절차](../../../playbooks/skill-setup.md). 검색 결과가 부족하면 domain/function 필터를 풀어 전체 원문 설명에서 찾는다.

@@ -1,0 +1,18 @@
+.env
+.env.*
+!.env.example
+.venv/
+__pycache__/
+*.pyc
+node_modules/
+runs/
+*.bak.*
+.backups/
+.DS_Store
+reference-skills/
+
+# Handoff receipts and runtime evidence stay local.
+docs/HANDOFF.md
+docs/HANDOFF.html
+docs/HANDOFF.md.parallel.lock
+docs/handoff-runs/

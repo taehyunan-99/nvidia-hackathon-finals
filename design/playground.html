@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>확정 디자인 — 상태와 컴포넌트</title>
+<link rel="stylesheet" href="../.agents/skills/nvidia-ui/assets/tokens.css?v=final2">
+<link rel="stylesheet" href="../.agents/skills/nvidia-ui/assets/components.css?v=final2">
+<style>
+body{margin:0}button{font:inherit}[hidden]{display:none!important}
+/* State palette is confirmed in tokens.css; review layout remains illustrative. */
+.review-header{padding:20px 32px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.review-header strong{font-size:16px}.review-header span,.subtle{font-size:13px;color:#555}
+main{max-width:1280px;margin:auto;padding:32px}.intro{display:flex;justify-content:space-between;align-items:start;gap:24px;margin-bottom:24px}h1{font-size:28px;line-height:1.3;margin:0 0 12px}h2,h3,p{margin-top:0}.eyebrow{color:#426700;font-size:12px;font-weight:700;margin-bottom:8px}.mode{display:inline-block;padding:4px 8px;border:1px solid var(--line);font-size:12px;white-space:nowrap}.review-note{font-size:14px;line-height:22px;color:#555;max-width:820px;margin:0}
+.state-picker{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:32px}.state-choice{text-align:left;border:1px solid var(--line);background:#fff;padding:14px;cursor:pointer;color:var(--state-ink);min-width:0}.state-choice strong{display:block;font-size:14px}.state-choice small{display:block;margin-top:8px;color:#555;font-size:12px;line-height:18px}.state-choice[aria-pressed=true]{box-shadow:inset 0 -3px var(--state-ink);border-color:var(--state-ink)}.state-choice:focus-visible,summary:focus-visible,.text-action:focus-visible{outline:2px solid #426700;outline-offset:2px}
+
+.workspace{grid-template-columns:minmax(300px,0.85fr) minmax(0,1.65fr);align-items:start}.field-note{font-size:13px;color:#555;margin:8px 0 0;overflow-wrap:anywhere}.file-list{margin:20px 0 0;padding:0;list-style:none;font-size:13px}.file-list li{padding:12px 0;border-top:1px solid var(--line)}.file-list span{display:block;font-size:12px;color:#555;margin-top:4px}.input-error{color:#b42318;font-size:13px;margin:8px 0 0}.nv-input[aria-invalid=true]{border-color:#b42318}
+.result-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px}.result-head .nv-card-title{margin:0}.status-box{padding:16px 20px;border:1px solid var(--line);border-left:3px solid var(--state-ink)}.status-box h3{font-size:18px;line-height:26px;margin-bottom:8px}.status-box p{font-size:14px;line-height:22px;color:#555;margin:0;word-break:keep-all;overflow-wrap:anywhere}.next-action{margin-top:20px;padding-top:16px;border-top:1px solid var(--line)}.next-action strong{display:block;font-size:13px;margin-bottom:6px}.next-action p{font-size:14px;color:#555;margin:0 0 12px}.status-table{margin-top:24px}.steps{list-style:none;margin:20px 0 0;padding:0;font-size:13px}.steps li{padding:10px 0;border-top:1px solid var(--line)}.steps span{color:#555}.evidence{margin-top:24px;font-size:14px}.evidence summary{cursor:pointer;color:#426700;width:max-content;max-width:100%}.evidence p{margin:12px 0 0;font-size:14px;color:#555}.footnote{font-size:12px;color:#555;margin:16px 0 0}.disabled-examples{margin-top:24px;padding-top:16px;border-top:1px solid var(--line)}.disabled-examples p{font-size:12px;color:#555;margin-bottom:10px}
+.reference{margin-top:32px;border-top:1px solid var(--line);padding-top:20px;font-size:13px;color:#555;line-height:21px}.reference a{color:#426700}.reference details{margin-top:12px}.reference summary{cursor:pointer}.reference ul{padding-left:20px}.reference li{margin:6px 0}
+</style></head>
+<body class="nv-ui">
+<header class="review-header"><strong>FINALS / DESIGN REVIEW</strong><span>데스크톱 전용 · 확정 디자인</span></header>
+<main>
+<section class="intro"><div><div class="eyebrow">확정한 디자인을 한 화면에서</div><h1>검토 흐름과 상태 표시</h1><p class="review-note">80개 세부 기준과 확정한 5개 상태 표시를 조합한 예시입니다. 서비스 주제·화면 배치·표 장식·글꼴의 미정 사항은 그대로 구분합니다.</p></div><span class="mode">MOCK · 실제 도구 호출 없음</span></section>
+<div class="state-picker" role="group" aria-label="확정 상태 미리보기">
+<button type="button" class="state-choice" data-state="empty" aria-pressed="false"><strong>○ 입력 전</strong><small>입력 안내와 시작 행동</small></button>
+<button type="button" class="state-choice" data-state="running" aria-pressed="false"><strong>… 진행 중</strong><small>관측된 단계와 선택 이유</small></button>
+<button type="button" class="state-choice" data-state="completed" aria-pressed="false"><strong>✓ 완료</strong><small>검증된 결과와 근거</small></button>
+<button type="button" class="state-choice" data-state="hold" aria-pressed="true"><strong>! 보류</strong><small>부분 결과 유지·추가 자료</small></button>
+<button type="button" class="state-choice" data-state="failed" aria-pressed="false"><strong>× 실패</strong><small>실패 이유와 재시도</small></button>
+</div>
+<div class="nv-card-grid workspace">
+<section class="nv-card"><h2 class="nv-card-title">검토 요청</h2><p class="nv-description">자료에서 확인할 내용을 입력하고, 결과와 근거를 함께 살펴보세요.</p>
+<form id="request-form" class="nv-card-content" novalidate><label class="nv-label" for="goal">검토 목표</label><input id="goal" class="nv-input" type="text" value="제출 자료에서 빠진 근거를 확인해줘" placeholder="확인할 내용을 입력하세요" aria-describedby="goal-help goal-error"><p id="goal-help" class="field-note">이 화면은 입력값을 서버로 보내지 않는 디자인 예시입니다.</p><p id="goal-error" class="input-error" hidden>검토 목표를 입력하세요.</p>
+<ul class="file-list"><li class="nv-technical">요구사항_안내.pdf<span>가상 자료 · 기본 조건</span></li><li class="nv-technical">review-evidence_2026-10-07_dataset-v3_candidate-001_validation-results.json<span>긴 파일명 표시 확인용 가상 자료</span></li></ul>
+<div class="nv-actions nv-card-actions"><button id="start" type="submit" class="nv-button nv-primary">예시 실행</button><button id="reset" type="button" class="nv-button nv-secondary">입력 초기화</button></div></form>
+<div class="disabled-examples"><p>사용할 수 없는 버튼의 예시</p><div class="nv-actions"><button class="nv-button nv-primary" disabled>실행 불가</button><button class="nv-button nv-secondary" disabled>내보내기 불가</button></div></div></section>
+<section class="nv-card" id="result" data-state="hold" aria-labelledby="result-title"><div class="result-head"><h2 class="nv-card-title" id="result-title">검토 상태</h2><span class="nv-status"><span id="status-icon" aria-hidden="true">!</span><span id="status-label">보류 · 예시</span></span></div>
+<div id="status-content" class="status-box" role="status" aria-live="polite" aria-atomic="true"><h3 id="state-title"></h3><p id="state-description"></p></div>
+<ol class="steps" id="steps" aria-label="관측과 도구 선택 예시"></ol>
+<div class="status-table nv-table-wrap" id="results-wrap"><table class="nv-table"><caption class="subtle" style="text-align:left;padding-bottom:8px">확인 범위 · 가상 예시</caption><thead><tr><th scope="col">항목</th><th scope="col">결과</th><th scope="col">근거</th></tr></thead><tbody id="rows"></tbody></table></div>
+<details class="evidence" id="evidence"><summary>근거 예시 보기</summary><p id="evidence-text"></p></details>
+<div class="next-action"><strong>다음 행동</strong><p id="next-description"></p><button id="next" type="button" class="nv-button nv-secondary"></button></div><p class="footnote">상태 전환과 예시 실행은 디자인 확인용이며 실제 분석 결과가 아닙니다.</p></section>
+</div>
+<section class="reference"><strong>확정한 상태 표시</strong><p>상태는 색만 쓰지 않고 아이콘·문구·다음 행동으로 구분합니다. 완료는 검증 후, 보류는 부분 결과를 유지하고, 실패는 결과를 확보하지 못했음을 명시합니다.</p><p>공식의 녹색·중립색과 <a href="https://github.com/taehyunan-99/nvidia-hackathon/blob/52f6be29e432b1fa660e2a9b3b6b7556d04793d4/frontend/src/tokens.css#L28">예선의 성공·경고·오류 구분</a>을 참고했으며, 이 5개 상태 묶음 자체가 NVIDIA 공식 규격은 아닙니다.</p>
+<details><summary>확정값과 미정값 구분</summary><ul><li>확정: 버튼·입력·카드·표의 80개 값과 작은 카드/복잡한 폼의 적용 조건.</li><li>확정: 5개 상태의 색·아이콘·문구·다음 행동 묶음.</li><li>미정: 글꼴 제공 방식, 표 헤더 배경·구분선·정렬, 페이지 배치·폭, 특수 요소·다크 테마 등.</li><li>미정 장식은 이번 검토에서 다시 하나씩 고르지 않습니다. 현재 화면의 임시값을 확정으로 기록하지 않습니다.</li></ul></details></section>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const states={
+ empty:{label:'입력 전',icon:'○',title:'검토할 내용을 알려주세요.',description:'목표와 자료가 준비되면 검토를 시작합니다. 아직 결과는 없습니다.',steps:['관측 · 목표와 자료 입력 대기','판단 · 입력이 준비되기 전에는 도구를 호출하지 않음'],rows:[],next:'목표를 적고 예시 실행을 눌러 진행 상태를 확인하세요.',action:'검토 목표로 이동',target:'input'},
+ running:{label:'진행 중',icon:'…',title:'자료에서 근거를 확인하고 있습니다.',description:'가상 예시의 현재 단계는 문서 검색입니다. 결과가 검증되기 전에는 완료로 표시하지 않습니다.',steps:['관측 · 판단에 필요한 근거가 부족함','선택 · 문서 검색으로 관련 출처 확인','검증 · 반환 형식과 출처 확인 대기'],rows:[],next:'실제 서비스에서는 관측된 단계만 갱신합니다. 여기서는 완료 예시를 직접 열어볼 수 있습니다.',action:'완료 예시 보기',target:'completed'},
+ completed:{label:'완료',icon:'✓',title:'요청한 범위의 검토를 마쳤습니다.',description:'이 가상 사례에서는 필요한 출처와 결과 형식을 확인했습니다. 확인한 범위의 결과와 근거를 함께 보여줍니다.',steps:['관측 · 필요한 근거가 모두 확보됨','검증 · 출처·형식·완료 조건 확인','종료 · 추가 도구 호출 없이 결과 표시'],rows:[['기본 조건','근거 확인','안내문 2쪽 · 예시'],['추가 증빙','근거 확인','추가 자료 1쪽 · 예시']],evidence:'가상 근거: 기본 조건과 추가 증빙을 각각 확인한 상태의 표시 예시입니다. 실제 문서를 분석한 결과가 아닙니다.',next:'결과별 근거를 확인하거나 새로운 검토를 준비하세요.',action:'새 검토 준비',target:'empty'},
+ hold:{label:'보류',icon:'!',title:'일부 항목은 자료가 더 필요합니다.',description:'확인된 결과는 유지했습니다. 없는 자료를 추정해 결론을 내리지 않고, 부족한 범위와 필요한 다음 자료를 표시합니다.',steps:['관측 · 기본 조건은 확인, 추가 증빙은 없음','선택 · 누락 자료를 추측하지 않고 추가 입력 요청','판단 · 확인한 결과를 유지한 채 보류'],rows:[['기본 조건','근거 확인','안내문 2쪽 · 예시'],['추가 증빙','자료 부족','미제공 · 확인 불가']],evidence:'가상 근거: 기본 조건은 안내문에서 확인했지만 추가 증빙은 제공되지 않았습니다. 보류 항목을 0 또는 통과로 표시하지 않습니다.',next:'추가 증빙을 제공하면 남은 항목을 다시 확인할 수 있습니다.',action:'자료 보완 후 진행 예시',target:'running'},
+ failed:{label:'실패',icon:'×',title:'자료 조회를 완료하지 못했습니다.',description:'가상 사례의 문서 검색 연결이 실패했습니다. 검증된 결과가 없으며 이전 성공 결과를 이번 결과로 보여주지 않습니다.',steps:['관측 · 검색 도구가 연결 오류를 반환함','검증 · 유효한 출처·결과를 확보하지 못함','판단 · 실패 이유를 알리고 재시도 제공'],rows:[],next:'연결 상태를 확인한 뒤 다시 시도하세요. 여기서는 재시도 상태만 확인합니다.',action:'재시도 예시',target:'running'}
+};
+let current='hold';
+function render(key){current=key;const s=states[key];$('result').dataset.state=key;$('status-icon').textContent=s.icon;$('status-label').textContent=s.label+' · 예시';$('state-title').textContent=s.title;$('state-description').textContent=s.description;
+ document.querySelectorAll('.state-choice').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.state===key)));
+ $('steps').replaceChildren(...s.steps.map(text=>{const li=document.createElement('li');li.textContent=text;return li;}));
+ $('rows').replaceChildren(...s.rows.map(cells=>{const tr=document.createElement('tr');cells.forEach(text=>{const td=document.createElement('td');td.textContent=text;tr.append(td);});return tr;}));
+ $('results-wrap').hidden=s.rows.length===0;$('evidence').hidden=!s.evidence;$('evidence').open=false;$('evidence-text').textContent=s.evidence||'';$('next-description').textContent=s.next;$('next').textContent=s.action;$('start').disabled=key==='running';$('start').textContent=key==='running'?'진행 중':'예시 실행';
+}
+document.querySelectorAll('.state-choice').forEach(b=>b.addEventListener('click',()=>render(b.dataset.state)));
+$('request-form').addEventListener('submit',event=>{event.preventDefault();const invalid=!$('goal').value.trim();$('goal-error').hidden=!invalid;$('goal').setAttribute('aria-invalid',String(invalid));if(invalid){$('goal').focus();return;}render('running');});
+$('goal').addEventListener('input',()=>{$('goal-error').hidden=true;$('goal').removeAttribute('aria-invalid');});
+$('reset').addEventListener('click',()=>{$('goal').value='';$('goal-error').hidden=true;$('goal').removeAttribute('aria-invalid');render('empty');$('goal').focus();});
+$('next').addEventListener('click',()=>{const target=states[current].target;if(target==='input'){$('goal').focus();}else{render(target);}});
+render('hold');
+</script></body></html>

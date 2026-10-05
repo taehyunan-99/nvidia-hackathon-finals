@@ -1,0 +1,999 @@
+{
+  "existing": {
+    "label": "기존 근거로 완료",
+    "run": {
+      "schema_version": "research-v1",
+      "run_id": "mock-5a6fce832d96",
+      "mode": "mock",
+      "model_id": null,
+      "http_requests": 0,
+      "input_hash": "5a6fce832d9604396de7cd43970e897ea330af9082acb0bd226a80a6271e13ee",
+      "input": {
+        "goal": "샘플 서비스의 로컬 실행 지원 여부",
+        "case": "existing",
+        "limits": {
+          "max_steps": 6,
+          "max_attempts_per_tool": 2
+        }
+      },
+      "status": "completed",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "decision",
+          "label": "다음 행동 선택",
+          "status": "running",
+          "reason": "추가 조사 전에 이미 확보된 근거를 확인합니다.",
+          "tool": "check_existing",
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 2,
+          "kind": "tool",
+          "label": "check_existing",
+          "status": "running",
+          "reason": "로컬 합성 도구 호출을 시작합니다.",
+          "tool": "check_existing",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 3,
+          "kind": "tool",
+          "label": "check_existing",
+          "status": "completed",
+          "reason": "도구 응답 수신; 결론 확정은 검증 후 가능합니다.",
+          "tool": "check_existing",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": [
+            "sample-a",
+            "sample-b"
+          ]
+        },
+        {
+          "seq": 4,
+          "kind": "validation",
+          "label": "근거 검증",
+          "status": "completed",
+          "reason": "두 출처의 주제와 값이 일치합니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "sample-a",
+            "sample-b"
+          ]
+        },
+        {
+          "seq": 5,
+          "kind": "decision",
+          "label": "다음 행동 선택",
+          "status": "running",
+          "reason": "서로 다른 두 근거가 일치하고 검증을 통과했습니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 6,
+          "kind": "result",
+          "label": "실행 결과",
+          "status": "completed",
+          "reason": "근거를 확인하고 다음 입력을 검토하세요.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "sample-a",
+            "sample-b"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "sample-a",
+          "source": "fixture://sample-a",
+          "topic": "샘플 서비스의 로컬 실행 지원 여부",
+          "supported": true,
+          "quote": "로컬 실행 지원"
+        },
+        {
+          "id": "sample-b",
+          "source": "fixture://sample-b",
+          "topic": "샘플 서비스의 로컬 실행 지원 여부",
+          "supported": true,
+          "quote": "로컬 실행 지원"
+        }
+      ],
+      "artifact": {
+        "summary": "샘플 서비스의 로컬 실행 지원 여부: 지원",
+        "evidence_ids": [
+          "sample-a",
+          "sample-b"
+        ]
+      },
+      "limitations": [
+        "합성 자료·규칙 기반 mock 판단이며 모델/API/NAT 실행 근거가 아닙니다."
+      ],
+      "next_action": "근거를 확인하고 다음 입력을 검토하세요."
+    }
+  },
+  "supplement": {
+    "label": "추가 조사 후 완료",
+    "run": {
+      "schema_version": "research-v1",
+      "run_id": "mock-fd8c34692568",
+      "mode": "mock",
+      "model_id": null,
+      "http_requests": 0,
+      "input_hash": "fd8c346925687352403b26b20d73c2b708dc95828b9df66accfd1392f7904dde",
+      "input": {
+        "goal": "샘플 서비스의 로컬 실행 지원 여부",
+        "case": "supplement",
+        "limits": {
+          "max_steps": 6,
+          "max_attempts_per_tool": 2
+        }
+      },
+      "status": "completed",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "decision",
+          "label": "다음 행동 선택",
+          "status": "running",
+          "reason": "추가 조사 전에 이미 확보된 근거를 확인합니다.",
+          "tool": "check_existing",
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 2,
+          "kind": "tool",
+          "label": "check_existing",
+          "status": "running",
+          "reason": "로컬 합성 도구 호출을 시작합니다.",
+          "tool": "check_existing",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 3,
+          "kind": "tool",
+          "label": "check_existing",
+          "status": "completed",
+          "reason": "도구 응답 수신; 결론 확정은 검증 후 가능합니다.",
+          "tool": "check_existing",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": [
+            "sample-a"
+          ]
+        },
+        {
+          "seq": 4,
+          "kind": "validation",
+          "label": "근거 검증",
+          "status": "hold",
+          "reason": "서로 다른 두 출처가 필요합니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "sample-a"
+          ]
+        },
+        {
+          "seq": 5,
+          "kind": "decision",
+          "label": "다음 행동 선택",
+          "status": "running",
+          "reason": "기존 근거가 한 건뿐이므로 추가 자료를 수집합니다.",
+          "tool": "collect_more",
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 6,
+          "kind": "tool",
+          "label": "collect_more",
+          "status": "running",
+          "reason": "로컬 합성 도구 호출을 시작합니다.",
+          "tool": "collect_more",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 7,
+          "kind": "tool",
+          "label": "collect_more",
+          "status": "completed",
+          "reason": "도구 응답 수신; 결론 확정은 검증 후 가능합니다.",
+          "tool": "collect_more",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": [
+            "sample-a",
+            "sample-b"
+          ]
+        },
+        {
+          "seq": 8,
+          "kind": "validation",
+          "label": "근거 검증",
+          "status": "completed",
+          "reason": "두 출처의 주제와 값이 일치합니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "sample-a",
+            "sample-b"
+          ]
+        },
+        {
+          "seq": 9,
+          "kind": "decision",
+          "label": "다음 행동 선택",
+          "status": "running",
+          "reason": "서로 다른 두 근거가 일치하고 검증을 통과했습니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 10,
+          "kind": "result",
+          "label": "실행 결과",
+          "status": "completed",
+          "reason": "근거를 확인하고 다음 입력을 검토하세요.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "sample-a",
+            "sample-b"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "sample-a",
+          "source": "fixture://sample-a",
+          "topic": "샘플 서비스의 로컬 실행 지원 여부",
+          "supported": true,
+          "quote": "로컬 실행 지원"
+        },
+        {
+          "id": "sample-b",
+          "source": "fixture://sample-b",
+          "topic": "샘플 서비스의 로컬 실행 지원 여부",
+          "supported": true,
+          "quote": "로컬 실행 지원"
+        }
+      ],
+      "artifact": {
+        "summary": "샘플 서비스의 로컬 실행 지원 여부: 지원",
+        "evidence_ids": [
+          "sample-a",
+          "sample-b"
+        ]
+      },
+      "limitations": [
+        "합성 자료·규칙 기반 mock 판단이며 모델/API/NAT 실행 근거가 아닙니다."
+      ],
+      "next_action": "근거를 확인하고 다음 입력을 검토하세요."
+    }
+  },
+  "hold": {
+    "label": "자료 부족으로 보류",
+    "run": {
+      "schema_version": "research-v1",
+      "run_id": "mock-7e8118992741",
+      "mode": "mock",
+      "model_id": null,
+      "http_requests": 0,
+      "input_hash": "7e811899274123b09415000bd1bf17083554423c01f7648fc1965efe688a2158",
+      "input": {
+        "goal": "샘플 서비스의 로컬 실행 지원 여부",
+        "case": "hold",
+        "limits": {
+          "max_steps": 6,
+          "max_attempts_per_tool": 2
+        }
+      },
+      "status": "partial",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "decision",
+          "label": "다음 행동 선택",
+          "status": "running",
+          "reason": "추가 조사 전에 이미 확보된 근거를 확인합니다.",
+          "tool": "check_existing",
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 2,
+          "kind": "tool",
+          "label": "check_existing",
+          "status": "running",
+          "reason": "로컬 합성 도구 호출을 시작합니다.",
+          "tool": "check_existing",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 3,
+          "kind": "tool",
+          "label": "check_existing",
+          "status": "completed",
+          "reason": "도구 응답 수신; 결론 확정은 검증 후 가능합니다.",
+          "tool": "check_existing",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": [
+            "sample-a"
+          ]
+        },
+        {
+          "seq": 4,
+          "kind": "validation",
+          "label": "근거 검증",
+          "status": "hold",
+          "reason": "서로 다른 두 출처가 필요합니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "sample-a"
+          ]
+        },
+        {
+          "seq": 5,
+          "kind": "decision",
+          "label": "다음 행동 선택",
+          "status": "running",
+          "reason": "기존 근거가 한 건뿐이므로 추가 자료를 수집합니다.",
+          "tool": "collect_more",
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 6,
+          "kind": "tool",
+          "label": "collect_more",
+          "status": "running",
+          "reason": "로컬 합성 도구 호출을 시작합니다.",
+          "tool": "collect_more",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 7,
+          "kind": "tool",
+          "label": "collect_more",
+          "status": "completed",
+          "reason": "도구 응답 수신; 결론 확정은 검증 후 가능합니다.",
+          "tool": "collect_more",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": [
+            "sample-a"
+          ]
+        },
+        {
+          "seq": 8,
+          "kind": "validation",
+          "label": "근거 검증",
+          "status": "hold",
+          "reason": "서로 다른 두 출처가 필요합니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "sample-a"
+          ]
+        },
+        {
+          "seq": 9,
+          "kind": "decision",
+          "label": "다음 행동 선택",
+          "status": "running",
+          "reason": "추가 조사 후에도 근거가 부족해 결론을 보류합니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 10,
+          "kind": "result",
+          "label": "실행 결과",
+          "status": "hold",
+          "reason": "누락되거나 충돌하는 자료를 확인한 뒤 다시 실행하세요.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "sample-a"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "sample-a",
+          "source": "fixture://sample-a",
+          "topic": "샘플 서비스의 로컬 실행 지원 여부",
+          "supported": true,
+          "quote": "로컬 실행 지원"
+        }
+      ],
+      "artifact": null,
+      "limitations": [
+        "합성 자료·규칙 기반 mock 판단이며 모델/API/NAT 실행 근거가 아닙니다."
+      ],
+      "next_action": "누락되거나 충돌하는 자료를 확인한 뒤 다시 실행하세요."
+    }
+  },
+  "failure": {
+    "label": "도구 연결 실패",
+    "run": {
+      "schema_version": "research-v1",
+      "run_id": "mock-2ebb02a03f33",
+      "mode": "mock",
+      "model_id": null,
+      "http_requests": 0,
+      "input_hash": "2ebb02a03f339095b8e272c53cb7534b1cb0daf756d9ed159b3780297bd6774a",
+      "input": {
+        "goal": "샘플 서비스의 로컬 실행 지원 여부",
+        "case": "failure",
+        "limits": {
+          "max_steps": 6,
+          "max_attempts_per_tool": 2
+        }
+      },
+      "status": "failed",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "decision",
+          "label": "다음 행동 선택",
+          "status": "running",
+          "reason": "추가 조사 전에 이미 확보된 근거를 확인합니다.",
+          "tool": "check_existing",
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 2,
+          "kind": "tool",
+          "label": "check_existing",
+          "status": "running",
+          "reason": "로컬 합성 도구 호출을 시작합니다.",
+          "tool": "check_existing",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 3,
+          "kind": "tool",
+          "label": "check_existing",
+          "status": "completed",
+          "reason": "도구 응답 수신; 결론 확정은 검증 후 가능합니다.",
+          "tool": "check_existing",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": [
+            "sample-a"
+          ]
+        },
+        {
+          "seq": 4,
+          "kind": "validation",
+          "label": "근거 검증",
+          "status": "hold",
+          "reason": "서로 다른 두 출처가 필요합니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "sample-a"
+          ]
+        },
+        {
+          "seq": 5,
+          "kind": "decision",
+          "label": "다음 행동 선택",
+          "status": "running",
+          "reason": "기존 근거가 한 건뿐이므로 추가 자료를 수집합니다.",
+          "tool": "collect_more",
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 6,
+          "kind": "tool",
+          "label": "collect_more",
+          "status": "running",
+          "reason": "로컬 합성 도구 호출을 시작합니다.",
+          "tool": "collect_more",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 7,
+          "kind": "tool",
+          "label": "collect_more",
+          "status": "failed",
+          "reason": "도구가 합성 timeout을 반환했습니다.",
+          "tool": "collect_more",
+          "attempt": 1,
+          "error_code": "timeout",
+          "evidence_ids": []
+        },
+        {
+          "seq": 8,
+          "kind": "decision",
+          "label": "다음 행동 선택",
+          "status": "running",
+          "reason": "일시 오류가 있어 허용된 한 번의 재시도를 선택합니다.",
+          "tool": "collect_more",
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 9,
+          "kind": "tool",
+          "label": "collect_more",
+          "status": "running",
+          "reason": "로컬 합성 도구 호출을 시작합니다.",
+          "tool": "collect_more",
+          "attempt": 2,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 10,
+          "kind": "tool",
+          "label": "collect_more",
+          "status": "failed",
+          "reason": "도구가 합성 timeout을 반환했습니다.",
+          "tool": "collect_more",
+          "attempt": 2,
+          "error_code": "timeout",
+          "evidence_ids": []
+        },
+        {
+          "seq": 11,
+          "kind": "decision",
+          "label": "다음 행동 선택",
+          "status": "running",
+          "reason": "재시도 상한에 도달해 실행을 종료합니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 12,
+          "kind": "result",
+          "label": "실행 결과",
+          "status": "failed",
+          "reason": "도구 연결 상태를 확인한 뒤 다시 실행하세요.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "sample-a"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "sample-a",
+          "source": "fixture://sample-a",
+          "topic": "샘플 서비스의 로컬 실행 지원 여부",
+          "supported": true,
+          "quote": "로컬 실행 지원"
+        }
+      ],
+      "artifact": null,
+      "limitations": [
+        "합성 자료·규칙 기반 mock 판단이며 모델/API/NAT 실행 근거가 아닙니다."
+      ],
+      "next_action": "도구 연결 상태를 확인한 뒤 다시 실행하세요."
+    }
+  },
+  "retry": {
+    "label": "일시 오류 후 재시도",
+    "run": {
+      "schema_version": "research-v1",
+      "run_id": "mock-e9369cf8d628",
+      "mode": "mock",
+      "model_id": null,
+      "http_requests": 0,
+      "input_hash": "e9369cf8d628f0b05866d980614cfa8352ebf79ac556aa1f604ebea179790108",
+      "input": {
+        "goal": "샘플 서비스의 로컬 실행 지원 여부",
+        "case": "retry",
+        "limits": {
+          "max_steps": 6,
+          "max_attempts_per_tool": 2
+        }
+      },
+      "status": "completed",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "decision",
+          "label": "다음 행동 선택",
+          "status": "running",
+          "reason": "추가 조사 전에 이미 확보된 근거를 확인합니다.",
+          "tool": "check_existing",
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 2,
+          "kind": "tool",
+          "label": "check_existing",
+          "status": "running",
+          "reason": "로컬 합성 도구 호출을 시작합니다.",
+          "tool": "check_existing",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 3,
+          "kind": "tool",
+          "label": "check_existing",
+          "status": "completed",
+          "reason": "도구 응답 수신; 결론 확정은 검증 후 가능합니다.",
+          "tool": "check_existing",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": [
+            "sample-a"
+          ]
+        },
+        {
+          "seq": 4,
+          "kind": "validation",
+          "label": "근거 검증",
+          "status": "hold",
+          "reason": "서로 다른 두 출처가 필요합니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "sample-a"
+          ]
+        },
+        {
+          "seq": 5,
+          "kind": "decision",
+          "label": "다음 행동 선택",
+          "status": "running",
+          "reason": "기존 근거가 한 건뿐이므로 추가 자료를 수집합니다.",
+          "tool": "collect_more",
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 6,
+          "kind": "tool",
+          "label": "collect_more",
+          "status": "running",
+          "reason": "로컬 합성 도구 호출을 시작합니다.",
+          "tool": "collect_more",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 7,
+          "kind": "tool",
+          "label": "collect_more",
+          "status": "failed",
+          "reason": "도구가 합성 timeout을 반환했습니다.",
+          "tool": "collect_more",
+          "attempt": 1,
+          "error_code": "timeout",
+          "evidence_ids": []
+        },
+        {
+          "seq": 8,
+          "kind": "decision",
+          "label": "다음 행동 선택",
+          "status": "running",
+          "reason": "일시 오류가 있어 허용된 한 번의 재시도를 선택합니다.",
+          "tool": "collect_more",
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 9,
+          "kind": "tool",
+          "label": "collect_more",
+          "status": "running",
+          "reason": "로컬 합성 도구 호출을 시작합니다.",
+          "tool": "collect_more",
+          "attempt": 2,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 10,
+          "kind": "tool",
+          "label": "collect_more",
+          "status": "completed",
+          "reason": "도구 응답 수신; 결론 확정은 검증 후 가능합니다.",
+          "tool": "collect_more",
+          "attempt": 2,
+          "error_code": null,
+          "evidence_ids": [
+            "sample-a",
+            "sample-b"
+          ]
+        },
+        {
+          "seq": 11,
+          "kind": "validation",
+          "label": "근거 검증",
+          "status": "completed",
+          "reason": "두 출처의 주제와 값이 일치합니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "sample-a",
+            "sample-b"
+          ]
+        },
+        {
+          "seq": 12,
+          "kind": "decision",
+          "label": "다음 행동 선택",
+          "status": "running",
+          "reason": "서로 다른 두 근거가 일치하고 검증을 통과했습니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 13,
+          "kind": "result",
+          "label": "실행 결과",
+          "status": "completed",
+          "reason": "근거를 확인하고 다음 입력을 검토하세요.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "sample-a",
+            "sample-b"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "sample-a",
+          "source": "fixture://sample-a",
+          "topic": "샘플 서비스의 로컬 실행 지원 여부",
+          "supported": true,
+          "quote": "로컬 실행 지원"
+        },
+        {
+          "id": "sample-b",
+          "source": "fixture://sample-b",
+          "topic": "샘플 서비스의 로컬 실행 지원 여부",
+          "supported": true,
+          "quote": "로컬 실행 지원"
+        }
+      ],
+      "artifact": {
+        "summary": "샘플 서비스의 로컬 실행 지원 여부: 지원",
+        "evidence_ids": [
+          "sample-a",
+          "sample-b"
+        ]
+      },
+      "limitations": [
+        "합성 자료·규칙 기반 mock 판단이며 모델/API/NAT 실행 근거가 아닙니다."
+      ],
+      "next_action": "근거를 확인하고 다음 입력을 검토하세요."
+    }
+  },
+  "conflict": {
+    "label": "근거 충돌로 보류",
+    "run": {
+      "schema_version": "research-v1",
+      "run_id": "mock-3937b79a0ec3",
+      "mode": "mock",
+      "model_id": null,
+      "http_requests": 0,
+      "input_hash": "3937b79a0ec3fd5aed4f7af70f51bc336e992164c69e8c933ff6d0f3fe678974",
+      "input": {
+        "goal": "샘플 서비스의 로컬 실행 지원 여부",
+        "case": "conflict",
+        "limits": {
+          "max_steps": 6,
+          "max_attempts_per_tool": 2
+        }
+      },
+      "status": "partial",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "decision",
+          "label": "다음 행동 선택",
+          "status": "running",
+          "reason": "추가 조사 전에 이미 확보된 근거를 확인합니다.",
+          "tool": "check_existing",
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 2,
+          "kind": "tool",
+          "label": "check_existing",
+          "status": "running",
+          "reason": "로컬 합성 도구 호출을 시작합니다.",
+          "tool": "check_existing",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 3,
+          "kind": "tool",
+          "label": "check_existing",
+          "status": "completed",
+          "reason": "도구 응답 수신; 결론 확정은 검증 후 가능합니다.",
+          "tool": "check_existing",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": [
+            "sample-a"
+          ]
+        },
+        {
+          "seq": 4,
+          "kind": "validation",
+          "label": "근거 검증",
+          "status": "hold",
+          "reason": "서로 다른 두 출처가 필요합니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "sample-a"
+          ]
+        },
+        {
+          "seq": 5,
+          "kind": "decision",
+          "label": "다음 행동 선택",
+          "status": "running",
+          "reason": "기존 근거가 한 건뿐이므로 추가 자료를 수집합니다.",
+          "tool": "collect_more",
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 6,
+          "kind": "tool",
+          "label": "collect_more",
+          "status": "running",
+          "reason": "로컬 합성 도구 호출을 시작합니다.",
+          "tool": "collect_more",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 7,
+          "kind": "tool",
+          "label": "collect_more",
+          "status": "completed",
+          "reason": "도구 응답 수신; 결론 확정은 검증 후 가능합니다.",
+          "tool": "collect_more",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": [
+            "sample-a",
+            "sample-b"
+          ]
+        },
+        {
+          "seq": 8,
+          "kind": "validation",
+          "label": "근거 검증",
+          "status": "hold",
+          "reason": "출처의 값이 서로 다릅니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "sample-a",
+            "sample-b"
+          ]
+        },
+        {
+          "seq": 9,
+          "kind": "decision",
+          "label": "다음 행동 선택",
+          "status": "running",
+          "reason": "근거가 충돌하거나 형식이 잘못되어 결론을 보류합니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 10,
+          "kind": "result",
+          "label": "실행 결과",
+          "status": "hold",
+          "reason": "누락되거나 충돌하는 자료를 확인한 뒤 다시 실행하세요.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "sample-a",
+            "sample-b"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "sample-a",
+          "source": "fixture://sample-a",
+          "topic": "샘플 서비스의 로컬 실행 지원 여부",
+          "supported": true,
+          "quote": "로컬 실행 지원"
+        },
+        {
+          "id": "sample-b",
+          "source": "fixture://sample-b",
+          "topic": "샘플 서비스의 로컬 실행 지원 여부",
+          "supported": false,
+          "quote": "로컬 실행 미지원"
+        }
+      ],
+      "artifact": null,
+      "limitations": [
+        "합성 자료·규칙 기반 mock 판단이며 모델/API/NAT 실행 근거가 아닙니다."
+      ],
+      "next_action": "누락되거나 충돌하는 자료를 확인한 뒤 다시 실행하세요."
+    }
+  }
+}

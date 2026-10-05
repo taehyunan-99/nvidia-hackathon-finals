@@ -1,0 +1,101 @@
+/* Confirmed semantic tokens: design-decisions.json. Generic legacy tokens and dark palette remain provisional. */
+:root {
+  /* User-confirmed state presentation on light desktop surfaces. */
+  --state-empty-color: #555555;
+  --state-running-color: #426700;
+  --state-completed-color: #426700;
+  --state-hold-color: #8a5800;
+  --state-failed-color: #b42318;
+
+  --accent: #76b900; --accent-ink: #426700; --button-ink: #111111;
+  --canvas: #f3f4f1; --panel: #ffffff; --ink: #111111; --muted: #555555;
+  --line: #d4d7cf; --gap: 24px; --panel-padding: 24px; --radius: 0px;
+  --table-header-line-height: 1.4; /* User-confirmed column header line-height ratio. */
+  --table-header-font-weight: 700; /* User-confirmed column header weight. */
+  --table-header-font-size: 14px; /* User-confirmed column header text size. */
+  --table-body-line-height: 1.4; /* User-confirmed work-table body line-height ratio. */
+  --table-body-font-weight: 400; /* User-confirmed work-table body weight. */
+  --table-body-font-size: 14px; /* User-confirmed work-table body text size. */
+  --table-cell-padding-inline: 16px; /* User-confirmed work-table horizontal cell padding. */
+  --table-cell-padding-block: 16px; /* User-confirmed work-table vertical cell padding. */
+  --technical-white-space: normal;
+  --technical-overflow-wrap: anywhere; /* User-confirmed full technical values without ellipsis. */
+  --page-background: #ffffff; /* User-confirmed light-theme page canvas. */
+  --input-placeholder-color: #757575; /* User-confirmed placeholder; render at opacity 1. */
+  --input-color: #414347; /* User-confirmed entered input text on light surfaces. */
+  --input-background: #ffffff; /* User-confirmed default input background on light surfaces. */
+  --input-label-line-height: 20px; /* User-confirmed input label line height. */
+  --input-label-color: #555555; /* User-confirmed label color on light surfaces. */
+  --input-label-font-weight: 600; /* User-confirmed input label weight. */
+  --input-label-font-size: 13px; /* User-confirmed input label size. */
+  --input-label-gap: 8px; /* User-confirmed label-to-field gap. */
+  --input-padding-inline: 12px; /* User-confirmed padding on each side. */
+  --button-primary-disabled-color: #999999; /* User-confirmed disabled primary text color. */
+  --button-primary-disabled-background: #cccccc; /* User-confirmed disabled primary background on light surfaces. */
+  --button-primary-focus-color: #426700; /* User-confirmed primary focus color on light surfaces. */
+  --button-primary-focus-offset: 2px; /* User-confirmed primary focus outline offset. */
+  --button-primary-focus-width: 2px; /* User-confirmed primary keyboard focus outline. */
+  --button-primary-transition-duration: 120ms; /* User-confirmed background transition duration. */
+  --button-primary-hover-background: #91d514; /* User-confirmed primary hover background. */
+  --button-primary-background: #76b900;
+  --button-primary-color: #000000;
+  --button-primary-border-width: 0px;
+  --button-group-gap: 12px; /* User-confirmed horizontal gap between buttons. */
+  --card-actions-gap: 20px; /* Small card: input area to actions. */
+  --form-submit-gap: 32px; /* Complex form: preceding area to submit section. */
+  --form-submit-border-width: 1px;
+  --form-submit-padding-top: 24px;
+  --card-description-content-gap: 20px; /* Simple card: description to input area. */
+  --form-description-content-gap: 32px; /* Complex form: introduction to form start. */
+  --card-description-word-break: keep-all; /* User-confirmed Korean description wrapping. */
+  --card-description-color: #555555; /* User-confirmed light-theme description color. */
+  --card-description-line-height: 22px; /* User-confirmed card description line height. */
+  --card-description-font-weight: 400; /* User-confirmed card description weight. */
+  --card-description-font-size: 14px; /* User-confirmed card description size. */
+  --card-title-description-gap: 8px; /* User-confirmed title-to-description gap. */
+  --card-title-line-height: 26px; /* User-confirmed card title line height. */
+  --card-title-font-weight: 600; /* User-confirmed default card title weight. */
+  --card-vertical-gap: 32px; /* User-confirmed general work card vertical spacing. */
+  --card-horizontal-gap: 30px; /* User-confirmed general card horizontal spacing. */
+  --card-title-color: #000000; /* User-confirmed title color on light cards. */
+  --card-title-font-size: 18px; /* User-confirmed default card title size. */
+  --card-background: #ffffff; /* User-confirmed light-theme card background. */
+  --card-shadow: none; /* User-confirmed default card shadow. */
+  --card-border-width: 1px; /* User-confirmed default card border width. */
+  --card-border: #d4d7cf; /* User-confirmed card border on light surfaces. */
+  --card-padding: 20px; /* User-confirmed default card inner padding. */
+  --card-radius: 0px; /* User-confirmed default card corners. */
+  --input-focus-color: #426700; /* User-confirmed focus color on light surfaces. */
+  --input-focus-offset: 2px; /* User-confirmed input focus outline offset. */
+  --input-focus-width: 2px; /* User-confirmed input focus outline width. */
+  --input-border-width: 1px; /* User-confirmed default input border width. */
+  --input-border: #d4d7cf; /* User-confirmed default border on light surfaces. */
+  --input-font-weight: 400; /* User-confirmed single-line input text weight. */
+  --input-font-size: 14px; /* User-confirmed single-line input text size. */
+  --input-height: 36px; /* User-confirmed single-line input height. */
+  --input-radius: 0px; /* User-confirmed input corners. */
+  --button-radius: 0px; /* User-confirmed button corners. */
+  --button-padding-inline: 12px; /* User-confirmed padding on each side. */
+  --button-transition-easing: ease-out; /* User-confirmed primary and secondary background easing. */
+  --button-secondary-disabled-border: rgba(153,153,153,0.5); /* User-confirmed official disabled border color. */
+  --button-secondary-disabled-color: #999999; /* User-confirmed disabled secondary text. */
+  --button-secondary-disabled-background: transparent; /* User-confirmed NVIDIA-style disabled secondary background. */
+  --button-secondary-focus-color: #426700; /* User-confirmed secondary focus color on light surfaces. */
+  --button-secondary-focus-offset: 2px; /* User-confirmed secondary focus outline offset. */
+  --button-secondary-focus-width: 2px; /* User-confirmed secondary focus outline width. */
+  --button-secondary-transition-duration: 120ms; /* User-confirmed secondary background transition. */
+  --button-secondary-hover-background: #eeeeee; /* User-confirmed secondary hover background. */
+  --button-secondary-color: #111111; /* User-confirmed secondary text color. */
+  --button-secondary-background: #ffffff; /* User-confirmed secondary background on light surfaces. */
+  --button-secondary-border-width: 1px; /* User-confirmed secondary border width. */
+  --button-secondary-border: #d4d7cf; /* User-confirmed for light surfaces. */
+  --button-font-weight: 600; /* User-confirmed button label weight. */
+  --button-font-size: 14px; /* User-confirmed button label size. */
+  --button-height: 36px; /* User-confirmed default text button height. */
+  --font: "SUIT Variable", Arial, system-ui, sans-serif;
+  --body-size: 16px; --caption-size: 13px; --page-padding: 32px;
+}
+[data-theme="dark"] {
+  color-scheme: dark; --canvas: #111411; --panel: #1b1f1a;
+  --ink: #f4f5f1; --muted: #bcc3b7; --line: #46503f; --accent-ink: #a2d45b;
+}

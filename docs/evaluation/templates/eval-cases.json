@@ -1,0 +1,80 @@
+{
+  "status": "template-not-executed",
+  "cases": [
+    {
+      "id": "C01",
+      "kind": "정상 대표 입력",
+      "input": null,
+      "expected": null,
+      "validator": null,
+      "mode": null
+    },
+    {
+      "id": "C02",
+      "kind": "입력 변화로 도구 선택 변경",
+      "input": null,
+      "expected": null,
+      "validator": null,
+      "mode": null
+    },
+    {
+      "id": "C03",
+      "kind": "필수 정보 누락",
+      "input": null,
+      "expected": null,
+      "validator": null,
+      "mode": null
+    },
+    {
+      "id": "C04",
+      "kind": "잘못된 입력/불가능 제약",
+      "input": null,
+      "expected": null,
+      "validator": null,
+      "mode": null
+    },
+    {
+      "id": "C05",
+      "kind": "검색 결과 없음/출처 충돌",
+      "input": null,
+      "expected": null,
+      "validator": null,
+      "mode": null
+    },
+    {
+      "id": "C06",
+      "kind": "timeout/429",
+      "input": null,
+      "expected": null,
+      "validator": null,
+      "mode": null
+    },
+    {
+      "id": "C07",
+      "kind": "잘못된 도구 응답/출처 불일치",
+      "input": null,
+      "expected": null,
+      "validator": null,
+      "mode": null
+    },
+    {
+      "id": "C08",
+      "kind": "동일 입력 반복/중복 요청",
+      "input": null,
+      "expected": null,
+      "validator": null,
+      "mode": null
+    }
+  ],
+  "metrics": [
+    "task_success",
+    "validator_pass",
+    "agent_completed_without_fallback",
+    "http_attempts",
+    "tool_calls",
+    "duration_ms",
+    "tokens_if_available",
+    "cost_if_known"
+  ],
+  "notes": "정상/비정상 비율을 성공률 모집단으로 해석하지 않는다. 결과에 맞춰 expected를 바꾸지 않는다. 미사용 입력을 따로 보존한다."
+}
