@@ -1,0 +1,4 @@
+interface:
+  display_name: "Topic Rubric"
+  short_description: "해커톤 주제 후보의 에이전트 적합성·근거·구현 가능성을 비교"
+  default_prompt: "Use $topic-rubric to compare these hackathon topic candidates and identify the next evidence check."

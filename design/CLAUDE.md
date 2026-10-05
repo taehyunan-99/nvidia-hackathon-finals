@@ -16,7 +16,7 @@ nvidia-ui 스킬을 읽고 확정값을 보존한다. 상태 묶음까지 확정
 - 가상 수치를 실제 agent 결과로 표현하지 않는다 — 비교 화면은 mock이다.
 
 ## 5. WHERE — 의존성과 경계
-../.agents/skills/nvidia-ui/assets/tokens.css와 components.css에 의존한다. 문서는 ../docs/design/에 둔다.
+../.agents/skills/nvidia-ui/assets/의 tokens.css·components.css·agent-flow.css·agent-flow.mjs를 사용한다. 기본 데이터는 ../docs/playbooks/examples/research/fixtures.json이며 source=live는 runs/research-live.json의 저장 기록을 재생한다. 문서는 ../docs/design/에 둔다.
 
 ## 6. WHY — 배경
 NVIDIA를 참고한 독립 디자인이며 로고/공식 제품 인증이 아니다.

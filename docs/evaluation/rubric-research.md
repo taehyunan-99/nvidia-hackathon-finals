@@ -15,7 +15,7 @@
 
 ## 예선에서 얻은 반례
 
-예선 revision `52f6be29e432b1fa660e2a9b3b6b7556d04793d4`의 [분석 요약](bio3-review.md)과 로컬 `docs/topics/her2/agent-benchmark-report.md`, `agent-improvement-review.md`, `frontend/src/AgentActivity.tsx`를 참고했다. 아래는 과거 기록 해석이며 이번에 예선 모델을 재실행한 결과가 아니다.
+예선 revision `52f6be29e432b1fa660e2a9b3b6b7556d04793d4`의 [구현 근거](bio3-review.md)과 로컬 `docs/topics/her2/agent-benchmark-report.md`, `agent-improvement-review.md`, `frontend/src/AgentActivity.tsx`를 참고했다. 아래는 과거 기록 해석이며 이번에 예선 모델을 재실행한 결과가 아니다.
 
 - 서비스 규칙 포함 최종 상태 8/8과 모델의 자율 선택·새 항체 정확도는 별개였다. 따라서 agency와 correctness를 분리하고 기준선 비교를 최고 등급에 둔다.
 - 6/6 완주 개선과 신규 항체 접촉 F1=0 사례가 공존했다. reliability가 correctness의 점수를 대신할 수 없다. 캐시 재사용을 독립 표본으로 늘리지 않는다.

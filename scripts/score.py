@@ -9,6 +9,7 @@ RUBRIC_FILES = {
     'agent-v2': 'agent-rubric.json',
     'frontend-v2': 'frontend-rubric.json',
     'integration-v2': 'integration.json',
+    'topic-v1': 'topic-rubric.json',
 }
 
 def load_rubric(version):
@@ -101,6 +102,50 @@ def calculate_area(card, rubric):
             'maximum':100, 'unassessed_weight':unknown, 'below_minimum':low,
             'blocking_gates':blocking, 'area_ready':ready, 'official_score':False}
 
+def calculate_topic(card, rubric):
+    check_metadata(card)
+    for key in ('assessed_at', 'next_check'):
+        if not isinstance(card.get(key), str) or not card[key].strip():
+            raise ValueError(f'{key}: 평가 시각과 다음 확인 필요')
+    criteria = {r['id']: r for r in rubric['criteria']}
+    if set(card.get('criteria', {})) != set(criteria):
+        raise ValueError('채점 항목 누락 또는 알 수 없는 항목')
+    blocking = check_gates(card, rubric)
+    score, unknown, low = 0, 0, []
+    for key, spec in criteria.items():
+        row = card['criteria'][key]
+        if not isinstance(row, dict) or not isinstance(row.get('note'), str) or not row['note'].strip():
+            raise ValueError(f'{key}: 판정 이유 또는 다음 확인 필요')
+        rating = row['rating']
+        if rating is None:
+            unknown += spec['weight']
+            continue
+        if type(rating) is not int or not 0 <= rating <= 4:
+            raise ValueError(f'{key}: 정수 0~4 또는 null 필요')
+        level = row.get('evidence_level')
+        if level not in rubric['evidence_caps'] or rating > rubric['evidence_caps'][level]:
+            raise ValueError(f'{key}: 근거 수준을 넘는 등급')
+        if not has_evidence(row):
+            raise ValueError(f'{key}: 근거 목록 필요')
+        score += spec['weight'] * rating / 4
+        if rating < spec['minimum_rating']:
+            low.append(key)
+    failed = [k for k, r in card['gates'].items() if r['status'] == 'fail']
+    unknown_gates = [k for k, r in card['gates'].items() if r['status'] == 'unknown']
+    eligible = score >= rubric['readiness_target'] and not unknown and not low
+    if failed:
+        decision = 'exclude' if 'mission' in failed else 'revise'
+    elif unknown or unknown_gates:
+        decision = 'hold'
+    else:
+        decision = 'candidate' if eligible else 'revise'
+    return {**{k: card[k] for k in ('subject','revision','environment','assessed_at','next_check')},
+            'rubric_version':rubric['version'], 'profile':'topic', 'score':score, 'maximum':100,
+            'unassessed_weight':unknown, 'possible_range':[score, score + unknown],
+            'below_minimum':low, 'blocking_gates':blocking, 'decision':decision,
+            'provisional_candidate':eligible and not failed and unknown_gates == ['mission'],
+            'low_priority':score < rubric['low_priority_below'], 'official_score':False}
+
 def calculate_integration(card, rubric, assessments):
     validate_rubric(rubric)
     if card.get('rubric_version') != rubric['version'] or rubric.get('profile') != 'integration':
@@ -130,6 +175,8 @@ def calculate(card, rubric):
         raise ValueError('루브릭 버전 불일치')
     if rubric.get('profile') == 'integration':
         raise ValueError('통합 평가는 두 영역 채점표가 필요함')
+    if rubric.get('profile') == 'topic':
+        return calculate_topic(card, rubric)
     if rubric.get('profile'):
         return calculate_area(card, rubric)
     criteria = {r['id']: r for r in rubric['criteria']}

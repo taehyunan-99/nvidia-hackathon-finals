@@ -7,6 +7,7 @@
 
 | 지금 필요한 것 | 읽을 곳 |
 |---|---|
+| 본선에서 만들 주제를 비교한다 | [주제 선정 기준](docs/evaluation/topic-selection.md) · [선정 과정과 장단점](docs/evaluation/topic-analysis.md) |
 | 두 사람이 구현·통합·시연한다 | [2인 개발·로컬 시연 운영](docs/operations/workflow.md) |
 | 프런트와 에이전트의 데이터를 맞춘다 | [입출력 계약·schema·예시 JSON](docs/catalog/contracts.md) · [다른 조합 9개](docs/catalog/contracts/combinations.md) |
 | 도구 선택·분석 과정을 화면에 붙인다 | [재사용 컴포넌트](docs/design/agent-flow.md) · [실행 화면](design/agent-flow.html) |
@@ -35,7 +36,7 @@ python3 scripts/lookup.py --domain knowledge --function setup --kind skill
 
 - [docs/catalog](docs/catalog/README.md) — 409개 스킬의 원본 metadata, 도메인/작업별 탐색, agent·도구 카드.
 - [docs/playbooks](docs/playbooks/README.md) — 10개 미션 조합, 9개 최소 실행 안내, 하네스·예제·스킬 확보법.
-- [docs/evaluation](docs/evaluation/README.md) — 에이전트·프런트별 100점 기준, 통합 관문, 평가 양식.
+- [docs/evaluation](docs/evaluation/README.md) — 주제 선정 기준, 에이전트·프런트별 구현 평가, 통합 관문과 양식.
 - [docs/operations](docs/operations/event.md) — 행사·준비 항목, [both 동기화](docs/operations/guide-sync.md).
 - [docs/design](docs/design/README.md) — 디자인 스킬과 [UI 비교 시안](design/playground.html) 진입.
 
@@ -52,4 +53,4 @@ python3 scripts/lookup.py --domain knowledge --function setup --kind skill
 `python3 -m unittest discover -s scripts -p 'test_*.py'`는 검색·채점·모델 응답 검사·동기화 보호 동작을 검사한다.
 `python3 scripts/probe_nim.py`는 기본 dry-run이며 실제 호출은 `--live`에서만 수행한다.
 
-본선 점수 활용: [진출 요인 추가 분석](docs/evaluation/bio3-review.md) → [루브릭 채점과 다음 개선](docs/evaluation/scoring-guide.md).
+사용 순서: [주제 선정](docs/evaluation/topic-selection.md) → [조합 선택](docs/playbooks/recipes.md) → [최소 실행](docs/playbooks/README.md) → [구현 평가](docs/evaluation/README.md).

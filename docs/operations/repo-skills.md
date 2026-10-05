@@ -26,6 +26,8 @@
 
 ## 함께 쓰는 본선 스킬
 
+- [topic-rubric](../../.agents/skills/topic-rubric/SKILL.md): 구현 전 주제 후보를 topic-v1으로 평가; 구현 점수와 분리.
+
 - [agent-rubric](../../.agents/skills/agent-rubric/SKILL.md): agent-v2 내부 100점으로 판단·도구·결과·실행 제어를 평가.
 - [frontend-rubric](../../.agents/skills/frontend-rubric/SKILL.md): frontend-v2 내부 100점으로 과업·상태·회복·시각 규칙·접근성을 평가.
 - [nvidia-ui](../../.agents/skills/nvidia-ui/SKILL.md): UI 선택과 간격·정렬·상태 표현.

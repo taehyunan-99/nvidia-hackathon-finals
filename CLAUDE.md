@@ -4,7 +4,8 @@
 
 ## 가장 빠른 진입
 
-1. [미션에서 시작](docs/playbooks/README.md) 또는 `python3 scripts/lookup.py "미션 핵심어" --kind recipe`.
+<!-- prev: 미션 조합 검색부터 시작 → 2026-10-05 사용자 승인으로 주제 선정 후 조합·실행·평가 순서로 연결. -->
+1. [주제 선정 기준](docs/evaluation/topic-selection.md)으로 후보를 비교한 뒤 [미션에서 시작](docs/playbooks/README.md) 또는 `python3 scripts/lookup.py "미션 핵심어" --kind recipe`.
 2. 결과의 guide/quickstart를 읽고 [도구](docs/catalog/tools.md)·[agent 형태](docs/catalog/agent-types.md)를 선택.
 3. 스킬이 필요하면 [도메인→작업 분류](docs/catalog/skills/README.md) 또는 `lookup.py --kind skill --domain knowledge --function setup`.
 4. [스킬 확보](docs/playbooks/skill-setup.md)→최소 실행→[루브릭](docs/evaluation/README.md). 설치/metadata 확인과 live 성공을 구분.
@@ -18,7 +19,7 @@
 - [docs/AGENTS.md](docs/AGENTS.md) — 문서 지도·출처·분류 경계.
 - [docs/catalog/AGENTS.md](docs/catalog/AGENTS.md) — 모델·도구·agent·스킬 원본 인덱스와 분류.
 - [docs/playbooks/AGENTS.md](docs/playbooks/AGENTS.md) — 미션 조합·설치·최소 실행·성공 확인.
-- [docs/evaluation/AGENTS.md](docs/evaluation/AGENTS.md) — 내부 루브릭·Bio-3 근거·평가 양식.
+- [docs/evaluation/AGENTS.md](docs/evaluation/AGENTS.md) — 주제 선정·구현 평가·예선 근거·평가 양식.
 - [docs/operations/AGENTS.md](docs/operations/AGENTS.md) — 행사 조건·저장소 운영 방법.
 - [docs/design/AGENTS.md](docs/design/AGENTS.md) — 디자인 지침과 선택 기록 위치.
 - [design/AGENTS.md](design/AGENTS.md) — 조정 가능한 HTML 시안과 미리보기.

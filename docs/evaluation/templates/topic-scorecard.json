@@ -1,0 +1,90 @@
+{
+  "rubric_version": "topic-v1",
+  "subject": "",
+  "revision": "",
+  "environment": "",
+  "assessed_at": "",
+  "next_check": "",
+  "context": {
+    "mission": "",
+    "user_problem": "",
+    "artifact": "",
+    "baseline": "",
+    "adaptive_actions": "",
+    "data_and_permissions": "",
+    "verification": "",
+    "nvidia_role": "",
+    "time_and_scope": ""
+  },
+  "criteria": {
+    "problem": {
+      "rating": null,
+      "evidence_level": null,
+      "evidence": [],
+      "note": "다음 확인할 근거를 기록"
+    },
+    "agency": {
+      "rating": null,
+      "evidence_level": null,
+      "evidence": [],
+      "note": "다음 확인할 근거를 기록"
+    },
+    "access": {
+      "rating": null,
+      "evidence_level": null,
+      "evidence": [],
+      "note": "다음 확인할 근거를 기록"
+    },
+    "verify": {
+      "rating": null,
+      "evidence_level": null,
+      "evidence": [],
+      "note": "다음 확인할 근거를 기록"
+    },
+    "nvidia": {
+      "rating": null,
+      "evidence_level": null,
+      "evidence": [],
+      "note": "다음 확인할 근거를 기록"
+    },
+    "scope": {
+      "rating": null,
+      "evidence_level": null,
+      "evidence": [],
+      "note": "다음 확인할 근거를 기록"
+    },
+    "inspect": {
+      "rating": null,
+      "evidence_level": null,
+      "evidence": [],
+      "note": "다음 확인할 근거를 기록"
+    }
+  },
+  "gates": {
+    "mission": {
+      "status": "unknown",
+      "evidence": [],
+      "note": "다음 확인할 근거를 기록"
+    },
+    "access": {
+      "status": "unknown",
+      "evidence": [],
+      "note": "다음 확인할 근거를 기록"
+    },
+    "verify": {
+      "status": "unknown",
+      "evidence": [],
+      "note": "다음 확인할 근거를 기록"
+    },
+    "agency": {
+      "status": "unknown",
+      "evidence": [],
+      "note": "다음 확인할 근거를 기록"
+    },
+    "scope": {
+      "status": "unknown",
+      "evidence": [],
+      "note": "다음 확인할 근거를 기록"
+    }
+  }
+}

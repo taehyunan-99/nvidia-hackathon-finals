@@ -6,7 +6,7 @@
 ## 2. CONTENTS — 파일과 기술
 - catalog/ — 기술/스킬 원본과 탐색 뷰
 - playbooks/ — 조합·quickstart
-- evaluation/ — 루브릭·근거
+- evaluation/ — 주제 선정 기준·구현 평가·예선 근거
 - operations/ — 행사·운영
 - design/ — 디자인 문서
 
@@ -19,7 +19,7 @@
 - 공식 배점을 내부 제안으로 추정해 확정하지 않는다 — 실제 규정과 채점 목적이 다르다.
 
 ## 5. WHERE — 의존성과 경계
-catalog의 제품 근거를 playbooks가 소비하고 evaluation은 결과를 검증한다.
+evaluation의 주제 선정 기준 → catalog와 playbooks의 조합·실행 → evaluation의 구현 평가 순서로 사용한다. 선정과 구현 평가의 점수·목적은 구분한다.
 
 ## 6. WHY — 배경
 당일 7시간이므로 모든 문서를 읽지 않고 필요한 경로만 따라가는 구조를 사용한다.
