@@ -61,7 +61,7 @@ Schema 검사는 형식만 확인한다. 서비스 검증기는 근거 ID의 존
 | [nat-agent-configuration](https://github.com/NVIDIA/NeMo-Agent-Toolkit/blob/c7e1162a1c7ff18bbd797e090a56cad97c281c92/skills/nat-agent-configuration/SKILL.md) | 관측에 따른 선택 필요성, 도구 schema, 모델 지원 정보 | agent 설정·선택 이유; 작은 요청에서 실제 선택/종료 |
 | [nat-tools-and-functions](https://github.com/NVIDIA/NeMo-Agent-Toolkit/blob/c7e1162a1c7ff18bbd797e090a56cad97c281c92/skills/nat-tools-and-functions/SKILL.md) | 함수 입력/출력, 실패 분류, 버전과 등록 방식 | 등록된 함수·schema·작은 정상/실패 테스트 |
 | [nvidia-ui](../../.agents/skills/nvidia-ui/SKILL.md) | 위 서비스 계약과 fixture, 필요한 사용자 과업 | 확정 토큰/상태를 재사용한 화면·키보드/상태 확인 |
-| [agent-rubric](../../.agents/skills/agent-rubric/SKILL.md) | 구현 버전·실행 모드·입력/출력·검증 근거 | 8항목 평가·관문·미확인·다음 개선; 구현 생성기가 아님 |
+| [agent-rubric](../../.agents/skills/agent-rubric/SKILL.md) | 구현 버전·실행 모드·입력/출력·검증 근거 | agent-v2의 7항목·관문·미확인·다음 개선; 프런트는 frontend-rubric으로 별도 평가 |
 
 ## 다른 조합으로 확장할 때
 

@@ -1,6 +1,6 @@
 ---
 name: agent-rubric
-description: Evaluate the hackathon agent with the approved finals-v1 rubric, evidence, unknowns, and improvement priorities.
+description: Evaluate agent decisions, tool use, verified outcomes and bounded execution with agent-v2; exclude frontend appearance and presentation scoring.
 ---
 
-Read the [canonical agent-rubric skill](../../../.agents/skills/agent-rubric/SKILL.md). Resolve its references relative to that canonical directory. Preserve the approved rubric and exclude schedule planning.
+Read the [canonical agent-rubric skill](../../../.agents/skills/agent-rubric/SKILL.md). Resolve references relative to that canonical directory. Preserve the versioned criteria, evidence boundaries and scoped evaluation.

@@ -14,7 +14,7 @@
 | 에이전트가 문제를 어떻게 해결하는가 | [공통 에이전트 흐름](docs/playbooks/agent-flow.md) |
 | 변경 후 어떤 검사를 할지 결정한다 | [CI 운영 원칙](docs/operations/ci-policy.md) |
 | 브랜치·인계·커밋·PR·가이드 작업 | [저장소 운영 스킬 10종](docs/operations/repo-skills.md) |
-| 현재 agent를 채점하고 개선한다 | [평가 진입](docs/evaluation/README.md) · `$agent-rubric` |
+| 에이전트·프런트를 채점하고 개선한다 | [평가 진입](docs/evaluation/README.md) · `$agent-rubric` · `$frontend-rubric` |
 | 미션을 받았고 조합을 골라야 한다 | [미션별 실행 안내](docs/playbooks/README.md) |
 | 어떤 agent 형태가 맞는지 판단한다 | [9개 형태 비교](docs/catalog/agent-types.md) |
 | 도구의 역할·조건·실행법을 찾는다 | [18개 도구 카드](docs/catalog/tools.md) |

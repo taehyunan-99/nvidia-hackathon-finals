@@ -1,0 +1,51 @@
+{
+  "schema_version": "team-content-v1",
+  "source": {
+    "repository": "taehyunan-99/nvidia-hackathon",
+    "revision": "52f6be29e432b1fa660e2a9b3b6b7556d04793d4",
+    "files": [
+      "frontend/src/AgentStart.tsx",
+      "frontend/src/team-page.css",
+      "frontend/src/main.tsx"
+    ],
+    "basis": "예선 로컬 소스에서 읽은 기존 프로필 정보. 현재 외부 프로필은 재조회하지 않음."
+  },
+  "team": {
+    "title": "팀원 소개",
+    "description": null,
+    "members": [
+      {
+        "id": "taehyunan-99",
+        "name": "안태현",
+        "handle": "taehyunan-99",
+        "avatar_url": "https://avatars.githubusercontent.com/u/219608216?v=4",
+        "profile_url": null,
+        "role": null,
+        "contribution": null
+      },
+      {
+        "id": "kongbeankong",
+        "name": "조수빈",
+        "handle": "kongbeankong",
+        "avatar_url": "https://avatars.githubusercontent.com/u/242176701?v=4",
+        "profile_url": null,
+        "role": null,
+        "contribution": null
+      }
+    ]
+  },
+  "github": {
+    "label": "GitHub",
+    "heading": "프로젝트 코드와 개발 기록",
+    "repository_url": null,
+    "description": null
+  },
+  "day_of_fields": [
+    "team.description",
+    "team.members[].profile_url",
+    "team.members[].role",
+    "team.members[].contribution",
+    "github.repository_url",
+    "github.description"
+  ]
+}

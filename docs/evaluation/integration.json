@@ -1,0 +1,19 @@
+{
+  "version": "integration-v2",
+  "profile": "integration",
+  "official": false,
+  "gates": [
+    "contract",
+    "live_path",
+    "failure_e2e",
+    "reproducibility",
+    "event_rules"
+  ],
+  "gate_conditions": {
+    "contract": "schema·실행/후보 ID·순번·오류·산출물이 서비스와 화면에서 일치; 이전 실행/중복/역순 이벤트 검사",
+    "live_path": "현재 코드의 실제 입력→모델 선택→실제 핵심 도구→검증→화면 결과 연결을 원본 기록과 대조",
+    "failure_e2e": "실제 경계에 오류를 주입해 제한된 복구/보류, 부분 결과 보존, UI 안내와 재시작을 확인",
+    "reproducibility": "현재 checkout에서 명령·설정·의존 버전으로 재실행 가능; mock/replay/live 구분; 비밀값은 제외",
+    "event_rules": "운영진이 제공한 현재 미션·필수 기술·제출 조건에 부합; 정보가 없으면 unknown"
+  }
+}

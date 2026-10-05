@@ -1,0 +1,75 @@
+{
+  "rubric_version": "agent-v2",
+  "subject": "",
+  "revision": "",
+  "environment": "",
+  "assessment_mode": "design",
+  "criteria": {
+    "goal": {
+      "rating": null,
+      "evidence_level": "unverified",
+      "evidence": [],
+      "note": "미검증; 필요한 관측을 기록",
+      "evidence_mode": "design"
+    },
+    "agency": {
+      "rating": null,
+      "evidence_level": "unverified",
+      "evidence": [],
+      "note": "미검증; 필요한 관측을 기록",
+      "evidence_mode": "design"
+    },
+    "correctness": {
+      "rating": null,
+      "evidence_level": "unverified",
+      "evidence": [],
+      "note": "미검증; 필요한 관측을 기록",
+      "evidence_mode": "design"
+    },
+    "reliability": {
+      "rating": null,
+      "evidence_level": "unverified",
+      "evidence": [],
+      "note": "미검증; 필요한 관측을 기록",
+      "evidence_mode": "design"
+    },
+    "efficiency": {
+      "rating": null,
+      "evidence_level": "unverified",
+      "evidence": [],
+      "note": "미검증; 필요한 관측을 기록",
+      "evidence_mode": "design"
+    },
+    "nvidia": {
+      "rating": null,
+      "evidence_level": "unverified",
+      "evidence": [],
+      "note": "미검증; 필요한 관측을 기록",
+      "evidence_mode": "design"
+    },
+    "boundaries": {
+      "rating": null,
+      "evidence_level": "unverified",
+      "evidence": [],
+      "note": "미검증; 필요한 관측을 기록",
+      "evidence_mode": "design"
+    }
+  },
+  "gates": {
+    "outcome_integrity": {
+      "status": "unknown",
+      "evidence": [],
+      "note": "미검증; 해소할 확인을 기록"
+    },
+    "bounded_execution": {
+      "status": "unknown",
+      "evidence": [],
+      "note": "미검증; 해소할 확인을 기록"
+    },
+    "action_boundary": {
+      "status": "unknown",
+      "evidence": [],
+      "note": "미검증; 해소할 확인을 기록"
+    }
+  }
+}

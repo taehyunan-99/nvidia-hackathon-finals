@@ -14,10 +14,11 @@ body{margin:0}main{max-width:1440px;margin:auto;padding:32px}.top{display:flex;j
 <header class="top"><span class="brand">AGENT WORKSPACE</span><span class="mode" id="mode">MOCK · 합성 예시 · 외부 호출 0회</span></header>
 <section class="intro"><span class="eyebrow">LOCAL REHEARSAL</span><h1>근거를 확인하고, 다음 도구를 선택합니다</h1><p class="nv-description">기존 근거의 재사용부터 추가 조사와 보류까지, 같은 화면에서 서로 다른 실행 경로를 확인합니다.</p></section>
 <section class="nv-card setup" aria-label="예시 선택">
-<div><label class="nv-label" for="scenario">관측 상황</label><select class="nv-input" id="scenario" disabled></select></div>
+<div><label class="nv-label" for="scenario">관측 상황</label><select class="nv-input" id="scenario" disabled></select><label class="nv-description" style="display:block;margin-top:12px"><input type="checkbox" id="compare"> 후보 2개 비교 · 합성 예시</label></div>
 <div><p class="nv-description" id="provenance">규칙 기반 mock 판단과 로컬 합성 도구의 실행 기록입니다. 재생 속도는 실제 분석 시간이 아닙니다.</p><div class="nv-actions"><button class="nv-button nv-primary" id="play" disabled>예시 재생</button><button class="nv-button nv-secondary" id="step" disabled>다음 단계</button><button class="nv-button nv-secondary" id="reset" disabled>처음으로</button></div></div>
 <p id="announcement" role="status" class="nv-description">예시 불러오는 중</p><p id="load-error" role="alert" hidden></p>
 </section>
+<section class="nv-card" id="activity" aria-label="도구 선택 지도" style="margin-top:32px"></section>
 <div class="nv-card-grid workspace"><section class="nv-card" id="flow" aria-label="실행 흐름"></section><aside class="nv-card" id="result" aria-label="결과와 근거"></aside></div>
 <nav class="links"><a href="playground.html">확정 컴포넌트 보기</a><a href="../docs/catalog/contracts.md">입출력 계약</a><a id="data-link" href="../docs/playbooks/examples/research/fixtures.json">예시 JSON</a></nav>
 </main><script type="module" src="agent-flow.mjs"></script></body></html>

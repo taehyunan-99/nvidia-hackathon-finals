@@ -36,6 +36,8 @@ description: Build desktop NVIDIA-inspired service UI from confirmed component t
 
 ## 구현
 
+모든 시각 요소는 의미·입력 조건·반복 규칙·상태 전환·예외·검증 방법이 있어야 한다. 기존 확정값은 design-decisions.json, 실행 지도는 activity-rules.md를 적용한다. 미션이 바뀌면 데이터와 도메인 결과를 교체하고, 데이터에 없는 후보·도구·진행 상태를 장식으로 만들어내지 않는다. 새 패턴은 이 규칙과 조건을 정의한 뒤 구현하며 사용자 미확정값을 확정으로 표시하지 않는다.
+
 기존 프레임워크를 유지하며 의미 토큰과 공통 클래스를 연결한다. `components.css`는 `.nv-ui` 내부에서만 적용된다. 확정한 상태 팔레트는 `--state-*-color`, 상태 적용은 `[data-state]`와 `.nv-status`를 사용한다. 상태 이름·아이콘·행동 계약은 `decisions["state.presentation"]`을 따른다.
 
 선택한 결과·근거는 같은 식별자를 가리켜야 한다. 관측 상태에 따라 도구 선택이 바뀌는 구조를 유지한다. 결과·형식·근거·종료 조건을 검증하기 전에는 완료로 표시하지 않는다. 실행 실패와 자료 부족에 따른 보류를 구분한다.
@@ -44,7 +46,11 @@ description: Build desktop NVIDIA-inspired service UI from confirmed component t
 
 ## 실행 과정 시각화 재사용
 
-도구 선택·재시도·검증·보류는 [agent-flow.mjs](assets/agent-flow.mjs)와 [agent-flow.css](assets/agent-flow.css)를 재사용한다. [사용법](../../../docs/design/agent-flow.md)의 서비스 계약과 fixture로 먼저 화면을 연결한다. 기존 확정 토큰을 유지하고 컴포넌트 기본 배치를 새로운 사용자 확정값으로 승격하지 않는다. 예시 재생과 실제 실행, 화면 재생 일시정지와 실행 취소를 구분한다.
+도구 선택·재시도·검증·보류는 [agent-flow.mjs](assets/agent-flow.mjs)와 [agent-flow.css](assets/agent-flow.css)를 재사용한다. [사용법](../../../docs/design/agent-flow.md)의 서비스 계약과 fixture로 먼저 화면을 연결한다. 기존 확정 토큰을 유지하고 컴포넌트 기본 배치를 새로운 사용자 확정값으로 승격하지 않는다. 예시 재생과 실제 실행, 화면 재생 일시정지와 실행 취소를 구분한다. `renderActivity`에 실제 도구 ID/표시 이름 목록을 전달하고 선택은 정적으로, 호출 중에만 바깥 방향 흐름으로, 응답은 정적 상태로 표시한다. [시각 규칙](references/activity-rules.md)에 따라 후보 ID가 링·경로·범례를 결정하며 장식용 링을 추가하지 않는다. 새 미션에서는 도구 목록·이벤트 adapter·도메인 결과 렌더러를 연결한다. 모션 시간과 중단 규칙은 사용법을 따른다.
+
+## 팀원·GitHub 재사용
+
+[팀원·GitHub 규칙](references/team-and-github.md)과 [준비 데이터](assets/team-content.json)를 사용한다. 안태현·조수빈 두 명의 기존 프로필을 기본으로 하며, 본선 역할·기여·주소는 null 상태로 보존하고 당일 확인해 채운다. 예선 작업 설명이나 저장소 주소를 자동 이월하지 않는다.
 
 ## 확인과 전달
 

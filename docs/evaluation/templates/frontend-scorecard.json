@@ -1,0 +1,75 @@
+{
+  "rubric_version": "frontend-v2",
+  "subject": "",
+  "revision": "",
+  "environment": "",
+  "assessment_mode": "design",
+  "criteria": {
+    "task_flow": {
+      "rating": null,
+      "evidence_level": "unverified",
+      "evidence": [],
+      "note": "미검증; 필요한 관측을 기록",
+      "evidence_mode": "design"
+    },
+    "state_truth": {
+      "rating": null,
+      "evidence_level": "unverified",
+      "evidence": [],
+      "note": "미검증; 필요한 관측을 기록",
+      "evidence_mode": "design"
+    },
+    "evidence_ui": {
+      "rating": null,
+      "evidence_level": "unverified",
+      "evidence": [],
+      "note": "미검증; 필요한 관측을 기록",
+      "evidence_mode": "design"
+    },
+    "recovery_ui": {
+      "rating": null,
+      "evidence_level": "unverified",
+      "evidence": [],
+      "note": "미검증; 필요한 관측을 기록",
+      "evidence_mode": "design"
+    },
+    "design": {
+      "rating": null,
+      "evidence_level": "unverified",
+      "evidence": [],
+      "note": "미검증; 필요한 관측을 기록",
+      "evidence_mode": "design"
+    },
+    "accessibility": {
+      "rating": null,
+      "evidence_level": "unverified",
+      "evidence": [],
+      "note": "미검증; 필요한 관측을 기록",
+      "evidence_mode": "design"
+    },
+    "responsiveness": {
+      "rating": null,
+      "evidence_level": "unverified",
+      "evidence": [],
+      "note": "미검증; 필요한 관측을 기록",
+      "evidence_mode": "design"
+    }
+  },
+  "gates": {
+    "truthful_state": {
+      "status": "unknown",
+      "evidence": [],
+      "note": "미검증; 해소할 확인을 기록"
+    },
+    "critical_access": {
+      "status": "unknown",
+      "evidence": [],
+      "note": "미검증; 해소할 확인을 기록"
+    },
+    "recoverable_ui": {
+      "status": "unknown",
+      "evidence": [],
+      "note": "미검증; 해소할 확인을 기록"
+    }
+  }
+}

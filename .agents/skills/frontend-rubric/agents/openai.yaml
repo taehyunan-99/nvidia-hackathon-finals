@@ -1,0 +1,4 @@
+interface:
+  display_name: "Frontend Rubric"
+  short_description: "Evidence-based frontend scoring with scoped quality gates"
+  default_prompt: "Use $frontend-rubric to assess the current frontend and identify evidence-backed improvements."

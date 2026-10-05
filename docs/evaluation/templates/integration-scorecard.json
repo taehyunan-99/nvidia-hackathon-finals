@@ -1,0 +1,38 @@
+{
+  "rubric_version": "integration-v2",
+  "subject": "",
+  "revision": "",
+  "environment": "",
+  "assessment_mode": "live",
+  "assessments": {
+    "agent": "agent-scorecard.json",
+    "frontend": "frontend-scorecard.json"
+  },
+  "gates": {
+    "contract": {
+      "status": "unknown",
+      "evidence": [],
+      "note": "미검증; 해소할 확인을 기록"
+    },
+    "live_path": {
+      "status": "unknown",
+      "evidence": [],
+      "note": "미검증; 해소할 확인을 기록"
+    },
+    "failure_e2e": {
+      "status": "unknown",
+      "evidence": [],
+      "note": "미검증; 해소할 확인을 기록"
+    },
+    "reproducibility": {
+      "status": "unknown",
+      "evidence": [],
+      "note": "미검증; 해소할 확인을 기록"
+    },
+    "event_rules": {
+      "status": "unknown",
+      "evidence": [],
+      "note": "미검증; 해소할 확인을 기록"
+    }
+  }
+}

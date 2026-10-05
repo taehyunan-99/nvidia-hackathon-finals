@@ -26,10 +26,11 @@
 
 ## 함께 쓰는 본선 스킬
 
-- [agent-rubric](../../.agents/skills/agent-rubric/SKILL.md): 승인된 내부 100점 루브릭으로 제품 agent의 판단·도구 사용·근거·완성도를 평가.
+- [agent-rubric](../../.agents/skills/agent-rubric/SKILL.md): agent-v2 내부 100점으로 판단·도구·결과·실행 제어를 평가.
+- [frontend-rubric](../../.agents/skills/frontend-rubric/SKILL.md): frontend-v2 내부 100점으로 과업·상태·회복·시각 규칙·접근성을 평가.
 - [nvidia-ui](../../.agents/skills/nvidia-ui/SKILL.md): UI 선택과 간격·정렬·상태 표현.
 
-예선의 `agent-evaluate`는 HER2 전용 20점/고정 데이터 의존성이 있어 요청한 repo 스킬 이관에서 제외했다. 본선 평가에는 agent-rubric을 사용한다.
+예선의 `agent-evaluate`는 HER2 전용 20점/고정 데이터 의존성이 있어 요청한 repo 스킬 이관에서 제외했다. 본선 평가는 agent-rubric과 frontend-rubric으로 나누며 공통 통합은 별도 관문으로 확인한다.
 
 ## 가이드 형식
 

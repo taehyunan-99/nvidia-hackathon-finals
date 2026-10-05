@@ -9,3 +9,31 @@
 .nv-ui .nv-flow-evidence{margin:var(--card-description-content-gap) 0;padding:var(--card-padding);border:var(--card-border-width) solid var(--card-border)}
 .nv-ui .nv-flow-evidence p{margin:8px 0 0}
 .nv-ui .nv-flow-limit{margin-top:var(--card-description-content-gap);border-top:1px solid var(--line);padding-top:var(--card-padding)}
+
+.nv-ui .nv-activity-map{display:block;width:100%;max-height:380px;margin:12px 0}
+.nv-ui .nv-activity-route{fill:none;stroke:var(--line);stroke-width:1.2;opacity:.55;transition:stroke .24s ease,opacity .24s ease}
+.nv-ui .nv-activity-route[data-visited="true"]{stroke:var(--track-color,var(--state-ink));opacity:.28}
+.nv-ui .nv-activity-route[data-active="true"]{stroke:var(--track-color,var(--state-ink));opacity:.6}
+.nv-ui .nv-activity-tool{fill:var(--card-background);stroke:var(--line);stroke-width:1.2;transition:stroke .24s ease,fill .24s ease}
+.nv-ui [data-active="true"]>.nv-activity-tool{stroke:var(--state-ink);fill:color-mix(in srgb,var(--state-ink) 4%,var(--card-background))}
+.nv-ui .nv-activity-icon{fill:none;stroke:var(--state-ink);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;transition:stroke .24s ease}
+.nv-ui .nv-activity-core{fill:var(--card-background);stroke:var(--line);stroke-width:1.2}
+.nv-ui .nv-activity-label,.nv-ui .nv-activity-caption,.nv-ui .nv-activity-core-title{text-anchor:middle;fill:var(--ink);font:600 14px sans-serif}
+.nv-ui .nv-activity-caption{fill:var(--muted);font-size:11px;font-weight:400}
+.nv-ui .nv-activity-core-title{font-size:13px;font-weight:700;letter-spacing:1px}
+.nv-ui .nv-activity-neural{fill:none;stroke:var(--accent-ink);stroke-width:1.4}
+.nv-ui .nv-activity-neural-dot{fill:var(--accent-ink)}
+.nv-ui .nv-activity-reason{border-top:1px solid var(--line);padding-top:16px;min-height:24px}
+.nv-ui .nv-activity-signal{fill:none;stroke:var(--track-color,var(--accent-ink));stroke-width:2.4;stroke-linecap:round;stroke-dasharray:12 100;visibility:hidden}
+.nv-ui .nv-activity-signal.is-running{visibility:visible;animation:nv-call 2.2s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes nv-call{0%{stroke-dashoffset:12;opacity:0}18%{opacity:.8}72%{opacity:.8}100%{stroke-dashoffset:-100;opacity:0}}
+
+.nv-ui .nv-activity-legend{display:flex;gap:24px;flex-wrap:wrap;margin:16px 0;color:var(--muted);font-size:12px}
+.nv-ui .nv-activity-legend-item{display:flex;align-items:center;gap:8px}
+.nv-ui .nv-activity-track-dot{width:18px;height:18px;border-radius:50%;background:var(--track-color);color:white;text-align:center;font-size:11px;line-height:18px}
+.nv-ui .nv-activity-candidate-ring{fill:none;stroke:var(--track-color);stroke-width:1.3;opacity:.13;transition:opacity .24s ease}
+.nv-ui .nv-activity-candidate-ring[data-visited="true"]{opacity:.45}
+.nv-ui .nv-activity-candidate-ring[data-active="true"]{opacity:.9}
+.nv-ui .nv-activity-candidate-ring[data-state="failed"]{stroke-dasharray:4 4}
+
+@media(prefers-reduced-motion:reduce){.nv-ui .nv-activity-signal.is-running{animation:none;visibility:hidden}.nv-ui .nv-activity-map *{transition:none}}

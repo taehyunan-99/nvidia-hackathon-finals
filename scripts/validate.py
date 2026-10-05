@@ -20,8 +20,10 @@ for p in files('*.md'):
         if target.startswith(('http:','https:','#','mailto:')):continue
         path=unquote(target.strip('<>').split('#')[0])
         if path and not (p.parent/path).exists():errors.append(f'{p.relative_to(R)}: {target}')
-rubric=json.loads((R/'docs/evaluation/rubric.json').read_text())
-if sum(r['weight'] for r in rubric['criteria'])!=100:errors.append('weights must sum to 100')
+from score import RUBRIC_FILES, load_rubric, validate_rubric
+for version in RUBRIC_FILES:
+    try:validate_rubric(load_rubric(version))
+    except (ValueError, KeyError, TypeError) as exc:errors.append(f'{version}: {exc}')
 index=json.loads((R/'docs/catalog/skills-index.json').read_text());skills=index['skills']
 folders={s['folder']for s in skills};ids={s['id']for s in skills}
 if len(ids)!=len(skills):errors.append('duplicate skill IDs')

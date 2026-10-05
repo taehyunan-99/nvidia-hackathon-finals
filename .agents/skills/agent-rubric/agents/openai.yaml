@@ -1,4 +1,4 @@
 interface:
   display_name: "Agent Rubric"
-  short_description: "Evidence-based hackathon agent scoring and improvement review"
+  short_description: "Evidence-based agent scoring with scoped quality gates"
   default_prompt: "Use $agent-rubric to assess the current agent and identify evidence-backed improvements."

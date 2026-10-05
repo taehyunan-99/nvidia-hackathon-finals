@@ -1,21 +1,15 @@
-# 에이전트 평가 진입
+# 에이전트·프런트 평가
 
-| 목적 | 먼저 읽을 곳 |
-|---|---|
-| 어떤 흐름을 평가하는가 | [목표→도구 선택→검증→해결](../playbooks/agent-flow.md) |
-| 확정한 내부 항목·가중치 | [루브릭](rubric.md), [숫자 원본](rubric.json) |
-| 근거를 어떻게 채점하는가 | [채점 방법](scoring-guide.md) |
-| 에이전트에게 평가 요청 | [agent-rubric 스킬](../../.agents/skills/agent-rubric/SKILL.md) |
-| 예선 프로젝트의 강점·한계 | [Bio-3 분석](bio3-review.md) |
+| 대상 | 스킬 | 기준 / 양식 |
+|---|---|---|
+| 관측 기반 판단·실제 도구·결과 | [$agent-rubric](../../.agents/skills/agent-rubric/SKILL.md) | [agent-v2](agent-rubric.md) · [채점표](templates/agent-scorecard.json) |
+| 사용자 과업·상태·시각 규칙 | [$frontend-rubric](../../.agents/skills/frontend-rubric/SKILL.md) | [frontend-v2](frontend-rubric.md) · [채점표](templates/frontend-scorecard.json) |
+| 두 영역의 연결·전체 준비 여부 | 두 스킬에서 통합 평가를 명시 요청한 경우 | [통합 관문](integration.md) · [채점표](templates/integration-scorecard.json) |
 
-`$agent-rubric 현재 프로젝트를 근거 기준으로 평가해줘`로 요청한다. 배점은 유지하고 결과 근거·미검증·개선 우선순위를 보고한다. 공식 심사 점수와 구분하며 작업 스케줄은 포함하지 않는다.
+각 영역은 독립 100점이며 합산·평균하지 않는다. 공통 통합은 점수 없이 pass/fail/unknown으로만 확인한다. 발표 점수는 두 새 기준과 통합에서 제거했다. 역할별 평가가 다른 영역의 구현이나 추가 모델 호출을 승인하지 않는다.
 
-## 다음 개편 범위 — 사용자 결정
+[채점 방법](scoring-guide.md) · [조사 근거와 설계 이유](rubric-research.md) · [예선 사례](bio3-review.md).
 
-2026-10-05 요청: 에이전트와 프런트의 별도 구현에 맞춰 루브릭을 **에이전트 / 프런트 / 공통 통합**으로 분리하고 **발표 항목은 제거**한다. 현재 rubric.md·rubric.json·agent-rubric은 finals-v1이며 아직 분리하거나 발표를 제거한 상태가 아니다. 다음 작업에서 새 평가 버전·양식·집계·스킬을 함께 맞춘다.
+내부 목표는 영역별 80점·모든 항목 3 이상·미채점 없음·영역 관문 pass다. 실제 서비스 준비 완료는 두 영역과 통합 관문이 모두 충족되어야 한다. 공식 심사 배점·순위·입상 확률로 해석하지 않는다. 미제공 행사 조건은 unknown으로 기록하며, 평가 도구 준비의 미완료나 추가 조사 의무로 바꾸지 않는다.
 
-- 에이전트: 관측에 따른 선택, NVIDIA 기여, 결과·근거 검증, 종료·복구·호출 상한.
-- 프런트: 확정 디자인 적용, 진행·선택 시각화와 모션, 결과·근거, 보류·실패·재시작 UX.
-- 공통 통합: 입출력 계약 일치, 실제 입력부터 결과까지 연결, 실행 재현성.
-
-각 담당은 자기 영역을 검사하고 최종 연결은 공통 통합으로 확인한다. 항목별 증거·미실행의 구분은 유지하며, 서로의 점수를 중복 합산하거나 기존 예선·리허설 점수를 새 기준의 점수로 바꾸지 않는다. 새 배점·집계 방식은 분리 설계에서 명시하고 검사한다. 운영진이 제공하지 않은 미션·제출 조건은 unknown으로 남겨도 이번 준비자료 완성을 막는 추가 과제로 만들지 않는다. 팀원 환경 점검도 이번 준비 범위에서 제외한다.
+이전 [finals-v1](rubric.md), rubric.json, [기존 채점 방법](scoring-guide-v1.md), scorecard.json과 bio3-scorecard.json은 그대로 재계산할 수 있다. 예선 73.75점과 기존 리허설 점수를 v2로 변환하지 않는다.
