@@ -8,7 +8,7 @@ import time
 import urllib.error
 import uuid
 from probe_nim import request
-from rehearsal import TOPIC, run, assert_result, validate_evidence
+from rehearsal import TOPIC, run, assert_result, validate_evidence, read_input
 from model_policy import Budget, ENV_FIELDS, load_policy
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -155,18 +155,6 @@ def check_expectation(result, case=None):
         expected_calls = ['check_existing'] if case == 'existing' else ['check_existing', 'collect_more']
         if result['status'] != expected or obs['calls'] != expected_calls:
             raise ValueError('Unexpected scenario outcome or tool path')
-
-
-def read_input(path):
-    """External synthetic data, never shown to the model before tool retrieval."""
-    data = json.loads(path.read_text())
-    if set(data) != {'name', 'goal', 'existing', 'additional'} or any(
-            not isinstance(data[key], str) or not data[key] for key in ['name', 'goal']):
-        raise ValueError('Invalid synthetic input')
-    for key in ['existing', 'additional']:
-        if validate_evidence(data[key], data['goal']) == 'invalid_output':
-            raise ValueError('Invalid synthetic evidence')
-    return data
 
 
 def main():

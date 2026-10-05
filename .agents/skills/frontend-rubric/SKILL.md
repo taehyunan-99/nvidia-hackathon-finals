@@ -24,4 +24,4 @@ description: Evaluate frontend task flow, truthful event visualization, recovery
 4. `python3 scripts/score.py 채점표.json`으로 집계한다. 계산 입력은 /tmp에 둘 수 있다. 저장소 평가 보고서는 명시 요청이 있을 때만 저장한다. 근거 문자열의 진위는 직접 확인하며 채점기가 검증했다고 표현하지 않는다.
 5. 대상/버전/모드, 영역 점수·미채점·최저 등급 미달, 항목별 근거와 관문, 개선 최대 3개와 재검증 조건을 보고한다. 전체 서비스 준비 완료와 구분한다.
 
-공통 통합을 요청받으면 동일 대상/버전/환경의 두 영역 채점표와 integration-scorecard를 연결해 같은 채점기로 검증한다. 두 100점을 합산/평균하지 않는다. 상대 영역 근거가 없으면 통합은 미확인이다. 발표·스케줄·예선 점수 소급 변경은 제외한다. 오래된 finals-v1 채점 요청은 기존 rubric.json과 scoring-guide-v1.md를 사용하고 현재 기준으로 재해석하지 않는다.
+공통 통합을 요청받으면 동일 대상/버전/환경의 두 영역 채점표와 integration-scorecard를 연결해 같은 채점기로 검증한다. 두 100점을 합산/평균하지 않는다. 상대 영역 근거가 없으면 통합은 미확인이다. 발표·스케줄·예선 점수 소급 변경은 제외한다. 오래된 finals-v1 채점 요청은 [이전 rubric.json](../../../docs/evaluation/legacy/rubric.json)과 [기존 채점 방법](../../../docs/evaluation/legacy/scoring-guide-v1.md)를 사용하고 현재 기준으로 재해석하지 않는다.

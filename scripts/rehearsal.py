@@ -37,6 +37,18 @@ def collect_more(case, attempt):
 TOOLS = {'check_existing': check_existing, 'collect_more': collect_more}
 
 
+def read_input(path):
+    """Read synthetic tool data shared by offline and live checks."""
+    data = json.loads(path.read_text())
+    if not isinstance(data, dict) or set(data) != {'name', 'goal', 'existing', 'additional'} or any(
+            not isinstance(data[key], str) or not data[key] for key in ['name', 'goal']):
+        raise ValueError('Invalid synthetic input')
+    for key in ['existing', 'additional']:
+        if validate_evidence(data[key], data['goal']) == 'invalid_output':
+            raise ValueError('Invalid synthetic evidence')
+    return data
+
+
 def validate_evidence(rows, topic=TOPIC):
     """Independent fixture-domain check, not a claim of real-world source correctness."""
     if not isinstance(rows, list) or any(not isinstance(r, dict) for r in rows):
@@ -183,12 +195,24 @@ def assert_result(result):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--case', choices=CASES, default='supplement')
-    parser.add_argument('--write-fixtures', action='store_true', help='정적 화면의 예시 JSON을 명시적으로 재생성')
+    inputs = parser.add_mutually_exclusive_group()
+    inputs.add_argument('--case', choices=CASES, default='supplement')
+    inputs.add_argument('--input', type=Path, help='새 합성 입력 JSON: name, goal, existing, additional')
+    inputs.add_argument('--write-fixtures', action='store_true', help='정적 화면의 예시 JSON을 명시적으로 재생성')
     args = parser.parse_args()
     if args.write_fixtures:
         target = ROOT / 'docs/playbooks/examples/research/fixtures.json'
         target.write_text(json.dumps({key: {'label': label, 'run': run(key)} for key, label in CASES.items()}, ensure_ascii=False, indent=2) + '\n')
         print(target.relative_to(ROOT))
     else:
-        print(json.dumps(run(args.case), ensure_ascii=False, indent=2))
+        if args.input:
+            try:
+                data = read_input(args.input)
+            except (ValueError, OSError):
+                parser.error('Invalid synthetic input; check name, goal and evidence')
+            result = run(data['name'], topic=data['goal'], tools={
+                'check_existing': lambda *_: data['existing'],
+                'collect_more': lambda *_: data['additional']})
+        else:
+            result = run(args.case)
+        print(json.dumps(result, ensure_ascii=False, indent=2))

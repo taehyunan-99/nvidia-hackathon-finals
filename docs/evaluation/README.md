@@ -12,4 +12,4 @@
 
 내부 목표는 영역별 80점·모든 항목 3 이상·미채점 없음·영역 관문 pass다. 실제 서비스 준비 완료는 두 영역과 통합 관문이 모두 충족되어야 한다. 공식 심사 배점·순위·입상 확률로 해석하지 않는다. 미제공 행사 조건은 unknown으로 기록하며, 평가 도구 준비의 미완료나 추가 조사 의무로 바꾸지 않는다.
 
-이전 [finals-v1](rubric.md), rubric.json, [기존 채점 방법](scoring-guide-v1.md), scorecard.json과 bio3-scorecard.json은 그대로 재계산할 수 있다. 예선 73.75점과 기존 리허설 점수를 v2로 변환하지 않는다.
+이전 [finals-v1](legacy/rubric.md), legacy/rubric.json, [기존 채점 방법](legacy/scoring-guide-v1.md), legacy/templates/의 scorecard.json과 bio3-scorecard.json은 그대로 재계산할 수 있다. 예선 73.75점과 기존 리허설 점수를 v2로 변환하지 않는다.

@@ -47,5 +47,5 @@ flowchart TD
 
 ## 평가로 이어가기
 
-[승인된 100점 루브릭](../evaluation/rubric.md) → [채점 방법](../evaluation/scoring-guide.md) → `$agent-rubric`.
+[승인된 에이전트·프런트 평가 기준](../evaluation/README.md) → [채점 방법](../evaluation/scoring-guide.md) → `$agent-rubric` / `$frontend-rubric`.
 `agent-rubric`은 근거를 검토해 점수·미확인·먼저 고칠 항목을 정리하며 스케줄을 만들거나 제품을 자동 수정하지 않는다.

@@ -1,4 +1,7 @@
 import json
+import subprocess
+import sys
+import tempfile
 from pathlib import Path
 import unittest
 from unittest.mock import Mock
@@ -9,6 +12,29 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class RehearsalTests(unittest.TestCase):
+    def test_new_input_cli_completes_and_holds_without_http(self):
+        goal = '팀 문서 도구의 오프라인 PDF 내보내기 지원 여부'
+        row = lambda key: {**evidence(key, False), 'topic': goal}
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / 'input.json'
+            for additional, status in [([row('pdf-b')], 'completed'), ([], 'partial')]:
+                path.write_text(json.dumps({'name': 'new-pdf-mission', 'goal': goal,
+                                            'existing': [row('pdf-a')], 'additional': additional}))
+                command = [sys.executable, str(ROOT / 'scripts/rehearsal.py'), '--input', str(path)]
+                result = json.loads(subprocess.check_output(command, text=True))
+                self.assertEqual(result['status'], status)
+                self.assertEqual(result['http_requests'], 0)
+                self.assertEqual(result['input']['goal'], goal)
+                self.assertEqual(result['evidence'][0]['id'], 'pdf-a')
+                self.assertEqual(result['artifact'] is None, status == 'partial')
+            for invalid in [[], {'name': 'bad'}, {'name': 'bad', 'goal': goal,
+                    'existing': [evidence('wrong-topic')], 'additional': []}]:
+                path.write_text(json.dumps(invalid))
+                failed = subprocess.run(command, capture_output=True, text=True)
+                self.assertNotEqual(failed.returncode, 0)
+                self.assertFalse(failed.stdout)
+                self.assertIn('Invalid synthetic input', failed.stderr)
+
     def test_observation_changes_next_tool(self):
         existing = run('existing'); supplement = run('supplement')
         calls = lambda r: [e['tool'] for e in r['events'] if e['kind'] == 'tool' and e['status'] == 'running']

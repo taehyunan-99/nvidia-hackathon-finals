@@ -35,7 +35,7 @@ try {
   }
   $('scenario').value = fixtures.supplement ? 'supplement' : Object.keys(fixtures)[0];
   $('data-link').href = dataPath;
-  $('compare').disabled = liveSource;
+  $('compare').disabled = liveSource || !fixtures.supplement;
   $('scenario').disabled = false; $('reset').disabled = false; reset();
 } catch (error) {
   $('announcement').textContent = '예시를 불러오지 못했습니다.';

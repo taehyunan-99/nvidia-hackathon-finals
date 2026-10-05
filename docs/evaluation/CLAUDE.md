@@ -5,8 +5,10 @@
 
 ## 2. CONTENTS — 파일과 기술
 - README.md — 흐름·루브릭·평가 스킬 진입
-- rubric.md, rubric.json — 항목/가중치
-- ../../.agents/skills/agent-rubric/SKILL.md — 근거 기반 반복 평가
+- agent-rubric.md/json, frontend-rubric.md/json — 현재 영역별 항목/가중치
+- integration.md/json — 공동 통합 관문
+- legacy/ — 이전 루브릭·채점법·재계산용 양식
+- ../../.agents/skills/agent-rubric/, frontend-rubric/ — 영역별 근거 기반 평가
 - scoring-guide.md — 관찰 증거·채점·개선 우선순위
 - bio3-review.md — 예선 강점·한계와 본선 적용 원칙
 - templates/ — 빈/예시 채점표·사례

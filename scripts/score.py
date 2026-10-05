@@ -5,7 +5,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 RUBRIC_FILES = {
-    'finals-v1': 'rubric.json',
+    'finals-v1': 'legacy/rubric.json',
     'agent-v2': 'agent-rubric.json',
     'frontend-v2': 'frontend-rubric.json',
     'integration-v2': 'integration.json',

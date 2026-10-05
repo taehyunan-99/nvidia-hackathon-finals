@@ -1,4 +1,4 @@
 interface:
   display_name: "NVIDIA UI"
   short_description: "NVIDIA-inspired layouts, spacing, and agent result UX"
-  default_prompt: "Use $nvidia-ui to compare three layouts and refine the selected design."
+  default_prompt: "Use $nvidia-ui to build the mission UI with confirmed tokens, components, and truthful agent states."

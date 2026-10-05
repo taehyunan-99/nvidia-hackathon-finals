@@ -6,8 +6,8 @@ from score import calculate
 R=Path(__file__).resolve().parents[1]
 class ScoreTest(unittest.TestCase):
     def setUp(self):
-        self.rubric=json.loads((R/'docs/evaluation/rubric.json').read_text())
-        self.card=json.loads((R/'docs/evaluation/templates/scorecard.json').read_text())
+        self.rubric=json.loads((R/'docs/evaluation/legacy/rubric.json').read_text())
+        self.card=json.loads((R/'docs/evaluation/legacy/templates/scorecard.json').read_text())
     def full(self):
         c=copy.deepcopy(self.card)
         for row in c['criteria'].values():row.update(rating=4,evidence=['run/trace.json'])
@@ -36,6 +36,6 @@ class ScoreTest(unittest.TestCase):
         c=self.full();c['rubric_version']='different'
         with self.assertRaises(ValueError):calculate(c,self.rubric)
     def test_bio3_is_provisional(self):
-        c=json.loads((R/'docs/evaluation/templates/bio3-scorecard.json').read_text());r=calculate(c,self.rubric)
+        c=json.loads((R/'docs/evaluation/legacy/templates/bio3-scorecard.json').read_text());r=calculate(c,self.rubric)
         self.assertEqual(r['score'],73.75);self.assertFalse(r['internal_ready'])
 if __name__=='__main__':unittest.main()

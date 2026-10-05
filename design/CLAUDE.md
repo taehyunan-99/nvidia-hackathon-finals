@@ -6,7 +6,6 @@
 ## 2. CONTENTS — 파일과 기술
 - playground.html — HTML/CSS/JS 비교 화면
 - agent-flow.html, agent-flow.mjs — 계약 fixture를 읽는 실행 흐름 리허설
-- preview.png — 초기 시안 기록
 
 기술: Markdown/JSON 중심; scripts는 Python/Bash, design은 HTML/CSS/JavaScript.
 

@@ -35,7 +35,7 @@ python3 scripts/lookup.py --domain knowledge --function setup --kind skill
 
 - [docs/catalog](docs/catalog/README.md) — 409개 스킬의 원본 metadata, 도메인/작업별 탐색, agent·도구 카드.
 - [docs/playbooks](docs/playbooks/README.md) — 10개 미션 조합, 9개 최소 실행 안내, 하네스·예제·스킬 확보법.
-- [docs/evaluation](docs/evaluation/rubric.md) — 내부 100점 루브릭, Bio-3 분석, 평가 양식.
+- [docs/evaluation](docs/evaluation/README.md) — 에이전트·프런트별 100점 기준, 통합 관문, 평가 양식.
 - [docs/operations](docs/operations/event.md) — 행사·준비 항목, [both 동기화](docs/operations/guide-sync.md).
 - [docs/design](docs/design/README.md) — 디자인 스킬과 [UI 비교 시안](design/playground.html) 진입.
 

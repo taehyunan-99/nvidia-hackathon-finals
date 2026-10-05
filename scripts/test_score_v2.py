@@ -152,7 +152,7 @@ class SplitScoreTest(unittest.TestCase):
             card=self.card('agent');card['gates']['bounded_execution']['status']='fail'
             (root/'agent-scorecard.json').write_text(json.dumps(card))
             self.assertFalse(json.loads(invoke(root/'integration-scorecard.json').stdout)['product_ready'])
-            result=invoke(ROOT/'docs/evaluation/templates/bio3-scorecard.json')
+            result=invoke(ROOT/'docs/evaluation/legacy/templates/bio3-scorecard.json')
             self.assertEqual(json.loads(result.stdout)['score'],73.75)
 
     def test_templates_unknown_and_markdown_matches_numeric_source(self):
