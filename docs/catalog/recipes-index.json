@@ -18,7 +18,11 @@
     "guide": "docs/playbooks/missions/documents.md",
     "quickstart": "docs/playbooks/quickstarts/retrieval.md",
     "validator": "원문 위치 대조·미지원 주장 거부",
-    "flow": "원문 문서→검색 근거→판단→항목별 검토표"
+    "flow": "원문 문서→검색 근거→판단→항목별 검토표",
+    "contract": "docs/catalog/contracts/combinations.md",
+    "fixtures": "docs/catalog/contracts/mission-fixtures.json",
+    "schema": "docs/catalog/contracts/mission.schema.json",
+    "contract_section": "documents"
   },
   {
     "id": "recipe:research",
@@ -61,7 +65,11 @@
     "guide": "docs/playbooks/missions/routing.md",
     "quickstart": "docs/playbooks/quickstarts/optimization.md",
     "validator": "차량 용량·시간창·방문 누락 독립 검사",
-    "flow": "요청→제약 schema→solver→검산→불가능 사유/계획"
+    "flow": "요청→제약 schema→solver→검산→불가능 사유/계획",
+    "contract": "docs/catalog/contracts/combinations.md",
+    "fixtures": "docs/catalog/contracts/mission-fixtures.json",
+    "schema": "docs/catalog/contracts/mission.schema.json",
+    "contract_section": "routing"
   },
   {
     "id": "recipe:allocation",
@@ -81,7 +89,11 @@
     "guide": "docs/playbooks/missions/allocation.md",
     "quickstart": "docs/playbooks/quickstarts/optimization.md",
     "validator": "변수 범위·제약·목적값 독립 재계산",
-    "flow": "목표→수학 모델→solver→검산→계획"
+    "flow": "목표→수학 모델→solver→검산→계획",
+    "contract": "docs/catalog/contracts/combinations.md",
+    "fixtures": "docs/catalog/contracts/mission-fixtures.json",
+    "schema": "docs/catalog/contracts/mission.schema.json",
+    "contract_section": "allocation"
   },
   {
     "id": "recipe:operations",
@@ -100,7 +112,11 @@
     "guide": "docs/playbooks/missions/operations.md",
     "quickstart": "docs/playbooks/quickstarts/nat.md",
     "validator": "재조회·권한 범위·중복 변경 차단",
-    "flow": "조회→진단→허용된 조치→재조회→기록"
+    "flow": "조회→진단→허용된 조치→재조회→기록",
+    "contract": "docs/catalog/contracts/combinations.md",
+    "fixtures": "docs/catalog/contracts/mission-fixtures.json",
+    "schema": "docs/catalog/contracts/mission.schema.json",
+    "contract_section": "operations"
   },
   {
     "id": "recipe:video",
@@ -120,7 +136,11 @@
     "guide": "docs/playbooks/missions/video.md",
     "quickstart": "docs/playbooks/quickstarts/video.md",
     "validator": "프레임·시간 직접 확인",
-    "flow": "영상→검색/시각 확인→구간 근거→답"
+    "flow": "영상→검색/시각 확인→구간 근거→답",
+    "contract": "docs/catalog/contracts/combinations.md",
+    "fixtures": "docs/catalog/contracts/mission-fixtures.json",
+    "schema": "docs/catalog/contracts/mission.schema.json",
+    "contract_section": "video"
   },
   {
     "id": "recipe:voice",
@@ -140,7 +160,11 @@
     "guide": "docs/playbooks/missions/voice.md",
     "quickstart": "docs/playbooks/quickstarts/speech.md",
     "validator": "전사 정확성·도구 결과·무음 입력",
-    "flow": "오디오→전사→도구 선택→업무 실행→텍스트/음성"
+    "flow": "오디오→전사→도구 선택→업무 실행→텍스트/음성",
+    "contract": "docs/catalog/contracts/combinations.md",
+    "fixtures": "docs/catalog/contracts/mission-fixtures.json",
+    "schema": "docs/catalog/contracts/mission.schema.json",
+    "contract_section": "voice"
   },
   {
     "id": "recipe:biology",
@@ -159,7 +183,11 @@
     "guide": "docs/playbooks/missions/biology.md",
     "quickstart": "docs/playbooks/quickstarts/biology.md",
     "validator": "사슬/서열/좌표/신뢰도 구분",
-    "flow": "입력 검증→공개 근거→필요 시 예측→좌표 검증→보고"
+    "flow": "입력 검증→공개 근거→필요 시 예측→좌표 검증→보고",
+    "contract": "docs/catalog/contracts/combinations.md",
+    "fixtures": "docs/catalog/contracts/mission-fixtures.json",
+    "schema": "docs/catalog/contracts/mission.schema.json",
+    "contract_section": "biology"
   },
   {
     "id": "recipe:data",
@@ -178,7 +206,11 @@
     "guide": "docs/playbooks/missions/data.md",
     "quickstart": "docs/playbooks/quickstarts/specialized.md",
     "validator": "CPU 기준 결과와 일치",
-    "flow": "데이터 schema→계산 계획→실행→검산→표"
+    "flow": "데이터 schema→계산 계획→실행→검산→표",
+    "contract": "docs/catalog/contracts/combinations.md",
+    "fixtures": "docs/catalog/contracts/mission-fixtures.json",
+    "schema": "docs/catalog/contracts/mission.schema.json",
+    "contract_section": "data"
   },
   {
     "id": "recipe:sandbox",
@@ -196,6 +228,10 @@
     "guide": "docs/playbooks/missions/sandbox.md",
     "quickstart": "docs/playbooks/quickstarts/runtime.md",
     "validator": "허용/차단 경계와 산출물 검사",
-    "flow": "정책→sandbox→agent 작업→결과/접근 검증"
+    "flow": "정책→sandbox→agent 작업→결과/접근 검증",
+    "contract": "docs/catalog/contracts/combinations.md",
+    "fixtures": "docs/catalog/contracts/mission-fixtures.json",
+    "schema": "docs/catalog/contracts/mission.schema.json",
+    "contract_section": "sandbox"
   }
 ]

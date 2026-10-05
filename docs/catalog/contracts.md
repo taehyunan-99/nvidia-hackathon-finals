@@ -1,10 +1,11 @@
 # 입출력 계약과 프런트 연결
 
-대표 조합: **조사·대안 비교 → NIM 판단 + NAT 도구 연결 + 근거 조회 도구**. 이번에 실행 가능한 것은 아래 프로젝트 계약의 오프라인 리허설이다. NIM의 실제 모델 호출과 도구 선택 응답은 확인했지만 기대 경로 점검은 미통과이며, NAT·Retriever 연결은 실행하지 않았다. 다른 도구 16종과 전체 스킬의 요청/응답을 조사 완료한 목록이 아니다.
+대표 조합: **조사·대안 비교 → NIM 판단 + NAT 도구 연결 + 근거 조회 도구**. 이번에 실행 가능한 것은 아래 프로젝트 계약의 오프라인 리허설이다. NIM의 실제 도구 선택과 새 합성 입력 두 개의 관측 기반 실행 제어를 확인했으며, NAT·Retriever 연결은 실행하지 않았다. 기존 다른 미션 조합 9개의 도구 반환 형태·프런트 계약·스킬 경계는 [다른 조합의 입출력](contracts/combinations.md)에 정리했다. 전체 제품·스킬의 모든 API를 조사 완료한 목록은 아니다.
 
 | 바로 할 일 | 파일 |
 |---|---|
 | NIM 요청·도구 선택 응답·도구 반환 형태 | [공급자 형식 예시](contracts/nim-tool-call.example.json) — 미호출 합성 예시 |
+| 다른 조합의 입력·출력·실패 형태 | [9개 조합 계약](contracts/combinations.md) · [schema](contracts/mission.schema.json) · [정상·보류·실패 예시](contracts/mission-fixtures.json) |
 | 프런트 데이터 형식 확인 | [research-v1 JSON Schema](contracts/research.schema.json) |
 | 정상·변화·보류·실패 화면 연결 | [6개 예시 JSON](../playbooks/examples/research/fixtures.json) |
 | 계약 예시를 코드로 다시 실행 | [로컬 리허설](../playbooks/rehearsal.md) |
@@ -16,9 +17,9 @@
 
 | 층 | 입력 | 출력 | 확인 수준 |
 |---|---|---|---|
-| NIM chat/tool calling | `model`, `messages`, `tools[].function.parameters`, `tool_choice`; 최소 연결은 `stream:false` | `choices[].message.tool_calls[]`의 `id/name/arguments`; 도구 결과를 `role:tool`, `tool_call_id`, 문자열 `content`로 돌려준 뒤 다음 응답 | 아래 공식 자료의 형식 확인; 선택 계정의 실제 tool call 확인; 불필요한 반복 호출로 기대 경로 미통과 |
+| NIM chat/tool calling | `model`, `messages`, `tools[].function.parameters`, `tool_choice`; 최소 연결은 `stream:false` | `choices[].message.tool_calls[]`의 `id/name/arguments`; 도구 결과를 `role:tool`, `tool_call_id`, 문자열 `content`로 돌려준 뒤 다음 응답 | 아래 공식 자료의 형식 확인; 선택 계정의 실제 tool call 확인; 새 합성 입력의 완료/보류와 검증 후 호출 중단 확인 |
 | NAT 함수 | 등록된 함수의 typed input 또는 명시한 input schema | 해당 함수의 typed output; streaming 타입은 최종 output과 별도 | 고정 revision 공식 패턴 확인; 로컬 NAT 설치·기동 미실행 |
-| 근거 조회 도구 | 리허설은 `case`, `attempt`; 실제 도구는 미션의 query/filter 계약 필요 | 리허설은 `{id, source, topic, supported, quote}[]` | 합성 함수 실행; 실제 Retriever/MCP 검색 형식은 미확정 |
+| 근거 조회 도구 | 리허설은 입력 식별자 `case`, `attempt`; 새 합성 입력은 goal과 기존/추가 근거 배열; 실제 도구는 미션의 query/filter 계약 필요 | 리허설은 `{id, source, topic, supported, quote}[]` | 합성 함수 실행; 실제 Retriever/MCP 검색 형식은 미확정 |
 | 서비스 adapter | 목표·미션 입력·호출 한도, 검증된 도구 반환값 | `run_id`, 실행 모드, 관측 이벤트, 근거, 산출물, 한계, 다음 행동 | 프로젝트가 정의한 아래 계약; NVIDIA 표준이 아님 |
 | 개발 스킬 | 개발자가 제공할 요구사항·대상 코드·설정·환경 | 수정된 구성/도구 코드·확인 절차 | 실행 API가 아닌 작업 지침; 스킬 설치만으로 도구가 생기지 않음 |
 
@@ -36,7 +37,7 @@ NAT는 단순 async 함수를 `FunctionInfo.from_fn()`으로 감싸거나 입력
 |---|---|
 | `schema_version`, `run_id`, `input_hash` | schema·실행·입력 구분; 다른 실행의 이벤트를 섞지 않음 |
 | `mode`, `model_id`, `http_requests` | `mock/replay/live`와 모델·호출 수를 명시; mock은 모델 null·HTTP 0 |
-| `input` | 이 리허설의 goal·case·limits; 실제 미션 도메인 입력으로 바꾸면 schema도 버전 변경 |
+| `input` | 이 리허설의 goal·case 식별 문자열·limits; 실제 미션 도메인 입력으로 바꾸면 schema도 버전 변경 |
 | `status` | `running/completed/partial/failed/cancelled`; `partial`은 보류로 표시 |
 | `events[]` | seq 순서의 decision/tool/validation/result, 상태·짧은 이유·도구·시도·오류·근거 ID |
 | `evidence[]` | 예시 근거의 ID·출처·주제·값·인용; 실제 자료와 구별되는 `fixture://` 주소 |
@@ -44,6 +45,8 @@ NAT는 단순 async 함수를 `FunctionInfo.from_fn()`으로 감싸거나 입력
 | `limitations`, `next_action` | 확인하지 못한 범위와 다음 행동 |
 
 Schema 검사는 형식만 확인한다. 서비스 검증기는 근거 ID의 존재·중복, 출처 구분, 주제·값 일치, 완료 조건을 별도로 확인한다. 리허설의 '두 출처 일치'는 예시 판정 기준이며 실제 도메인의 정확성 기준을 대신하지 않는다.
+
+판단 이벤트의 label은 실제 선택과 코드 종료를 구분한다. `모델의 도구 선택`은 모델이 현재 허용된 도구를 고른 기록이고, `실행 제어의 종료`는 검증·자료 소진·재시도 상한에 따라 코드가 결정한 종료다. 코드 종료에는 모델 요청을 추가하지 않는다. 상세 제어와 새 입력 사용법은 [리허설](../playbooks/rehearsal.md#관측-기반-실행-제어와-새-입력)을 따른다.
 
 이벤트의 `completed`는 그 단계의 완료다. 도구 응답 수신만으로 전체 실행을 완료 표시하지 않으며 `validation`과 최종 `status`를 함께 사용한다. 보류/실패에서도 이미 확인한 근거는 유지하되 확정 산출물은 표시하지 않는다. 취소는 보류 색상에 '취소됨'과 다음 행동을 별도 표시하며, 현재 리허설은 취소 실행을 구현하지 않는다.
 

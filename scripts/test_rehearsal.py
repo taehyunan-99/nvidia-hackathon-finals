@@ -47,20 +47,65 @@ class RehearsalTests(unittest.TestCase):
         r = run('existing', decide=lambda _: ('shell', 'not allowed'), tools={'shell': tool})
         tool.assert_not_called(); self.assertEqual(r['status'], 'failed')
 
-    def test_step_budget_stops_loop(self):
+    def test_last_step_can_finish_without_another_decision(self):
         r = run('existing', decide=lambda _: ('check_existing', 'again'), max_steps=1)
-        self.assertEqual(r['status'], 'partial'); self.assertIsNone(r['artifact'])
+        self.assertEqual(r['status'], 'completed'); self.assertIsNotNone(r['artifact'])
+
+    def test_step_budget_preserves_incomplete_evidence(self):
+        result = run('supplement', max_steps=1)
+        self.assertEqual(result['status'], 'partial')
+        self.assertEqual(len(result['evidence']), 1)
+        self.assertIsNone(result['artifact'])
+
+    def test_collection_before_existing_evidence_is_rejected(self):
+        tool = Mock()
+        result = run('existing', decide=lambda _: ('collect_more', 'skip'),
+                     tools={'collect_more': tool})
+        tool.assert_not_called()
+        self.assertEqual(result['status'], 'failed')
 
     def test_call_budget_stops_repeated_tool(self):
         tool = Mock(return_value=[])
         r = run('existing', decide=lambda _: ('check_existing', 'again'), tools={'check_existing': tool})
-        self.assertEqual(tool.call_count, 2); self.assertEqual(r['status'], 'failed')
+        self.assertEqual(tool.call_count, 1); self.assertEqual(r['status'], 'failed')
 
     def test_malformed_tool_outputs_cannot_complete(self):
         for bad in [None, 'wrong', [{}], [None], [evidence('same'), evidence('same')]]:
             with self.subTest(bad=bad):
                 r = run('existing', tools={**TOOLS, 'check_existing': lambda *_: bad})
                 self.assertEqual(r['status'], 'partial'); self.assertIsNone(r['artifact'])
+
+    def test_verified_terminal_never_requests_another_decision(self):
+        decide = Mock(return_value=('check_existing', 'choose'))
+        result = run('existing', decide=decide)
+        self.assertEqual(result['status'], 'completed')
+        self.assertEqual(decide.call_count, 1)
+        self.assertEqual(result['events'][-2]['label'], '실행 제어의 종료')
+
+    def test_successful_call_cannot_be_repeated(self):
+        tool = Mock(return_value=[])
+        result = run('existing', decide=lambda _: ('check_existing', 'again'),
+                     tools={'check_existing': tool})
+        self.assertEqual(tool.call_count, 1)
+        self.assertEqual(result['status'], 'failed')
+
+    def test_timeout_retry_is_for_the_failed_tool(self):
+        tool = Mock(side_effect=TimeoutError())
+        observations = []
+        def decide(obs):
+            observations.append(obs)
+            return 'check_existing', 'retry'
+        result = run('existing', decide=decide, tools={'check_existing': tool})
+        self.assertEqual(tool.call_count, 2)
+        self.assertEqual(observations[-1]['allowed_actions'], ['check_existing', 'fail'])
+        self.assertEqual(result['status'], 'failed')
+
+    def test_new_input_uses_its_topic_and_preserves_false_value(self):
+        topic = '새 도구의 파일 내보내기 지원'
+        rows = [{**evidence(key, False), 'topic': topic} for key in ['new-a', 'new-b']]
+        result = run('new-input', topic=topic, tools={'check_existing': lambda *_: rows})
+        self.assertEqual(result['status'], 'completed')
+        self.assertIn('미지원', result['artifact']['summary'])
 
     def test_dangling_evidence_reference_rejected(self):
         r = run('existing'); r['events'][0]['evidence_ids'] = ['missing']

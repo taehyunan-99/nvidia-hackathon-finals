@@ -37,14 +37,8 @@
           "minLength": 1
         },
         "case": {
-          "enum": [
-            "existing",
-            "supplement",
-            "hold",
-            "failure",
-            "retry",
-            "conflict"
-          ]
+          "type": "string",
+          "minLength": 1
         },
         "limits": {
           "type": "object",

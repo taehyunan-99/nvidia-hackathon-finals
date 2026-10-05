@@ -8,7 +8,7 @@
 | 지금 필요한 것 | 읽을 곳 |
 |---|---|
 | 두 사람이 구현·통합·시연한다 | [2인 개발·로컬 시연 운영](docs/operations/workflow.md) |
-| 프런트와 에이전트의 데이터를 맞춘다 | [입출력 계약·schema·예시 JSON](docs/catalog/contracts.md) |
+| 프런트와 에이전트의 데이터를 맞춘다 | [입출력 계약·schema·예시 JSON](docs/catalog/contracts.md) · [다른 조합 9개](docs/catalog/contracts/combinations.md) |
 | 도구 선택·분석 과정을 화면에 붙인다 | [재사용 컴포넌트](docs/design/agent-flow.md) · [실행 화면](design/agent-flow.html) |
 | 검색부터 화면까지 작게 점검한다 | [로컬 리허설 명령과 성공 기준](docs/playbooks/rehearsal.md) |
 | 에이전트가 문제를 어떻게 해결하는가 | [공통 에이전트 흐름](docs/playbooks/agent-flow.md) |

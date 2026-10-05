@@ -47,6 +47,6 @@ if __name__=='__main__':
     if not found:
         print(json.dumps({'matches':[],'note':'필터를 풀거나 영어 제품명으로 검색하세요. 이 결과는 지원 기능이 없다는 판정이 아닙니다.'},ensure_ascii=False));raise SystemExit(1)
     if not a.show:
-        keys=['id','name','kind','description','domains','functions','guide','quickstart','github_url','install','runtime_status','verification','contract','fixtures','preview']
+        keys=['id','name','kind','description','domains','functions','guide','quickstart','github_url','install','runtime_status','verification','contract','contract_section','schema','fixtures','preview']
         found=[{k:(v[:220]+'…' if k=='description' and len(v)>220 else v) for k,v in row.items() if k in keys} for row in found]
     print(json.dumps(found,ensure_ascii=False,indent=2))

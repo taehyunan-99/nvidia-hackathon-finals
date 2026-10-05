@@ -1,0 +1,2744 @@
+{
+  "documents": {
+    "completed": {
+      "schema_version": "mission-v1",
+      "recipe": "documents",
+      "run_id": "mock-documents-completed",
+      "input_hash": "313e7084fcd8916199f0ec3343e602092bdd38bbf2daca8acc59b68a849e222c",
+      "mode": "mock",
+      "model_id": null,
+      "http_requests": 0,
+      "input": {
+        "question": "What is the retention period?",
+        "documents": [
+          {
+            "ref": "fixture://policy",
+            "media_type": "application/pdf"
+          }
+        ],
+        "items": [
+          "retention"
+        ]
+      },
+      "status": "completed",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "decision",
+          "label": "합성 도구 선택",
+          "status": "running",
+          "reason": "입력에 필요한 도구를 선택한 가상 기록입니다.",
+          "tool": "documents",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 2,
+          "kind": "tool",
+          "label": "합성 도구 반환",
+          "status": "completed",
+          "reason": "합성 결과를 수신했습니다.",
+          "tool": "documents",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": [
+            "documents-proof"
+          ]
+        },
+        {
+          "seq": 3,
+          "kind": "validation",
+          "label": "결과 검증",
+          "status": "completed",
+          "reason": "완료 조건 확인 예시입니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "documents-proof"
+          ]
+        },
+        {
+          "seq": 4,
+          "kind": "result",
+          "label": "실행 결과",
+          "status": "completed",
+          "reason": "결과 확인",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "documents-proof"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "documents-proof",
+          "source": "fixture://documents",
+          "quote": "합성 입력과 결과를 대조한 예시입니다. 실제 공급자 실행 근거가 아닙니다."
+        }
+      ],
+      "output": {
+        "items": [
+          {
+            "item": "retention",
+            "verdict": "supported",
+            "quote": "Retention is 30 days.",
+            "document_ref": "fixture://policy",
+            "page": 1
+          }
+        ]
+      },
+      "artifact": {
+        "summary": "documents 조합의 합성 완료 결과",
+        "evidence_ids": [
+          "documents-proof"
+        ]
+      },
+      "limitations": [
+        "프런트 개발용 합성 예시. 공급자/API/GPU/파일 실실행 미검증."
+      ],
+      "next_action": "결과와 근거를 확인하세요."
+    },
+    "partial": {
+      "schema_version": "mission-v1",
+      "recipe": "documents",
+      "run_id": "mock-documents-partial",
+      "input_hash": "313e7084fcd8916199f0ec3343e602092bdd38bbf2daca8acc59b68a849e222c",
+      "mode": "mock",
+      "model_id": null,
+      "http_requests": 0,
+      "input": {
+        "question": "What is the retention period?",
+        "documents": [
+          {
+            "ref": "fixture://policy",
+            "media_type": "application/pdf"
+          }
+        ],
+        "items": [
+          "retention"
+        ]
+      },
+      "status": "partial",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "decision",
+          "label": "합성 도구 선택",
+          "status": "running",
+          "reason": "입력에 필요한 도구를 선택한 가상 기록입니다.",
+          "tool": "documents",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 2,
+          "kind": "tool",
+          "label": "합성 도구 반환",
+          "status": "completed",
+          "reason": "합성 결과를 수신했습니다.",
+          "tool": "documents",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": [
+            "documents-proof"
+          ]
+        },
+        {
+          "seq": 3,
+          "kind": "validation",
+          "label": "결과 검증",
+          "status": "hold",
+          "reason": "자료 또는 실행 조건이 부족합니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "documents-proof"
+          ]
+        },
+        {
+          "seq": 4,
+          "kind": "result",
+          "label": "실행 결과",
+          "status": "hold",
+          "reason": "입력·자료·접근 조건을 확인하세요.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "documents-proof"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "documents-proof",
+          "source": "fixture://documents",
+          "quote": "합성 입력과 결과를 대조한 예시입니다. 실제 공급자 실행 근거가 아닙니다."
+        }
+      ],
+      "output": {
+        "items": [
+          {
+            "item": "retention",
+            "verdict": "unknown",
+            "quote": "",
+            "document_ref": null,
+            "page": null
+          }
+        ]
+      },
+      "artifact": null,
+      "limitations": [
+        "프런트 개발용 합성 예시. 공급자/API/GPU/파일 실실행 미검증."
+      ],
+      "next_action": "자료·제약·권한을 확인한 뒤 다시 실행하세요."
+    },
+    "failed": {
+      "schema_version": "mission-v1",
+      "recipe": "documents",
+      "run_id": "mock-documents-failed",
+      "input_hash": "313e7084fcd8916199f0ec3343e602092bdd38bbf2daca8acc59b68a849e222c",
+      "mode": "mock",
+      "model_id": null,
+      "http_requests": 0,
+      "input": {
+        "question": "What is the retention period?",
+        "documents": [
+          {
+            "ref": "fixture://policy",
+            "media_type": "application/pdf"
+          }
+        ],
+        "items": [
+          "retention"
+        ]
+      },
+      "status": "failed",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "decision",
+          "label": "합성 도구 선택",
+          "status": "running",
+          "reason": "입력에 필요한 도구를 선택한 가상 기록입니다.",
+          "tool": "documents",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 2,
+          "kind": "tool",
+          "label": "합성 도구 반환",
+          "status": "failed",
+          "reason": "도구 실패 예시입니다.",
+          "tool": "documents",
+          "attempt": 1,
+          "error_code": "unavailable",
+          "evidence_ids": [
+            "documents-proof"
+          ]
+        },
+        {
+          "seq": 3,
+          "kind": "validation",
+          "label": "결과 검증",
+          "status": "failed",
+          "reason": "자료 또는 실행 조건이 부족합니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "documents-proof"
+          ]
+        },
+        {
+          "seq": 4,
+          "kind": "result",
+          "label": "실행 결과",
+          "status": "failed",
+          "reason": "입력·자료·접근 조건을 확인하세요.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "documents-proof"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "documents-proof",
+          "source": "fixture://documents",
+          "quote": "합성 도구 연결 오류 관측입니다. 결과는 수신하지 못했습니다."
+        }
+      ],
+      "output": null,
+      "artifact": null,
+      "limitations": [
+        "프런트 개발용 합성 예시. 공급자/API/GPU/파일 실실행 미검증."
+      ],
+      "next_action": "자료·제약·권한을 확인한 뒤 다시 실행하세요."
+    }
+  },
+  "routing": {
+    "completed": {
+      "schema_version": "mission-v1",
+      "recipe": "routing",
+      "run_id": "mock-routing-completed",
+      "input_hash": "9259deab296fcefd3b2c9b7c645e5e7824fa6a2bf41f38d8dd922d304f706443",
+      "mode": "mock",
+      "model_id": null,
+      "http_requests": 0,
+      "input": {
+        "cost_matrix": [
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            2,
+            0,
+            1
+          ],
+          [
+            3,
+            1,
+            0
+          ]
+        ],
+        "time_unit": "minute",
+        "vehicles": [
+          {
+            "id": "v1",
+            "capacity": 3,
+            "depot": 0
+          }
+        ],
+        "orders": [
+          {
+            "id": "a",
+            "location": 1,
+            "demand": 1,
+            "time_window": [
+              0,
+              60
+            ]
+          },
+          {
+            "id": "b",
+            "location": 2,
+            "demand": 2,
+            "time_window": [
+              0,
+              60
+            ]
+          }
+        ]
+      },
+      "status": "completed",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "decision",
+          "label": "합성 도구 선택",
+          "status": "running",
+          "reason": "입력에 필요한 도구를 선택한 가상 기록입니다.",
+          "tool": "routing",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 2,
+          "kind": "tool",
+          "label": "합성 도구 반환",
+          "status": "completed",
+          "reason": "합성 결과를 수신했습니다.",
+          "tool": "routing",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": [
+            "routing-proof"
+          ]
+        },
+        {
+          "seq": 3,
+          "kind": "validation",
+          "label": "결과 검증",
+          "status": "completed",
+          "reason": "완료 조건 확인 예시입니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "routing-proof"
+          ]
+        },
+        {
+          "seq": 4,
+          "kind": "result",
+          "label": "실행 결과",
+          "status": "completed",
+          "reason": "결과 확인",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "routing-proof"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "routing-proof",
+          "source": "fixture://routing",
+          "quote": "합성 입력과 결과를 대조한 예시입니다. 실제 공급자 실행 근거가 아닙니다."
+        }
+      ],
+      "output": {
+        "solver_status": "feasible",
+        "routes": [
+          {
+            "vehicle_id": "v1",
+            "order_ids": [
+              "a",
+              "b"
+            ],
+            "locations": [
+              0,
+              1,
+              2,
+              0
+            ],
+            "arrival_minutes": [
+              0,
+              2,
+              3,
+              6
+            ],
+            "load": 3
+          }
+        ],
+        "objective": 6,
+        "unserved_order_ids": []
+      },
+      "artifact": {
+        "summary": "routing 조합의 합성 완료 결과",
+        "evidence_ids": [
+          "routing-proof"
+        ]
+      },
+      "limitations": [
+        "프런트 개발용 합성 예시. 공급자/API/GPU/파일 실실행 미검증."
+      ],
+      "next_action": "결과와 근거를 확인하세요."
+    },
+    "partial": {
+      "schema_version": "mission-v1",
+      "recipe": "routing",
+      "run_id": "mock-routing-partial",
+      "input_hash": "ca8a001061dcb2d83f95a9963482aa6f7cea697379cc9244d146616bf2e501b5",
+      "mode": "mock",
+      "model_id": null,
+      "http_requests": 0,
+      "input": {
+        "cost_matrix": [
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            2,
+            0,
+            1
+          ],
+          [
+            3,
+            1,
+            0
+          ]
+        ],
+        "time_unit": "minute",
+        "vehicles": [
+          {
+            "id": "v1",
+            "capacity": 0,
+            "depot": 0
+          }
+        ],
+        "orders": [
+          {
+            "id": "a",
+            "location": 1,
+            "demand": 1,
+            "time_window": [
+              0,
+              60
+            ]
+          },
+          {
+            "id": "b",
+            "location": 2,
+            "demand": 2,
+            "time_window": [
+              0,
+              60
+            ]
+          }
+        ]
+      },
+      "status": "partial",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "decision",
+          "label": "합성 도구 선택",
+          "status": "running",
+          "reason": "입력에 필요한 도구를 선택한 가상 기록입니다.",
+          "tool": "routing",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 2,
+          "kind": "tool",
+          "label": "합성 도구 반환",
+          "status": "completed",
+          "reason": "합성 결과를 수신했습니다.",
+          "tool": "routing",
+          "attempt": 1,
+          "error_code": "infeasible",
+          "evidence_ids": [
+            "routing-proof"
+          ]
+        },
+        {
+          "seq": 3,
+          "kind": "validation",
+          "label": "결과 검증",
+          "status": "hold",
+          "reason": "자료 또는 실행 조건이 부족합니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "routing-proof"
+          ]
+        },
+        {
+          "seq": 4,
+          "kind": "result",
+          "label": "실행 결과",
+          "status": "hold",
+          "reason": "입력·자료·접근 조건을 확인하세요.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "routing-proof"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "routing-proof",
+          "source": "fixture://routing",
+          "quote": "합성 입력과 결과를 대조한 예시입니다. 실제 공급자 실행 근거가 아닙니다."
+        }
+      ],
+      "output": {
+        "solver_status": "infeasible",
+        "routes": [],
+        "objective": null,
+        "unserved_order_ids": [
+          "a",
+          "b"
+        ]
+      },
+      "artifact": null,
+      "limitations": [
+        "프런트 개발용 합성 예시. 공급자/API/GPU/파일 실실행 미검증."
+      ],
+      "next_action": "자료·제약·권한을 확인한 뒤 다시 실행하세요."
+    },
+    "failed": {
+      "schema_version": "mission-v1",
+      "recipe": "routing",
+      "run_id": "mock-routing-failed",
+      "input_hash": "9259deab296fcefd3b2c9b7c645e5e7824fa6a2bf41f38d8dd922d304f706443",
+      "mode": "mock",
+      "model_id": null,
+      "http_requests": 0,
+      "input": {
+        "cost_matrix": [
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            2,
+            0,
+            1
+          ],
+          [
+            3,
+            1,
+            0
+          ]
+        ],
+        "time_unit": "minute",
+        "vehicles": [
+          {
+            "id": "v1",
+            "capacity": 3,
+            "depot": 0
+          }
+        ],
+        "orders": [
+          {
+            "id": "a",
+            "location": 1,
+            "demand": 1,
+            "time_window": [
+              0,
+              60
+            ]
+          },
+          {
+            "id": "b",
+            "location": 2,
+            "demand": 2,
+            "time_window": [
+              0,
+              60
+            ]
+          }
+        ]
+      },
+      "status": "failed",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "decision",
+          "label": "합성 도구 선택",
+          "status": "running",
+          "reason": "입력에 필요한 도구를 선택한 가상 기록입니다.",
+          "tool": "routing",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 2,
+          "kind": "tool",
+          "label": "합성 도구 반환",
+          "status": "failed",
+          "reason": "도구 실패 예시입니다.",
+          "tool": "routing",
+          "attempt": 1,
+          "error_code": "unavailable",
+          "evidence_ids": [
+            "routing-proof"
+          ]
+        },
+        {
+          "seq": 3,
+          "kind": "validation",
+          "label": "결과 검증",
+          "status": "failed",
+          "reason": "자료 또는 실행 조건이 부족합니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "routing-proof"
+          ]
+        },
+        {
+          "seq": 4,
+          "kind": "result",
+          "label": "실행 결과",
+          "status": "failed",
+          "reason": "입력·자료·접근 조건을 확인하세요.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "routing-proof"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "routing-proof",
+          "source": "fixture://routing",
+          "quote": "합성 도구 연결 오류 관측입니다. 결과는 수신하지 못했습니다."
+        }
+      ],
+      "output": null,
+      "artifact": null,
+      "limitations": [
+        "프런트 개발용 합성 예시. 공급자/API/GPU/파일 실실행 미검증."
+      ],
+      "next_action": "자료·제약·권한을 확인한 뒤 다시 실행하세요."
+    }
+  },
+  "allocation": {
+    "completed": {
+      "schema_version": "mission-v1",
+      "recipe": "allocation",
+      "run_id": "mock-allocation-completed",
+      "input_hash": "78ba9b613693b2cd756adfcd145d124f39ec509d9f1091f6083d5fe7c1cfba4b",
+      "mode": "mock",
+      "model_id": null,
+      "http_requests": 0,
+      "input": {
+        "sense": "maximize",
+        "variables": [
+          {
+            "id": "x",
+            "lower": 0,
+            "upper": 3,
+            "integer": true
+          },
+          {
+            "id": "y",
+            "lower": 0,
+            "upper": 3,
+            "integer": true
+          }
+        ],
+        "objective": [
+          2,
+          1
+        ],
+        "constraints": [
+          {
+            "coefficients": [
+              1,
+              1
+            ],
+            "sense": "le",
+            "rhs": 3
+          }
+        ]
+      },
+      "status": "completed",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "decision",
+          "label": "합성 도구 선택",
+          "status": "running",
+          "reason": "입력에 필요한 도구를 선택한 가상 기록입니다.",
+          "tool": "allocation",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 2,
+          "kind": "tool",
+          "label": "합성 도구 반환",
+          "status": "completed",
+          "reason": "합성 결과를 수신했습니다.",
+          "tool": "allocation",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": [
+            "allocation-proof"
+          ]
+        },
+        {
+          "seq": 3,
+          "kind": "validation",
+          "label": "결과 검증",
+          "status": "completed",
+          "reason": "완료 조건 확인 예시입니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "allocation-proof"
+          ]
+        },
+        {
+          "seq": 4,
+          "kind": "result",
+          "label": "실행 결과",
+          "status": "completed",
+          "reason": "결과 확인",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "allocation-proof"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "allocation-proof",
+          "source": "fixture://allocation",
+          "quote": "합성 입력과 결과를 대조한 예시입니다. 실제 공급자 실행 근거가 아닙니다."
+        }
+      ],
+      "output": {
+        "solver_status": "optimal",
+        "values": [
+          {
+            "variable_id": "x",
+            "value": 3
+          },
+          {
+            "variable_id": "y",
+            "value": 0
+          }
+        ],
+        "objective": 6,
+        "checks": [
+          {
+            "name": "capacity",
+            "passed": true
+          }
+        ]
+      },
+      "artifact": {
+        "summary": "allocation 조합의 합성 완료 결과",
+        "evidence_ids": [
+          "allocation-proof"
+        ]
+      },
+      "limitations": [
+        "프런트 개발용 합성 예시. 공급자/API/GPU/파일 실실행 미검증."
+      ],
+      "next_action": "결과와 근거를 확인하세요."
+    },
+    "partial": {
+      "schema_version": "mission-v1",
+      "recipe": "allocation",
+      "run_id": "mock-allocation-partial",
+      "input_hash": "027a8de9feb7fb60d22f7996d02e6d1885dd601e5bf7cc0ae52b5cd651b41be9",
+      "mode": "mock",
+      "model_id": null,
+      "http_requests": 0,
+      "input": {
+        "sense": "maximize",
+        "variables": [
+          {
+            "id": "x",
+            "lower": 0,
+            "upper": 3,
+            "integer": true
+          },
+          {
+            "id": "y",
+            "lower": 0,
+            "upper": 3,
+            "integer": true
+          }
+        ],
+        "objective": [
+          2,
+          1
+        ],
+        "constraints": [
+          {
+            "coefficients": [
+              1,
+              1
+            ],
+            "sense": "le",
+            "rhs": -1
+          }
+        ]
+      },
+      "status": "partial",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "decision",
+          "label": "합성 도구 선택",
+          "status": "running",
+          "reason": "입력에 필요한 도구를 선택한 가상 기록입니다.",
+          "tool": "allocation",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 2,
+          "kind": "tool",
+          "label": "합성 도구 반환",
+          "status": "completed",
+          "reason": "합성 결과를 수신했습니다.",
+          "tool": "allocation",
+          "attempt": 1,
+          "error_code": "infeasible",
+          "evidence_ids": [
+            "allocation-proof"
+          ]
+        },
+        {
+          "seq": 3,
+          "kind": "validation",
+          "label": "결과 검증",
+          "status": "hold",
+          "reason": "자료 또는 실행 조건이 부족합니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "allocation-proof"
+          ]
+        },
+        {
+          "seq": 4,
+          "kind": "result",
+          "label": "실행 결과",
+          "status": "hold",
+          "reason": "입력·자료·접근 조건을 확인하세요.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "allocation-proof"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "allocation-proof",
+          "source": "fixture://allocation",
+          "quote": "합성 입력과 결과를 대조한 예시입니다. 실제 공급자 실행 근거가 아닙니다."
+        }
+      ],
+      "output": {
+        "solver_status": "infeasible",
+        "values": [],
+        "objective": null,
+        "checks": []
+      },
+      "artifact": null,
+      "limitations": [
+        "프런트 개발용 합성 예시. 공급자/API/GPU/파일 실실행 미검증."
+      ],
+      "next_action": "자료·제약·권한을 확인한 뒤 다시 실행하세요."
+    },
+    "failed": {
+      "schema_version": "mission-v1",
+      "recipe": "allocation",
+      "run_id": "mock-allocation-failed",
+      "input_hash": "78ba9b613693b2cd756adfcd145d124f39ec509d9f1091f6083d5fe7c1cfba4b",
+      "mode": "mock",
+      "model_id": null,
+      "http_requests": 0,
+      "input": {
+        "sense": "maximize",
+        "variables": [
+          {
+            "id": "x",
+            "lower": 0,
+            "upper": 3,
+            "integer": true
+          },
+          {
+            "id": "y",
+            "lower": 0,
+            "upper": 3,
+            "integer": true
+          }
+        ],
+        "objective": [
+          2,
+          1
+        ],
+        "constraints": [
+          {
+            "coefficients": [
+              1,
+              1
+            ],
+            "sense": "le",
+            "rhs": 3
+          }
+        ]
+      },
+      "status": "failed",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "decision",
+          "label": "합성 도구 선택",
+          "status": "running",
+          "reason": "입력에 필요한 도구를 선택한 가상 기록입니다.",
+          "tool": "allocation",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 2,
+          "kind": "tool",
+          "label": "합성 도구 반환",
+          "status": "failed",
+          "reason": "도구 실패 예시입니다.",
+          "tool": "allocation",
+          "attempt": 1,
+          "error_code": "unavailable",
+          "evidence_ids": [
+            "allocation-proof"
+          ]
+        },
+        {
+          "seq": 3,
+          "kind": "validation",
+          "label": "결과 검증",
+          "status": "failed",
+          "reason": "자료 또는 실행 조건이 부족합니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "allocation-proof"
+          ]
+        },
+        {
+          "seq": 4,
+          "kind": "result",
+          "label": "실행 결과",
+          "status": "failed",
+          "reason": "입력·자료·접근 조건을 확인하세요.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "allocation-proof"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "allocation-proof",
+          "source": "fixture://allocation",
+          "quote": "합성 도구 연결 오류 관측입니다. 결과는 수신하지 못했습니다."
+        }
+      ],
+      "output": null,
+      "artifact": null,
+      "limitations": [
+        "프런트 개발용 합성 예시. 공급자/API/GPU/파일 실실행 미검증."
+      ],
+      "next_action": "자료·제약·권한을 확인한 뒤 다시 실행하세요."
+    }
+  },
+  "operations": {
+    "completed": {
+      "schema_version": "mission-v1",
+      "recipe": "operations",
+      "run_id": "mock-operations-completed",
+      "input_hash": "69e3a038d69948c623e14123ff7fc339350381fb44685ef3e3f8ebf449ea36e6",
+      "mode": "mock",
+      "model_id": null,
+      "http_requests": 0,
+      "input": {
+        "resource_id": "sample-service",
+        "allowed_actions": [
+          "inspect"
+        ],
+        "idempotency_key": "fixture-inspect-1"
+      },
+      "status": "completed",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "decision",
+          "label": "합성 도구 선택",
+          "status": "running",
+          "reason": "입력에 필요한 도구를 선택한 가상 기록입니다.",
+          "tool": "operations",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 2,
+          "kind": "tool",
+          "label": "합성 도구 반환",
+          "status": "completed",
+          "reason": "합성 결과를 수신했습니다.",
+          "tool": "operations",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": [
+            "operations-proof"
+          ]
+        },
+        {
+          "seq": 3,
+          "kind": "validation",
+          "label": "결과 검증",
+          "status": "completed",
+          "reason": "완료 조건 확인 예시입니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "operations-proof"
+          ]
+        },
+        {
+          "seq": 4,
+          "kind": "result",
+          "label": "실행 결과",
+          "status": "completed",
+          "reason": "결과 확인",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "operations-proof"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "operations-proof",
+          "source": "fixture://operations",
+          "quote": "합성 입력과 결과를 대조한 예시입니다. 실제 공급자 실행 근거가 아닙니다."
+        }
+      ],
+      "output": {
+        "before": "healthy",
+        "action": "inspect",
+        "after": "healthy",
+        "verified": true
+      },
+      "artifact": {
+        "summary": "operations 조합의 합성 완료 결과",
+        "evidence_ids": [
+          "operations-proof"
+        ]
+      },
+      "limitations": [
+        "프런트 개발용 합성 예시. 공급자/API/GPU/파일 실실행 미검증."
+      ],
+      "next_action": "결과와 근거를 확인하세요."
+    },
+    "partial": {
+      "schema_version": "mission-v1",
+      "recipe": "operations",
+      "run_id": "mock-operations-partial",
+      "input_hash": "69e3a038d69948c623e14123ff7fc339350381fb44685ef3e3f8ebf449ea36e6",
+      "mode": "mock",
+      "model_id": null,
+      "http_requests": 0,
+      "input": {
+        "resource_id": "sample-service",
+        "allowed_actions": [
+          "inspect"
+        ],
+        "idempotency_key": "fixture-inspect-1"
+      },
+      "status": "partial",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "decision",
+          "label": "합성 도구 선택",
+          "status": "running",
+          "reason": "입력에 필요한 도구를 선택한 가상 기록입니다.",
+          "tool": "operations",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 2,
+          "kind": "tool",
+          "label": "합성 도구 반환",
+          "status": "completed",
+          "reason": "합성 결과를 수신했습니다.",
+          "tool": "operations",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": [
+            "operations-proof"
+          ]
+        },
+        {
+          "seq": 3,
+          "kind": "validation",
+          "label": "결과 검증",
+          "status": "hold",
+          "reason": "자료 또는 실행 조건이 부족합니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "operations-proof"
+          ]
+        },
+        {
+          "seq": 4,
+          "kind": "result",
+          "label": "실행 결과",
+          "status": "hold",
+          "reason": "입력·자료·접근 조건을 확인하세요.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "operations-proof"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "operations-proof",
+          "source": "fixture://operations",
+          "quote": "합성 입력과 결과를 대조한 예시입니다. 실제 공급자 실행 근거가 아닙니다."
+        }
+      ],
+      "output": {
+        "before": "healthy",
+        "action": null,
+        "after": null,
+        "verified": false
+      },
+      "artifact": null,
+      "limitations": [
+        "프런트 개발용 합성 예시. 공급자/API/GPU/파일 실실행 미검증."
+      ],
+      "next_action": "자료·제약·권한을 확인한 뒤 다시 실행하세요."
+    },
+    "failed": {
+      "schema_version": "mission-v1",
+      "recipe": "operations",
+      "run_id": "mock-operations-failed",
+      "input_hash": "69e3a038d69948c623e14123ff7fc339350381fb44685ef3e3f8ebf449ea36e6",
+      "mode": "mock",
+      "model_id": null,
+      "http_requests": 0,
+      "input": {
+        "resource_id": "sample-service",
+        "allowed_actions": [
+          "inspect"
+        ],
+        "idempotency_key": "fixture-inspect-1"
+      },
+      "status": "failed",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "decision",
+          "label": "합성 도구 선택",
+          "status": "running",
+          "reason": "입력에 필요한 도구를 선택한 가상 기록입니다.",
+          "tool": "operations",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 2,
+          "kind": "tool",
+          "label": "합성 도구 반환",
+          "status": "failed",
+          "reason": "도구 실패 예시입니다.",
+          "tool": "operations",
+          "attempt": 1,
+          "error_code": "unavailable",
+          "evidence_ids": [
+            "operations-proof"
+          ]
+        },
+        {
+          "seq": 3,
+          "kind": "validation",
+          "label": "결과 검증",
+          "status": "failed",
+          "reason": "자료 또는 실행 조건이 부족합니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "operations-proof"
+          ]
+        },
+        {
+          "seq": 4,
+          "kind": "result",
+          "label": "실행 결과",
+          "status": "failed",
+          "reason": "입력·자료·접근 조건을 확인하세요.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "operations-proof"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "operations-proof",
+          "source": "fixture://operations",
+          "quote": "합성 도구 연결 오류 관측입니다. 결과는 수신하지 못했습니다."
+        }
+      ],
+      "output": null,
+      "artifact": null,
+      "limitations": [
+        "프런트 개발용 합성 예시. 공급자/API/GPU/파일 실실행 미검증."
+      ],
+      "next_action": "자료·제약·권한을 확인한 뒤 다시 실행하세요."
+    }
+  },
+  "video": {
+    "completed": {
+      "schema_version": "mission-v1",
+      "recipe": "video",
+      "run_id": "mock-video-completed",
+      "input_hash": "7be5815635f615183ed142a73b7d2373ac6a67fa680e36830314fdc3c7827621",
+      "mode": "mock",
+      "model_id": null,
+      "http_requests": 0,
+      "input": {
+        "question": "When does a person enter?",
+        "video": {
+          "ref": "fixture://clip",
+          "media_type": "video/mp4"
+        },
+        "duration_seconds": 20
+      },
+      "status": "completed",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "decision",
+          "label": "합성 도구 선택",
+          "status": "running",
+          "reason": "입력에 필요한 도구를 선택한 가상 기록입니다.",
+          "tool": "video",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 2,
+          "kind": "tool",
+          "label": "합성 도구 반환",
+          "status": "completed",
+          "reason": "합성 결과를 수신했습니다.",
+          "tool": "video",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": [
+            "video-proof"
+          ]
+        },
+        {
+          "seq": 3,
+          "kind": "validation",
+          "label": "결과 검증",
+          "status": "completed",
+          "reason": "완료 조건 확인 예시입니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "video-proof"
+          ]
+        },
+        {
+          "seq": 4,
+          "kind": "result",
+          "label": "실행 결과",
+          "status": "completed",
+          "reason": "결과 확인",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "video-proof"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "video-proof",
+          "source": "fixture://video",
+          "quote": "합성 입력과 결과를 대조한 예시입니다. 실제 공급자 실행 근거가 아닙니다."
+        }
+      ],
+      "output": {
+        "answer": "A person enters between 4 and 6 seconds.",
+        "segments": [
+          {
+            "start_seconds": 4,
+            "end_seconds": 6,
+            "frame": {
+              "ref": "fixture://frame-5",
+              "media_type": "image/jpeg"
+            },
+            "observation": "A person entering"
+          }
+        ],
+        "visually_verified": true
+      },
+      "artifact": {
+        "summary": "video 조합의 합성 완료 결과",
+        "evidence_ids": [
+          "video-proof"
+        ]
+      },
+      "limitations": [
+        "프런트 개발용 합성 예시. 공급자/API/GPU/파일 실실행 미검증."
+      ],
+      "next_action": "결과와 근거를 확인하세요."
+    },
+    "partial": {
+      "schema_version": "mission-v1",
+      "recipe": "video",
+      "run_id": "mock-video-partial",
+      "input_hash": "7be5815635f615183ed142a73b7d2373ac6a67fa680e36830314fdc3c7827621",
+      "mode": "mock",
+      "model_id": null,
+      "http_requests": 0,
+      "input": {
+        "question": "When does a person enter?",
+        "video": {
+          "ref": "fixture://clip",
+          "media_type": "video/mp4"
+        },
+        "duration_seconds": 20
+      },
+      "status": "partial",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "decision",
+          "label": "합성 도구 선택",
+          "status": "running",
+          "reason": "입력에 필요한 도구를 선택한 가상 기록입니다.",
+          "tool": "video",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 2,
+          "kind": "tool",
+          "label": "합성 도구 반환",
+          "status": "completed",
+          "reason": "합성 결과를 수신했습니다.",
+          "tool": "video",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": [
+            "video-proof"
+          ]
+        },
+        {
+          "seq": 3,
+          "kind": "validation",
+          "label": "결과 검증",
+          "status": "hold",
+          "reason": "자료 또는 실행 조건이 부족합니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "video-proof"
+          ]
+        },
+        {
+          "seq": 4,
+          "kind": "result",
+          "label": "실행 결과",
+          "status": "hold",
+          "reason": "입력·자료·접근 조건을 확인하세요.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "video-proof"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "video-proof",
+          "source": "fixture://video",
+          "quote": "합성 입력과 결과를 대조한 예시입니다. 실제 공급자 실행 근거가 아닙니다."
+        }
+      ],
+      "output": {
+        "answer": null,
+        "segments": [],
+        "visually_verified": false
+      },
+      "artifact": null,
+      "limitations": [
+        "프런트 개발용 합성 예시. 공급자/API/GPU/파일 실실행 미검증."
+      ],
+      "next_action": "자료·제약·권한을 확인한 뒤 다시 실행하세요."
+    },
+    "failed": {
+      "schema_version": "mission-v1",
+      "recipe": "video",
+      "run_id": "mock-video-failed",
+      "input_hash": "7be5815635f615183ed142a73b7d2373ac6a67fa680e36830314fdc3c7827621",
+      "mode": "mock",
+      "model_id": null,
+      "http_requests": 0,
+      "input": {
+        "question": "When does a person enter?",
+        "video": {
+          "ref": "fixture://clip",
+          "media_type": "video/mp4"
+        },
+        "duration_seconds": 20
+      },
+      "status": "failed",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "decision",
+          "label": "합성 도구 선택",
+          "status": "running",
+          "reason": "입력에 필요한 도구를 선택한 가상 기록입니다.",
+          "tool": "video",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 2,
+          "kind": "tool",
+          "label": "합성 도구 반환",
+          "status": "failed",
+          "reason": "도구 실패 예시입니다.",
+          "tool": "video",
+          "attempt": 1,
+          "error_code": "unavailable",
+          "evidence_ids": [
+            "video-proof"
+          ]
+        },
+        {
+          "seq": 3,
+          "kind": "validation",
+          "label": "결과 검증",
+          "status": "failed",
+          "reason": "자료 또는 실행 조건이 부족합니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "video-proof"
+          ]
+        },
+        {
+          "seq": 4,
+          "kind": "result",
+          "label": "실행 결과",
+          "status": "failed",
+          "reason": "입력·자료·접근 조건을 확인하세요.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "video-proof"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "video-proof",
+          "source": "fixture://video",
+          "quote": "합성 도구 연결 오류 관측입니다. 결과는 수신하지 못했습니다."
+        }
+      ],
+      "output": null,
+      "artifact": null,
+      "limitations": [
+        "프런트 개발용 합성 예시. 공급자/API/GPU/파일 실실행 미검증."
+      ],
+      "next_action": "자료·제약·권한을 확인한 뒤 다시 실행하세요."
+    }
+  },
+  "voice": {
+    "completed": {
+      "schema_version": "mission-v1",
+      "recipe": "voice",
+      "run_id": "mock-voice-completed",
+      "input_hash": "6bbcf9c0236016e1b358140c276961e41813ea95806ebe8ba5a22ea20f2400cb",
+      "mode": "mock",
+      "model_id": null,
+      "http_requests": 0,
+      "input": {
+        "audio": {
+          "ref": "fixture://speech",
+          "media_type": "audio/wav"
+        },
+        "encoding": "LINEAR_PCM",
+        "sample_rate_hz": 16000,
+        "language_code": "en-US",
+        "task": "summarize"
+      },
+      "status": "completed",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "decision",
+          "label": "합성 도구 선택",
+          "status": "running",
+          "reason": "입력에 필요한 도구를 선택한 가상 기록입니다.",
+          "tool": "voice",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 2,
+          "kind": "tool",
+          "label": "합성 도구 반환",
+          "status": "completed",
+          "reason": "합성 결과를 수신했습니다.",
+          "tool": "voice",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": [
+            "voice-proof"
+          ]
+        },
+        {
+          "seq": 3,
+          "kind": "validation",
+          "label": "결과 검증",
+          "status": "completed",
+          "reason": "완료 조건 확인 예시입니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "voice-proof"
+          ]
+        },
+        {
+          "seq": 4,
+          "kind": "result",
+          "label": "실행 결과",
+          "status": "completed",
+          "reason": "결과 확인",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "voice-proof"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "voice-proof",
+          "source": "fixture://voice",
+          "quote": "합성 입력과 결과를 대조한 예시입니다. 실제 공급자 실행 근거가 아닙니다."
+        }
+      ],
+      "output": {
+        "transcript": "Summarize the meeting.",
+        "final": true,
+        "task_result": "Meeting summary prepared.",
+        "audio_reply": null
+      },
+      "artifact": {
+        "summary": "voice 조합의 합성 완료 결과",
+        "evidence_ids": [
+          "voice-proof"
+        ]
+      },
+      "limitations": [
+        "프런트 개발용 합성 예시. 공급자/API/GPU/파일 실실행 미검증."
+      ],
+      "next_action": "결과와 근거를 확인하세요."
+    },
+    "partial": {
+      "schema_version": "mission-v1",
+      "recipe": "voice",
+      "run_id": "mock-voice-partial",
+      "input_hash": "6bbcf9c0236016e1b358140c276961e41813ea95806ebe8ba5a22ea20f2400cb",
+      "mode": "mock",
+      "model_id": null,
+      "http_requests": 0,
+      "input": {
+        "audio": {
+          "ref": "fixture://speech",
+          "media_type": "audio/wav"
+        },
+        "encoding": "LINEAR_PCM",
+        "sample_rate_hz": 16000,
+        "language_code": "en-US",
+        "task": "summarize"
+      },
+      "status": "partial",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "decision",
+          "label": "합성 도구 선택",
+          "status": "running",
+          "reason": "입력에 필요한 도구를 선택한 가상 기록입니다.",
+          "tool": "voice",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 2,
+          "kind": "tool",
+          "label": "합성 도구 반환",
+          "status": "completed",
+          "reason": "합성 결과를 수신했습니다.",
+          "tool": "voice",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": [
+            "voice-proof"
+          ]
+        },
+        {
+          "seq": 3,
+          "kind": "validation",
+          "label": "결과 검증",
+          "status": "hold",
+          "reason": "자료 또는 실행 조건이 부족합니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "voice-proof"
+          ]
+        },
+        {
+          "seq": 4,
+          "kind": "result",
+          "label": "실행 결과",
+          "status": "hold",
+          "reason": "입력·자료·접근 조건을 확인하세요.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "voice-proof"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "voice-proof",
+          "source": "fixture://voice",
+          "quote": "합성 입력과 결과를 대조한 예시입니다. 실제 공급자 실행 근거가 아닙니다."
+        }
+      ],
+      "output": {
+        "transcript": "",
+        "final": false,
+        "task_result": null,
+        "audio_reply": null
+      },
+      "artifact": null,
+      "limitations": [
+        "프런트 개발용 합성 예시. 공급자/API/GPU/파일 실실행 미검증."
+      ],
+      "next_action": "자료·제약·권한을 확인한 뒤 다시 실행하세요."
+    },
+    "failed": {
+      "schema_version": "mission-v1",
+      "recipe": "voice",
+      "run_id": "mock-voice-failed",
+      "input_hash": "6bbcf9c0236016e1b358140c276961e41813ea95806ebe8ba5a22ea20f2400cb",
+      "mode": "mock",
+      "model_id": null,
+      "http_requests": 0,
+      "input": {
+        "audio": {
+          "ref": "fixture://speech",
+          "media_type": "audio/wav"
+        },
+        "encoding": "LINEAR_PCM",
+        "sample_rate_hz": 16000,
+        "language_code": "en-US",
+        "task": "summarize"
+      },
+      "status": "failed",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "decision",
+          "label": "합성 도구 선택",
+          "status": "running",
+          "reason": "입력에 필요한 도구를 선택한 가상 기록입니다.",
+          "tool": "voice",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 2,
+          "kind": "tool",
+          "label": "합성 도구 반환",
+          "status": "failed",
+          "reason": "도구 실패 예시입니다.",
+          "tool": "voice",
+          "attempt": 1,
+          "error_code": "unavailable",
+          "evidence_ids": [
+            "voice-proof"
+          ]
+        },
+        {
+          "seq": 3,
+          "kind": "validation",
+          "label": "결과 검증",
+          "status": "failed",
+          "reason": "자료 또는 실행 조건이 부족합니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "voice-proof"
+          ]
+        },
+        {
+          "seq": 4,
+          "kind": "result",
+          "label": "실행 결과",
+          "status": "failed",
+          "reason": "입력·자료·접근 조건을 확인하세요.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "voice-proof"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "voice-proof",
+          "source": "fixture://voice",
+          "quote": "합성 도구 연결 오류 관측입니다. 결과는 수신하지 못했습니다."
+        }
+      ],
+      "output": null,
+      "artifact": null,
+      "limitations": [
+        "프런트 개발용 합성 예시. 공급자/API/GPU/파일 실실행 미검증."
+      ],
+      "next_action": "자료·제약·권한을 확인한 뒤 다시 실행하세요."
+    }
+  },
+  "biology": {
+    "completed": {
+      "schema_version": "mission-v1",
+      "recipe": "biology",
+      "run_id": "mock-biology-completed",
+      "input_hash": "3f8db7e63e2268ed7c56ef9ba03d2fe1b55216da52f41ae41f42ef922735eed6",
+      "mode": "mock",
+      "model_id": null,
+      "http_requests": 0,
+      "input": {
+        "polymers": [
+          {
+            "id": "A",
+            "molecule_type": "protein",
+            "sequence": "MTEYK"
+          }
+        ],
+        "existing_structures": []
+      },
+      "status": "completed",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "decision",
+          "label": "합성 도구 선택",
+          "status": "running",
+          "reason": "입력에 필요한 도구를 선택한 가상 기록입니다.",
+          "tool": "biology",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 2,
+          "kind": "tool",
+          "label": "합성 도구 반환",
+          "status": "completed",
+          "reason": "합성 결과를 수신했습니다.",
+          "tool": "biology",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": [
+            "biology-proof"
+          ]
+        },
+        {
+          "seq": 3,
+          "kind": "validation",
+          "label": "결과 검증",
+          "status": "completed",
+          "reason": "완료 조건 확인 예시입니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "biology-proof"
+          ]
+        },
+        {
+          "seq": 4,
+          "kind": "result",
+          "label": "실행 결과",
+          "status": "completed",
+          "reason": "결과 확인",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "biology-proof"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "biology-proof",
+          "source": "fixture://biology",
+          "quote": "합성 입력과 결과를 대조한 예시입니다. 실제 공급자 실행 근거가 아닙니다."
+        }
+      ],
+      "output": {
+        "structures": [
+          {
+            "file": {
+              "ref": "fixture://structure",
+              "media_type": "chemical/x-mmcif"
+            },
+            "chain_ids": [
+              "A"
+            ],
+            "sequence_match": true,
+            "coordinate_check": true,
+            "confidence": 0.8,
+            "provenance": "predicted"
+          }
+        ],
+        "interpretation": "Structure check only; biological efficacy unverified."
+      },
+      "artifact": {
+        "summary": "biology 조합의 합성 완료 결과",
+        "evidence_ids": [
+          "biology-proof"
+        ]
+      },
+      "limitations": [
+        "프런트 개발용 합성 예시. 공급자/API/GPU/파일 실실행 미검증."
+      ],
+      "next_action": "결과와 근거를 확인하세요."
+    },
+    "partial": {
+      "schema_version": "mission-v1",
+      "recipe": "biology",
+      "run_id": "mock-biology-partial",
+      "input_hash": "3f8db7e63e2268ed7c56ef9ba03d2fe1b55216da52f41ae41f42ef922735eed6",
+      "mode": "mock",
+      "model_id": null,
+      "http_requests": 0,
+      "input": {
+        "polymers": [
+          {
+            "id": "A",
+            "molecule_type": "protein",
+            "sequence": "MTEYK"
+          }
+        ],
+        "existing_structures": []
+      },
+      "status": "partial",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "decision",
+          "label": "합성 도구 선택",
+          "status": "running",
+          "reason": "입력에 필요한 도구를 선택한 가상 기록입니다.",
+          "tool": "biology",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 2,
+          "kind": "tool",
+          "label": "합성 도구 반환",
+          "status": "completed",
+          "reason": "합성 결과를 수신했습니다.",
+          "tool": "biology",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": [
+            "biology-proof"
+          ]
+        },
+        {
+          "seq": 3,
+          "kind": "validation",
+          "label": "결과 검증",
+          "status": "hold",
+          "reason": "자료 또는 실행 조건이 부족합니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "biology-proof"
+          ]
+        },
+        {
+          "seq": 4,
+          "kind": "result",
+          "label": "실행 결과",
+          "status": "hold",
+          "reason": "입력·자료·접근 조건을 확인하세요.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "biology-proof"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "biology-proof",
+          "source": "fixture://biology",
+          "quote": "합성 입력과 결과를 대조한 예시입니다. 실제 공급자 실행 근거가 아닙니다."
+        }
+      ],
+      "output": {
+        "structures": [],
+        "interpretation": "Input correspondence cannot be checked."
+      },
+      "artifact": null,
+      "limitations": [
+        "프런트 개발용 합성 예시. 공급자/API/GPU/파일 실실행 미검증."
+      ],
+      "next_action": "자료·제약·권한을 확인한 뒤 다시 실행하세요."
+    },
+    "failed": {
+      "schema_version": "mission-v1",
+      "recipe": "biology",
+      "run_id": "mock-biology-failed",
+      "input_hash": "3f8db7e63e2268ed7c56ef9ba03d2fe1b55216da52f41ae41f42ef922735eed6",
+      "mode": "mock",
+      "model_id": null,
+      "http_requests": 0,
+      "input": {
+        "polymers": [
+          {
+            "id": "A",
+            "molecule_type": "protein",
+            "sequence": "MTEYK"
+          }
+        ],
+        "existing_structures": []
+      },
+      "status": "failed",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "decision",
+          "label": "합성 도구 선택",
+          "status": "running",
+          "reason": "입력에 필요한 도구를 선택한 가상 기록입니다.",
+          "tool": "biology",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 2,
+          "kind": "tool",
+          "label": "합성 도구 반환",
+          "status": "failed",
+          "reason": "도구 실패 예시입니다.",
+          "tool": "biology",
+          "attempt": 1,
+          "error_code": "unavailable",
+          "evidence_ids": [
+            "biology-proof"
+          ]
+        },
+        {
+          "seq": 3,
+          "kind": "validation",
+          "label": "결과 검증",
+          "status": "failed",
+          "reason": "자료 또는 실행 조건이 부족합니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "biology-proof"
+          ]
+        },
+        {
+          "seq": 4,
+          "kind": "result",
+          "label": "실행 결과",
+          "status": "failed",
+          "reason": "입력·자료·접근 조건을 확인하세요.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "biology-proof"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "biology-proof",
+          "source": "fixture://biology",
+          "quote": "합성 도구 연결 오류 관측입니다. 결과는 수신하지 못했습니다."
+        }
+      ],
+      "output": null,
+      "artifact": null,
+      "limitations": [
+        "프런트 개발용 합성 예시. 공급자/API/GPU/파일 실실행 미검증."
+      ],
+      "next_action": "자료·제약·권한을 확인한 뒤 다시 실행하세요."
+    }
+  },
+  "data": {
+    "completed": {
+      "schema_version": "mission-v1",
+      "recipe": "data",
+      "run_id": "mock-data-completed",
+      "input_hash": "d302e8b58750df1800e7777acdac21f40c6a211e8491e42cbf3cf7a441b3b9a1",
+      "mode": "mock",
+      "model_id": null,
+      "http_requests": 0,
+      "input": {
+        "dataset": {
+          "ref": "fixture://table",
+          "media_type": "text/csv"
+        },
+        "columns": [
+          {
+            "name": "team",
+            "dtype": "string"
+          },
+          {
+            "name": "amount",
+            "dtype": "int64"
+          }
+        ],
+        "group_by": [
+          "team"
+        ],
+        "value_column": "amount",
+        "aggregation": "sum"
+      },
+      "status": "completed",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "decision",
+          "label": "합성 도구 선택",
+          "status": "running",
+          "reason": "입력에 필요한 도구를 선택한 가상 기록입니다.",
+          "tool": "data",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 2,
+          "kind": "tool",
+          "label": "합성 도구 반환",
+          "status": "completed",
+          "reason": "합성 결과를 수신했습니다.",
+          "tool": "data",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": [
+            "data-proof"
+          ]
+        },
+        {
+          "seq": 3,
+          "kind": "validation",
+          "label": "결과 검증",
+          "status": "completed",
+          "reason": "완료 조건 확인 예시입니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "data-proof"
+          ]
+        },
+        {
+          "seq": 4,
+          "kind": "result",
+          "label": "실행 결과",
+          "status": "completed",
+          "reason": "결과 확인",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "data-proof"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "data-proof",
+          "source": "fixture://data",
+          "quote": "합성 입력과 결과를 대조한 예시입니다. 실제 공급자 실행 근거가 아닙니다."
+        }
+      ],
+      "output": {
+        "columns": [
+          "team",
+          "amount"
+        ],
+        "rows": [
+          [
+            "A",
+            30
+          ]
+        ],
+        "row_count": 1,
+        "cpu_parity": "pass",
+        "duration_ms": 3
+      },
+      "artifact": {
+        "summary": "data 조합의 합성 완료 결과",
+        "evidence_ids": [
+          "data-proof"
+        ]
+      },
+      "limitations": [
+        "프런트 개발용 합성 예시. 공급자/API/GPU/파일 실실행 미검증."
+      ],
+      "next_action": "결과와 근거를 확인하세요."
+    },
+    "partial": {
+      "schema_version": "mission-v1",
+      "recipe": "data",
+      "run_id": "mock-data-partial",
+      "input_hash": "d302e8b58750df1800e7777acdac21f40c6a211e8491e42cbf3cf7a441b3b9a1",
+      "mode": "mock",
+      "model_id": null,
+      "http_requests": 0,
+      "input": {
+        "dataset": {
+          "ref": "fixture://table",
+          "media_type": "text/csv"
+        },
+        "columns": [
+          {
+            "name": "team",
+            "dtype": "string"
+          },
+          {
+            "name": "amount",
+            "dtype": "int64"
+          }
+        ],
+        "group_by": [
+          "team"
+        ],
+        "value_column": "amount",
+        "aggregation": "sum"
+      },
+      "status": "partial",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "decision",
+          "label": "합성 도구 선택",
+          "status": "running",
+          "reason": "입력에 필요한 도구를 선택한 가상 기록입니다.",
+          "tool": "data",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 2,
+          "kind": "tool",
+          "label": "합성 도구 반환",
+          "status": "completed",
+          "reason": "합성 결과를 수신했습니다.",
+          "tool": "data",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": [
+            "data-proof"
+          ]
+        },
+        {
+          "seq": 3,
+          "kind": "validation",
+          "label": "결과 검증",
+          "status": "hold",
+          "reason": "자료 또는 실행 조건이 부족합니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "data-proof"
+          ]
+        },
+        {
+          "seq": 4,
+          "kind": "result",
+          "label": "실행 결과",
+          "status": "hold",
+          "reason": "입력·자료·접근 조건을 확인하세요.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "data-proof"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "data-proof",
+          "source": "fixture://data",
+          "quote": "합성 입력과 결과를 대조한 예시입니다. 실제 공급자 실행 근거가 아닙니다."
+        }
+      ],
+      "output": {
+        "columns": [
+          "team",
+          "amount"
+        ],
+        "rows": [
+          [
+            "A",
+            30
+          ]
+        ],
+        "row_count": 1,
+        "cpu_parity": "unverified",
+        "duration_ms": 3
+      },
+      "artifact": null,
+      "limitations": [
+        "프런트 개발용 합성 예시. 공급자/API/GPU/파일 실실행 미검증."
+      ],
+      "next_action": "자료·제약·권한을 확인한 뒤 다시 실행하세요."
+    },
+    "failed": {
+      "schema_version": "mission-v1",
+      "recipe": "data",
+      "run_id": "mock-data-failed",
+      "input_hash": "d302e8b58750df1800e7777acdac21f40c6a211e8491e42cbf3cf7a441b3b9a1",
+      "mode": "mock",
+      "model_id": null,
+      "http_requests": 0,
+      "input": {
+        "dataset": {
+          "ref": "fixture://table",
+          "media_type": "text/csv"
+        },
+        "columns": [
+          {
+            "name": "team",
+            "dtype": "string"
+          },
+          {
+            "name": "amount",
+            "dtype": "int64"
+          }
+        ],
+        "group_by": [
+          "team"
+        ],
+        "value_column": "amount",
+        "aggregation": "sum"
+      },
+      "status": "failed",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "decision",
+          "label": "합성 도구 선택",
+          "status": "running",
+          "reason": "입력에 필요한 도구를 선택한 가상 기록입니다.",
+          "tool": "data",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 2,
+          "kind": "tool",
+          "label": "합성 도구 반환",
+          "status": "failed",
+          "reason": "도구 실패 예시입니다.",
+          "tool": "data",
+          "attempt": 1,
+          "error_code": "unavailable",
+          "evidence_ids": [
+            "data-proof"
+          ]
+        },
+        {
+          "seq": 3,
+          "kind": "validation",
+          "label": "결과 검증",
+          "status": "failed",
+          "reason": "자료 또는 실행 조건이 부족합니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "data-proof"
+          ]
+        },
+        {
+          "seq": 4,
+          "kind": "result",
+          "label": "실행 결과",
+          "status": "failed",
+          "reason": "입력·자료·접근 조건을 확인하세요.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "data-proof"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "data-proof",
+          "source": "fixture://data",
+          "quote": "합성 도구 연결 오류 관측입니다. 결과는 수신하지 못했습니다."
+        }
+      ],
+      "output": null,
+      "artifact": null,
+      "limitations": [
+        "프런트 개발용 합성 예시. 공급자/API/GPU/파일 실실행 미검증."
+      ],
+      "next_action": "자료·제약·권한을 확인한 뒤 다시 실행하세요."
+    }
+  },
+  "sandbox": {
+    "completed": {
+      "schema_version": "mission-v1",
+      "recipe": "sandbox",
+      "run_id": "mock-sandbox-completed",
+      "input_hash": "277efec0f85ca31668f3eba58db27d633992ab2e4970f6b29695009f5d34094a",
+      "mode": "mock",
+      "model_id": null,
+      "http_requests": 0,
+      "input": {
+        "goal": "Create a summary from an allowed file",
+        "allowed_read": [
+          "/workspace/input.txt"
+        ],
+        "allowed_write": [
+          "/workspace/output.txt"
+        ],
+        "allowed_hosts": [],
+        "output_ref": "/workspace/output.txt"
+      },
+      "status": "completed",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "decision",
+          "label": "합성 도구 선택",
+          "status": "running",
+          "reason": "입력에 필요한 도구를 선택한 가상 기록입니다.",
+          "tool": "sandbox",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 2,
+          "kind": "tool",
+          "label": "합성 도구 반환",
+          "status": "completed",
+          "reason": "합성 결과를 수신했습니다.",
+          "tool": "sandbox",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": [
+            "sandbox-proof"
+          ]
+        },
+        {
+          "seq": 3,
+          "kind": "validation",
+          "label": "결과 검증",
+          "status": "completed",
+          "reason": "완료 조건 확인 예시입니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "sandbox-proof"
+          ]
+        },
+        {
+          "seq": 4,
+          "kind": "result",
+          "label": "실행 결과",
+          "status": "completed",
+          "reason": "결과 확인",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "sandbox-proof"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "sandbox-proof",
+          "source": "fixture://sandbox",
+          "quote": "합성 입력과 결과를 대조한 예시입니다. 실제 공급자 실행 근거가 아닙니다."
+        }
+      ],
+      "output": {
+        "files": [
+          {
+            "ref": "fixture://output",
+            "media_type": "text/plain"
+          }
+        ],
+        "denied_accesses": [
+          "/private/secret"
+        ],
+        "scope_verified": true,
+        "exit_code": 0
+      },
+      "artifact": {
+        "summary": "sandbox 조합의 합성 완료 결과",
+        "evidence_ids": [
+          "sandbox-proof"
+        ]
+      },
+      "limitations": [
+        "프런트 개발용 합성 예시. 공급자/API/GPU/파일 실실행 미검증."
+      ],
+      "next_action": "결과와 근거를 확인하세요."
+    },
+    "partial": {
+      "schema_version": "mission-v1",
+      "recipe": "sandbox",
+      "run_id": "mock-sandbox-partial",
+      "input_hash": "277efec0f85ca31668f3eba58db27d633992ab2e4970f6b29695009f5d34094a",
+      "mode": "mock",
+      "model_id": null,
+      "http_requests": 0,
+      "input": {
+        "goal": "Create a summary from an allowed file",
+        "allowed_read": [
+          "/workspace/input.txt"
+        ],
+        "allowed_write": [
+          "/workspace/output.txt"
+        ],
+        "allowed_hosts": [],
+        "output_ref": "/workspace/output.txt"
+      },
+      "status": "partial",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "decision",
+          "label": "합성 도구 선택",
+          "status": "running",
+          "reason": "입력에 필요한 도구를 선택한 가상 기록입니다.",
+          "tool": "sandbox",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 2,
+          "kind": "tool",
+          "label": "합성 도구 반환",
+          "status": "completed",
+          "reason": "합성 결과를 수신했습니다.",
+          "tool": "sandbox",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": [
+            "sandbox-proof"
+          ]
+        },
+        {
+          "seq": 3,
+          "kind": "validation",
+          "label": "결과 검증",
+          "status": "hold",
+          "reason": "자료 또는 실행 조건이 부족합니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "sandbox-proof"
+          ]
+        },
+        {
+          "seq": 4,
+          "kind": "result",
+          "label": "실행 결과",
+          "status": "hold",
+          "reason": "입력·자료·접근 조건을 확인하세요.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "sandbox-proof"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "sandbox-proof",
+          "source": "fixture://sandbox",
+          "quote": "합성 입력과 결과를 대조한 예시입니다. 실제 공급자 실행 근거가 아닙니다."
+        }
+      ],
+      "output": {
+        "files": [],
+        "denied_accesses": [
+          "/private/secret"
+        ],
+        "scope_verified": false,
+        "exit_code": null
+      },
+      "artifact": null,
+      "limitations": [
+        "프런트 개발용 합성 예시. 공급자/API/GPU/파일 실실행 미검증."
+      ],
+      "next_action": "자료·제약·권한을 확인한 뒤 다시 실행하세요."
+    },
+    "failed": {
+      "schema_version": "mission-v1",
+      "recipe": "sandbox",
+      "run_id": "mock-sandbox-failed",
+      "input_hash": "277efec0f85ca31668f3eba58db27d633992ab2e4970f6b29695009f5d34094a",
+      "mode": "mock",
+      "model_id": null,
+      "http_requests": 0,
+      "input": {
+        "goal": "Create a summary from an allowed file",
+        "allowed_read": [
+          "/workspace/input.txt"
+        ],
+        "allowed_write": [
+          "/workspace/output.txt"
+        ],
+        "allowed_hosts": [],
+        "output_ref": "/workspace/output.txt"
+      },
+      "status": "failed",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "decision",
+          "label": "합성 도구 선택",
+          "status": "running",
+          "reason": "입력에 필요한 도구를 선택한 가상 기록입니다.",
+          "tool": "sandbox",
+          "attempt": 1,
+          "error_code": null,
+          "evidence_ids": []
+        },
+        {
+          "seq": 2,
+          "kind": "tool",
+          "label": "합성 도구 반환",
+          "status": "failed",
+          "reason": "도구 실패 예시입니다.",
+          "tool": "sandbox",
+          "attempt": 1,
+          "error_code": "unavailable",
+          "evidence_ids": [
+            "sandbox-proof"
+          ]
+        },
+        {
+          "seq": 3,
+          "kind": "validation",
+          "label": "결과 검증",
+          "status": "failed",
+          "reason": "자료 또는 실행 조건이 부족합니다.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "sandbox-proof"
+          ]
+        },
+        {
+          "seq": 4,
+          "kind": "result",
+          "label": "실행 결과",
+          "status": "failed",
+          "reason": "입력·자료·접근 조건을 확인하세요.",
+          "tool": null,
+          "attempt": null,
+          "error_code": null,
+          "evidence_ids": [
+            "sandbox-proof"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "id": "sandbox-proof",
+          "source": "fixture://sandbox",
+          "quote": "합성 도구 연결 오류 관측입니다. 결과는 수신하지 못했습니다."
+        }
+      ],
+      "output": null,
+      "artifact": null,
+      "limitations": [
+        "프런트 개발용 합성 예시. 공급자/API/GPU/파일 실실행 미검증."
+      ],
+      "next_action": "자료·제약·권한을 확인한 뒤 다시 실행하세요."
+    }
+  }
+}

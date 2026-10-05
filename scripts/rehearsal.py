@@ -37,13 +37,13 @@ def collect_more(case, attempt):
 TOOLS = {'check_existing': check_existing, 'collect_more': collect_more}
 
 
-def validate_evidence(rows):
+def validate_evidence(rows, topic=TOPIC):
     """Independent fixture-domain check, not a claim of real-world source correctness."""
     if not isinstance(rows, list) or any(not isinstance(r, dict) for r in rows):
         return 'invalid_output'
     if any(set(r) != {'id', 'source', 'topic', 'supported', 'quote'} or
            not all(isinstance(r[k], str) and r[k] for k in ['id', 'source', 'topic', 'quote']) or
-           type(r['supported']) is not bool or r['topic'] != TOPIC for r in rows):
+           type(r['supported']) is not bool or r['topic'] != topic for r in rows):
         return 'invalid_output'
     if len({r['id'] for r in rows}) != len(rows):
         return 'invalid_output'
@@ -54,46 +54,65 @@ def validate_evidence(rows):
     return 'pass'
 
 
-def mock_decide(observation):
-    """Replace with model adapter for live work; this rule is only a test double."""
-    if not observation['calls']:
-        return 'check_existing', '추가 조사 전에 이미 확보된 근거를 확인합니다.'
-    if observation['error']:
-        if observation['attempts'].get('collect_more', 0) < 2:
-            return 'collect_more', '일시 오류가 있어 허용된 한 번의 재시도를 선택합니다.'
-        return 'fail', '재시도 상한에 도달해 실행을 종료합니다.'
+def allowed_actions(observation):
+    """State policy; no scenario names or expected paths are used here."""
     if observation['validation'] == 'pass':
-        return 'complete', '서로 다른 두 근거가 일치하고 검증을 통과했습니다.'
+        return ['complete']
     if observation['validation'] in {'conflict', 'invalid_output'}:
-        return 'hold', '근거가 충돌하거나 형식이 잘못되어 결론을 보류합니다.'
+        return ['hold']
+    if observation['error']:
+        failed = observation['calls'][-1]
+        return [failed, 'fail'] if observation['attempts'][failed] < 2 else ['fail']
+    if not observation['calls']:
+        return ['check_existing']
     if 'collect_more' in observation['calls']:
-        return 'hold', '추가 조사 후에도 근거가 부족해 결론을 보류합니다.'
-    return 'collect_more', '기존 근거가 한 건뿐이므로 추가 자료를 수집합니다.'
+        return ['hold']
+    return ['collect_more', 'hold']
 
 
-def run(case, decide=mock_decide, tools=None, max_steps=6):
-    if case not in CASES:
+def mock_decide(observation):
+    """Deterministic test double: choose the first permitted action."""
+    return observation['allowed_actions'][0], '관측에 따라 허용된 행동을 테스트용 규칙으로 선택합니다.'
+
+
+def run(case, decide=mock_decide, tools=None, max_steps=6, topic=TOPIC):
+    if case not in CASES and tools is None:
         raise ValueError('알 수 없는 예시')
     tools = TOOLS if tools is None else tools
-    request = {'goal': TOPIC, 'case': case, 'limits': {'max_steps': max_steps, 'max_attempts_per_tool': 2}}
+    request = {'goal': topic, 'case': case, 'limits': {'max_steps': max_steps, 'max_attempts_per_tool': 2}}
     input_hash = hashlib.sha256(json.dumps(request, sort_keys=True).encode()).hexdigest()
     result = {'schema_version': 'research-v1', 'run_id': 'mock-' + input_hash[:12],
               'mode': 'mock', 'model_id': None, 'http_requests': 0, 'input_hash': input_hash,
               'input': request, 'status': 'running', 'events': [], 'evidence': [],
               'artifact': None, 'limitations': ['합성 자료·규칙 기반 mock 판단이며 모델/API/NAT 실행 근거가 아닙니다.'],
               'next_action': ''}
-    obs = {'calls': [], 'attempts': {}, 'error': None, 'validation': 'insufficient'}
+    obs = {'goal': topic, 'calls': [], 'attempts': {}, 'error': None,
+           'validation': 'insufficient', 'evidence': []}
 
     def emit(kind, label, status, reason, tool=None, attempt=None, error=None, ids=None):
         result['events'].append({'seq': len(result['events']) + 1, 'kind': kind, 'label': label,
                                  'status': status, 'reason': reason, 'tool': tool, 'attempt': attempt,
                                  'error_code': error, 'evidence_ids': ids or []})
 
-    for _ in range(max_steps):
-        action, reason = decide(deepcopy(obs))
-        emit('decision', '다음 행동 선택', 'running', reason, tool=action if action in TOOLS else None)
+    for step in range(max_steps + 1):
+        obs['allowed_actions'] = allowed_actions(obs)
+        terminal = obs['allowed_actions'][0] if len(obs['allowed_actions']) == 1 and obs['allowed_actions'][0] in {'complete', 'hold', 'fail'} else None
+        if terminal:
+            action, reason = terminal, '실행 제어가 검증 결과와 남은 도구에 따라 종료했습니다: ' + obs['validation'] + (('; ' + obs['error']) if obs['error'] else '')
+        else:
+            if step == max_steps:
+                result['status'] = 'partial'
+                result['next_action'] = '단계 상한에 도달했습니다. 범위를 줄여 다시 실행하세요.'
+                break
+            action, reason = decide(deepcopy(obs))
+        emit('decision', '실행 제어의 종료' if terminal else '다음 행동 선택', 'running', reason,
+             tool=action if action in TOOLS else None)
+        if action not in obs['allowed_actions']:
+            result['status'] = 'failed'
+            result['next_action'] = '현재 관측에서 허용되지 않은 행동을 수정하세요.'
+            break
         if action in {'complete', 'hold', 'fail'}:
-            if action == 'complete' and validate_evidence(result['evidence']) != 'pass':
+            if action == 'complete' and validate_evidence(result['evidence'], topic) != 'pass':
                 result['status'] = 'failed'
                 result['next_action'] = '완료 조건을 충족하지 않은 판단을 수정하세요.'
             else:
@@ -102,7 +121,7 @@ def run(case, decide=mock_decide, tools=None, max_steps=6):
                                          'hold': '누락되거나 충돌하는 자료를 확인한 뒤 다시 실행하세요.',
                                          'fail': '도구 연결 상태를 확인한 뒤 다시 실행하세요.'}[action]
                 if action == 'complete':
-                    result['artifact'] = {'summary': TOPIC + ': ' + ('지원' if result['evidence'][0]['supported'] else '미지원'),
+                    result['artifact'] = {'summary': topic + ': ' + ('지원' if result['evidence'][0]['supported'] else '미지원'),
                                           'evidence_ids': [e['id'] for e in result['evidence']]}
             break
         if action not in TOOLS or action not in tools:
@@ -125,7 +144,7 @@ def run(case, decide=mock_decide, tools=None, max_steps=6):
             continue
         obs['error'] = None
         candidate = result['evidence'] + rows if isinstance(rows, list) else None
-        verdict = validate_evidence(candidate)
+        verdict = validate_evidence(candidate, topic)
         if verdict != 'invalid_output':
             result['evidence'] = candidate
         ids = [r['id'] for r in result['evidence']]
@@ -154,7 +173,7 @@ def assert_result(result):
         if event['seq'] != i or not set(event['evidence_ids']) <= ids:
             raise ValueError('이벤트 순서 또는 근거 연결 오류')
     if result['status'] == 'completed':
-        if validate_evidence(result['evidence']) != 'pass' or not result['artifact']:
+        if validate_evidence(result['evidence'], result['input']['goal']) != 'pass' or not result['artifact']:
             raise ValueError('검증 전 완료 금지')
         if set(result['artifact']['evidence_ids']) != ids:
             raise ValueError('산출물 근거 불일치')
