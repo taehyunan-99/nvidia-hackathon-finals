@@ -6,7 +6,8 @@
 ## 2. CONTENTS — 파일과 기술
 - agent-flow.md — 목표·상태·도구 선택·검증·종료의 공통 흐름
 - model-policy.md, model-policy.json — 본선 공통 모델 호출 기본값·적용 경계
-- rehearsal.md, examples/research/ — 오프라인 계약 리허설과 합성 fixture
+- rehearsal.md, examples/research/ — 오프라인 계약 리허설·합성 fixture와 긴 라이브 분석의 조건부 시연 압축
+- brev-event-guide.md — GPU 필요성 판단·당일 등록/접속/백업/종료 안내
 - README.md, missions/ — 미션별 조합
 - quickstarts/ — 실제 시작 절차
 - skill-setup.md — 최신/고정 스킬 확보

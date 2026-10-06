@@ -45,7 +45,8 @@
 
 ## 운영 기준
 
-[2인 개발·로컬 시연](docs/operations/workflow.md): 공동 최소 연결 후 에이전트와 프런트·서비스로 나누고 교차 검증한다. 배포 없이 로컬 시연을 목표로 하며 개인별 담당·목표 시각은 미확정과 구분한다. [입출력 계약](docs/catalog/contracts.md) → [실행 흐름 화면](docs/design/agent-flow.md) → [리허설](docs/playbooks/rehearsal.md)을 재사용하며 [확정 디자인](docs/design/README.md)의 미세 비교는 재개하지 않는다.
+<!-- prev: 공동 최소 연결 후 분담, 개인별 담당·목표 시각 미확정 → 2026-10-06 사용자 결정으로 11:30까지 주제·문서·계약 정리 후 단계별 분담, 15:00 공동 점검·16:00 발표 준비 시간표 반영. -->
+[2인 개발·로컬 시연](docs/operations/workflow.md): 11:30까지 주제·문서·입출력 계약을 함께 정리한 뒤 단계별로 분담하고, 15:00부터 공동 점검·16:00부터 발표 준비를 진행한다. 배포 없이 로컬 시연을 목표로 하며 시간표의 A/B는 특정 팀원에게 미리 배정한 이름이 아니다. [입출력 계약](docs/catalog/contracts.md) → [실행 흐름 화면](docs/design/agent-flow.md) → [리허설](docs/playbooks/rehearsal.md)을 재사용하며 [확정 디자인](docs/design/README.md)의 미세 비교는 재개하지 않는다.
 
 ## 저장소 운영 스킬
 

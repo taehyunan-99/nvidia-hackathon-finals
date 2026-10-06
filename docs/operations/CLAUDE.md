@@ -5,7 +5,7 @@
 
 ## 2. CONTENTS — 파일과 기술
 - event.md — 사용자 전달 안내
-- workflow.md — 공동 최소 연결·영역 분담·로컬 시연 운영 기준
+- workflow.md — 공동 주제·문서·계약 정리, 단계별 분담·통합·발표 준비 시간표
 - guide-sync.md — both 운영
 - repo-skills.md — repo 작업 스킬 사용법
 - ci-policy.md — 변경 영향·검사 시간 예산·미완료 검사 처리 원칙
