@@ -8,7 +8,7 @@ GPU 환경을 마련해 원격 개발·컨테이너 실행
 
 ## 바로 사용할 경로
 
-1. [최소 실행 안내](../../playbooks/quickstarts/runtime.md)를 읽고 배치 경로를 선택한다.
+1. [대회 당일 사용 가이드](../../playbooks/brev-event-guide.md)에서 API·GPU 선택과 크레딧·실행·종료 순서를 확인하고, [최소 실행 안내](../../playbooks/quickstarts/runtime.md)로 배치 경로를 선택한다.
 2. 필요한 스킬만 아래 링크 또는 `python3 scripts/lookup.py --show tool:brev`로 조회한다.
 3. 준비된 작은 입력으로 실행하고 아래 성공 기준을 확인한다.
 
