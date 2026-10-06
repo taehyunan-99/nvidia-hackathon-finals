@@ -2,6 +2,8 @@
 
 ## Brev
 
+[대회 당일 사용 가이드](../brev-event-guide.md)에 API와 직접 GPU 운영의 선택 기준, 크레딧 등록, OS별 접속 명령, 백업·종료 절차를 정리했다.
+
 [공식 시작 페이지](https://docs.nvidia.com/brev/getting-started/overview)에서 팀 계정/크레딧과 사용할 GPU를 확인한 뒤 환경을 만든다. 지급 정보·비용·종료 조건이 미확정인 현재 자동 임대하지 않는다.
 연결 후 `nvidia-smi`, `docker version`, `docker info`로 장치/driver/daemon을 확인하고 GPU 컨테이너는 선택 제품의 image/tag·runtime 조건에 따라 시작한다. 접속 성공 이후 실제 모델/solver 한 건까지 별도로 기록한다. `tao-run-on-brev`는 TAO 전용이며 범용 Brev 설치 스킬로 쓰지 않는다.
 

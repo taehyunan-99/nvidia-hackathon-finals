@@ -2,6 +2,8 @@
 
 공통 원리는 [에이전트 흐름](agent-flow.md), 평가 기준은 [루브릭·스킬](../evaluation/README.md)을 따른다. 운영 방향은 [2인 개발·로컬 시연](../operations/workflow.md), 검색부터 화면까지 점검은 [로컬 리허설](rehearsal.md)을 따른다.
 
+Brev를 검토한다면 [대회 당일 GPU·크레딧 가이드](brev-event-guide.md)에서 API로 충분한 경우, GPU 사용 예시, 등록·접속·백업·종료 순서를 확인한다.
+
 1. [미션 카드](templates/mission.md)에 사용자·실패 상태·입력·성공 기준을 적고 [주제 선정 기준](../evaluation/topic-selection.md)으로 후보를 비교한다.
 2. 선택한 주제에 [조합 선택표](recipes.md)를 적용하고 `python3 scripts/lookup.py "미션 핵심어" --kind recipe` 또는 아래 목록에서 한 조합을 고른다.
 3. 해당 조합의 quickstart→스킬 확보→실제 한 건 실행→독립 검증 순서로 진행한다.
