@@ -78,32 +78,32 @@ class SyncTests(unittest.TestCase):
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory();self.root=Path(self.tmp.name)
         git(self.root,'init','-q');(self.root/'scripts').mkdir()
-        (self.root/'scripts/guide-pairs.json').write_text(json.dumps([['AGENTS.md','CLAUDE.md']]))
+        (self.root/'scripts/guide-pairs.json').write_text(json.dumps([['left.md','right.md']]))
     def tearDown(self):self.tmp.cleanup()
     def put(self,name,text): (self.root/name).write_text(text)
     def test_create_missing_partner_without_commit(self):
-        self.put('AGENTS.md','approved');git(self.root,'add','AGENTS.md')
+        self.put('left.md','approved');git(self.root,'add','left.md')
         self.assertEqual(synchronize(self.root),1)
-        self.assertEqual((self.root/'CLAUDE.md').read_text(),'approved')
+        self.assertEqual((self.root/'right.md').read_text(),'approved')
         self.assertNotEqual(git(self.root,'rev-parse','--verify','HEAD').returncode,0)
     def test_reverse_direction(self):
-        self.put('CLAUDE.md','approved');git(self.root,'add','CLAUDE.md')
+        self.put('right.md','approved');git(self.root,'add','right.md')
         self.assertEqual(synchronize(self.root),1)
     def test_untracked_conflict_not_overwritten(self):
-        self.put('AGENTS.md','new');self.put('CLAUDE.md','other');git(self.root,'add','AGENTS.md')
+        self.put('left.md','new');self.put('right.md','other');git(self.root,'add','left.md')
         with self.assertRaises(ValueError):synchronize(self.root)
-        self.assertEqual((self.root/'CLAUDE.md').read_text(),'other')
+        self.assertEqual((self.root/'right.md').read_text(),'other')
     def test_partial_stage_is_preserved(self):
-        self.put('AGENTS.md','staged');git(self.root,'add','AGENTS.md');self.put('AGENTS.md','unstaged')
+        self.put('left.md','staged');git(self.root,'add','left.md');self.put('left.md','unstaged')
         with self.assertRaises(ValueError):synchronize(self.root)
-        self.assertEqual((self.root/'AGENTS.md').read_text(),'unstaged')
-        self.assertFalse((self.root/'CLAUDE.md').exists())
+        self.assertEqual((self.root/'left.md').read_text(),'unstaged')
+        self.assertFalse((self.root/'right.md').exists())
     def test_both_staged_differ_rejected(self):
-        self.put('AGENTS.md','one');self.put('CLAUDE.md','two');git(self.root,'add','AGENTS.md','CLAUDE.md')
+        self.put('left.md','one');self.put('right.md','two');git(self.root,'add','left.md','right.md')
         with self.assertRaises(ValueError):synchronize(self.root)
     def test_lowercase_guide_is_rejected_without_overwrite(self):
         self.put('agents.md','existing content')
-        self.put('CLAUDE.md','existing content')
+        self.put('right.md','existing content')
         with self.assertRaises(ValueError):synchronize(self.root,check=True)
         self.assertEqual((self.root/'agents.md').read_text(),'existing content')
     def test_nested_lowercase_guide_is_detected(self):
@@ -111,7 +111,48 @@ class SyncTests(unittest.TestCase):
         (nested/'claude.md').write_text('existing content')
         self.assertTrue(guide_case_errors(self.root,[]))
     def test_check_is_read_only(self):
-        self.put('AGENTS.md','same');self.put('CLAUDE.md','same')
+        self.put('left.md','same');self.put('right.md','same')
         self.assertEqual(synchronize(self.root,check=True),0)
         self.assertEqual(git(self.root,'diff','--cached','--name-only').stdout,b'')
+class GuideImportTests(unittest.TestCase):
+    def setUp(self):
+        self.tmp=tempfile.TemporaryDirectory();self.root=Path(self.tmp.name)
+        git(self.root,'init','-q');(self.root/'scripts').mkdir()
+        (self.root/'scripts/guide-pairs.json').write_text(json.dumps([['AGENTS.md','CLAUDE.md']]))
+        (self.root/'AGENTS.md').write_text('canonical rules')
+        (self.root/'CLAUDE.md').write_text('@./AGENTS.md\n')
+    def tearDown(self):self.tmp.cleanup()
+    def test_check_does_not_stage_or_expand_import(self):
+        self.assertEqual(synchronize(self.root,check=True),0)
+        self.assertEqual(git(self.root,'diff','--cached','--name-only').stdout,b'')
+        self.assertEqual((self.root/'CLAUDE.md').read_text(),'@./AGENTS.md\n')
+    def test_canonical_edits_never_copy_into_claude(self):
+        git(self.root,'add','AGENTS.md','CLAUDE.md')
+        (self.root/'AGENTS.md').write_text('new canonical rules')
+        git(self.root,'add','AGENTS.md')
+        self.assertEqual(synchronize(self.root),0)
+        self.assertEqual(git(self.root,'show',':CLAUDE.md').stdout,b'@./AGENTS.md\n')
+    def test_claude_edits_are_rejected_without_overwriting_canonical(self):
+        (self.root/'CLAUDE.md').write_text('unreviewed rules')
+        git(self.root,'add','AGENTS.md','CLAUDE.md')
+        with self.assertRaises(ValueError):synchronize(self.root)
+        self.assertEqual((self.root/'AGENTS.md').read_text(),'canonical rules')
+        self.assertEqual((self.root/'CLAUDE.md').read_text(),'unreviewed rules')
+    def test_unstaged_import_fix_cannot_hide_invalid_index(self):
+        (self.root/'CLAUDE.md').write_text('old duplicated rules')
+        git(self.root,'add','AGENTS.md','CLAUDE.md')
+        (self.root/'CLAUDE.md').write_text('@./AGENTS.md\n')
+        with self.assertRaises(ValueError):synchronize(self.root)
+        self.assertEqual(git(self.root,'show',':CLAUDE.md').stdout,b'old duplicated rules')
+    def test_missing_canonical_is_rejected(self):
+        (self.root/'AGENTS.md').unlink()
+        with self.assertRaises(ValueError):synchronize(self.root,check=True)
+    def test_import_conflict_prevents_other_pair_mutation(self):
+        (self.root/'scripts/guide-pairs.json').write_text(json.dumps([
+            ['left.md','right.md'],['AGENTS.md','CLAUDE.md']]))
+        (self.root/'left.md').write_text('skill copy');git(self.root,'add','left.md')
+        (self.root/'CLAUDE.md').write_text('conflict')
+        with self.assertRaises(ValueError):synchronize(self.root)
+        self.assertFalse((self.root/'right.md').exists())
+
 if __name__=='__main__':unittest.main()

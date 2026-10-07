@@ -4,6 +4,7 @@
 공식 자료와 팀 실행 지침을 분리한 문서 지도. 새 미션의 조합과 실행법을 찾는 진입점이다.
 
 ## 2. CONTENTS — 파일과 기술
+- product/ — 현재 가족 MVP·선택 기능·설계·데이터 근거
 - catalog/ — 기술/스킬 원본과 탐색 뷰
 - playbooks/ — 조합·quickstart
 - evaluation/ — 주제 선정 기준·구현 평가·예선 근거
@@ -19,7 +20,7 @@
 - 공식 배점을 내부 제안으로 추정해 확정하지 않는다 — 실제 규정과 채점 목적이 다르다.
 
 ## 5. WHERE — 의존성과 경계
-evaluation의 주제 선정 기준 → catalog와 playbooks의 조합·실행 → evaluation의 구현 평가 순서로 사용한다. 선정과 구현 평가의 점수·목적은 구분한다.
+product/는 제품 범위 원본이며 operations의 공식 요건과 catalog/playbooks/evaluation의 준비 자료를 참조한다. evaluation의 주제 선정 기준 → catalog와 playbooks의 조합·실행 → evaluation의 구현 평가 순서로 사용한다. 선정과 구현 평가의 점수·목적은 구분한다.
 
 ## 6. WHY — 배경
 당일 7시간이므로 모든 문서를 읽지 않고 필요한 경로만 따라가는 구조를 사용한다.

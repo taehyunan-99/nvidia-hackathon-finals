@@ -1,13 +1,16 @@
 # NVIDIA Hackathon Finals — 에이전트 작업 지도
 
-목적: 새 본선 미션에서 도구·에이전트·스킬 조합을 빠르게 선택하고 최소 실행·검증까지 연결한다. 문서는 docs 아래에 두며 필요한 영역만 읽는다.
+<!-- prev: 새 미션용 조합 탐색 준비 → 2026-10-07 사용자 결정으로 한국 가족 문화체험 MVP를 구현 대상으로 확정. -->
+목적: 한국 가족이 참여조건에 맞는 한국 문화체험을 찾도록 자료의 충돌·누락을 판단하는 에이전트를 만든다. [제품 정의](docs/product/README.md)가 현재 기능 범위의 원본이며, 기존 도구·스킬·실행·검증 준비 자료를 재사용한다.
 
 ## 가장 빠른 진입
+
+**현재 MVP:** 한국 가족의 자녀 연령·동반 조건·날짜를 검증하고 후보·근거·다음 확인을 제시한다. GPS·지도·이동수단·영어 화면·현장 통역 검색은 작업 중 채택/제외할 서브미션이며 핵심 완료 조건이 아니다. OpenShell과 공통 테스트는 필수다. [설계](docs/product/agent-design.md) · [데이터 근거](docs/product/data-sources.md).
 
 2026-10-07 공개된 [본선 미션·공통 테스트·공식 배점·제출 요건](docs/operations/mission.md)을 먼저 확인한다. OpenShell 필수, `/hackathon` 경계 검증, **17:20 제출**을 기준으로 하며 내부 루브릭과 공식 배점을 구분한다. 반복 제출 점검은 [$submission-check](.agents/skills/submission-check/SKILL.md)를 사용한다.
 
 <!-- prev: 미션 조합 검색부터 시작 → 2026-10-05 사용자 승인으로 주제 선정 후 조합·실행·평가 순서로 연결. -->
-1. [주제 선정 기준](docs/evaluation/topic-selection.md)으로 후보를 비교한 뒤 [미션에서 시작](docs/playbooks/README.md) 또는 `python3 scripts/lookup.py "미션 핵심어" --kind recipe`.
+1. [제품 정의](docs/product/README.md)의 확정 범위를 먼저 읽고 [미션에서 시작](docs/playbooks/README.md) 또는 `python3 scripts/lookup.py "미션 핵심어" --kind recipe`. 새 후보/범위 비교에만 [주제 선정 기준](docs/evaluation/topic-selection.md)을 적용한다.
 2. 결과의 guide/quickstart를 읽고 [도구](docs/catalog/tools.md)·[agent 형태](docs/catalog/agent-types.md)를 선택.
 3. 스킬이 필요하면 [도메인→작업 분류](docs/catalog/skills/README.md) 또는 `lookup.py --kind skill --domain knowledge --function setup`.
 4. [스킬 확보](docs/playbooks/skill-setup.md)→최소 실행→[루브릭](docs/evaluation/README.md). 설치/metadata 확인과 live 성공을 구분.
@@ -19,6 +22,7 @@
 ## 영역별 가이드
 
 - [docs/AGENTS.md](docs/AGENTS.md) — 문서 지도·출처·분류 경계.
+- [docs/product/AGENTS.md](docs/product/AGENTS.md) — 가족 MVP·서브미션·제품 설계·데이터 근거.
 - [docs/catalog/AGENTS.md](docs/catalog/AGENTS.md) — 모델·도구·agent·스킬 원본 인덱스와 분류.
 - [docs/playbooks/AGENTS.md](docs/playbooks/AGENTS.md) — 미션 조합·설치·최소 실행·성공 확인.
 - [docs/evaluation/AGENTS.md](docs/evaluation/AGENTS.md) — 주제 선정·구현 평가·예선 근거·평가 양식.
@@ -35,7 +39,8 @@
 - 전체 스킬 JSON/문서를 한꺼번에 로드하지 않는다. 검색 결과의 1~3개 원문과 필요한 참조만 읽는다.
 - 원본 모델 키/인증 헤더는 출력·문서·Git에 넣지 않는다. API·GPU 사용은 명시한 범위와 예산에서 수행한다.
 - 이 폴더는 독립 로컬 Git 저장소다. 작업 브랜치에서 변경하며 요청 없이 commit/push/원격 생성하지 않는다. 예선 저장소·전역 스킬은 수정하지 않는다.
-- AGENTS.md/CLAUDE.md는 both 모드의 동일 본문이다. 한쪽을 수정하면 다른 쪽도 맞추거나 pre-commit sync를 사용한다. 충돌을 임의 덮어쓰지 않는다.
+<!-- prev: AGENTS.md/CLAUDE.md 동일 본문 양방향 sync → 2026-10-07 사용자 요청으로 AGENTS.md 단일 원본과 CLAUDE @ 참조로 전환. -->
+- 가이드 본문은 AGENTS.md에서만 수정한다. 같은 폴더의 CLAUDE.md는 `@./AGENTS.md` 한 줄을 유지한다. hook은 가이드 참조를 검사하고 learn 스킬 사본만 동기화한다. 충돌을 임의 덮어쓰지 않는다.
 
 ## 모델 호출 기본값
 
@@ -46,6 +51,8 @@
 [CI 운영 원칙](docs/operations/ci-policy.md)을 따른다. 본선 2인 팀은 로컬 자동 검사·동료 교차 검증·경량 원격 CI 보조를 사용한다. 마지막 유효 검증 이후 누적 변경을 검사하고, 10분 초과는 검증 불충분과 대체 확인으로 처리한다.
 
 ## 운영 기준
+
+AWS와 Brev를 함께 사용할 경우 [연동 절차](docs/playbooks/aws-brev-deployment.md)를 확인한다. PR #3에서 조사한 배치·인증·복구 선택지이며 실제 배포 성공이나 해당 배치 확정을 뜻하지 않는다. 모델 호출·원격 자원 사용은 기존 승인 범위와 예산을 따른다.
 
 <!-- prev: 공동 최소 연결 후 분담, 개인별 담당·목표 시각 미확정 → 2026-10-06 사용자 결정으로 11:30까지 주제·문서·계약 정리 후 단계별 분담, 15:00 공동 점검·16:00 발표 준비 시간표 반영. -->
 [2인 개발·로컬 시연](docs/operations/workflow.md): 11:30까지 주제·문서·입출력 계약을 함께 정리한 뒤 단계별로 분담하고, 15:00부터 공동 점검·16:00부터 발표 준비를 진행한다. 2026-10-07 추가 요구에 따라 한국 문화·OpenShell 필수·외부 사용자 직접 테스트를 전제로 [보안정책](docs/catalog/tools/openshell-security.md)과 [배포 경로](docs/playbooks/openshell-deployment.md)를 조사한다. Brev $500 등록과 AWS 배포 희망은 확인했으며 구체적인 배치·사용 예산은 미정이다. 인스턴스 생성은 이후에 진행하고 시간표의 A/B는 특정 팀원에게 미리 배정한 이름이 아니다. [입출력 계약](docs/catalog/contracts.md) → [실행 흐름 화면](docs/design/agent-flow.md) → [리허설](docs/playbooks/rehearsal.md)을 재사용하며 [확정 디자인](docs/design/README.md)의 미세 비교는 재개하지 않는다.

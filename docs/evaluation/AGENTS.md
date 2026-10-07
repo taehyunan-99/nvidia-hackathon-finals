@@ -31,7 +31,7 @@
 - 실행 실패를 분모에서 빼지 않는다 — 가용성을 숨긴다.
 
 ## 5. WHERE — 의존성과 경계
-playbooks는 topic-selection.md의 선정 기준을 참조하고, 실행 결과를 구현 평가의 근거로 제공한다. scripts/score.py는 주제 선정·구현·통합·legacy JSON을 구분해 읽는다.
+현재 평가 대상·MVP 경계는 ../product/README.md, 입력 자료와 미확인은 ../product/data-sources.md에서 가져온다. playbooks는 topic-selection.md의 선정 기준을 참조하고, 실행 결과를 구현 평가의 근거로 제공한다. scripts/score.py는 주제 선정·구현·통합·legacy JSON을 구분해 읽는다.
 
 ## 6. WHY — 배경
 본선 진출의 정확한 심사평은 없다. 자료 기반 잠정 평가는 개발 우선순위를 위한 도구다.

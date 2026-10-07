@@ -17,7 +17,7 @@ UI 선택과 실제 디자인 스킬의 위치를 안내한다.
 - 예선 3D/HER2 화면을 새 미션의 필수로 두지 않는다 — 실제 사용자 과업이 다르다.
 
 ## 5. WHERE — 의존성과 경계
-../../design/의 시안과 ../../.agents/skills/nvidia-ui/ 원본을 연결한다.
+실제 서비스 기능은 ../product/README.md를 따른다. ../../design/의 시안과 ../../.agents/skills/nvidia-ui/ 원본을 연결한다.
 
 ## 6. WHY — 배경
 요소별로 확정한 값은 design-decisions.json에 누적하며, 기록되지 않은 스타일은 비교용 임시값이다.

@@ -9,7 +9,9 @@
 - **17:20까지** 발표자료·데모코드를 제출한다. 저장소 README는 지정 Slack 제출 채널에 팀명·프로젝트명·저장소·데모 URL 또는 실행 방법·발표자료를 함께 제출하도록 안내한다.
 - 공식 배점은 NVIDIA 기술 40, 실용성·가치·혁신 20, 완성도 20, 발표 10, 동료평가 10이다. 동료평가 세부 산식의 자료 간 차이는 [미션 문서](mission.md#10-자료-간-차이와-미확인-사항)에 남겼다.
 
-기술 구현은 [OpenShell 보안정책 분석](../catalog/tools/openshell-security.md)과 [배포 준비](../playbooks/openshell-deployment.md)를 사용한다. 공통 연습 파일은 제품 주제의 한계가 아니며, 세부 서비스는 아직 선정하지 않았다.
+기술 구현은 [OpenShell 보안정책 분석](../catalog/tools/openshell-security.md)과 [배포 준비](../playbooks/openshell-deployment.md)를 사용한다. 공통 연습 파일은 제품 주제의 한계가 아니다.
+<!-- prev: 세부 서비스 미선정 → 2026-10-07 사용자 결정으로 한국 가족 문화체험 MVP 선정. -->
+현재 제품은 [한국 가족 문화체험 MVP](../product/README.md)이며 지도·이동·영어·통역은 선택 기능이다.
 
 ## 확정 안내
 

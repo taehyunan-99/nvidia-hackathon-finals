@@ -1,5 +1,7 @@
 # 미션에서 실행까지
 
+현재 구현 대상은 [한국 가족 문화체험 MVP](../product/README.md)다. [제품 설계](../product/agent-design.md)에서 범위를 확인한 뒤 필요한 조합만 선택한다.
+
 2026-10-07 공개된 [상세 미션·공통 테스트·공식 배점·제출 요건](../operations/mission.md)을 먼저 읽는다. 한국 문화 에이전트와 OpenShell 실제 경계 검증을 함께 구현하며 제출은 **17:20**까지다. 기술 준비는 [보안정책 분석](../catalog/tools/openshell-security.md)과 [Brev/별도 환경·배포 준비](openshell-deployment.md)를 따른다.
 
 Brev에 직접 sandbox를 준비하는 절차는 [Brev VM의 OpenShell 설치·검증](brev-openshell-setup.md)을 따른다.

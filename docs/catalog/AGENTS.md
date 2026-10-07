@@ -8,6 +8,7 @@
 - contracts.md, contracts/ — research-v1과 다른 9개 조합의 mission-v1 schema·공급자 형식·fixture 연결
 - agent-types.md, agents-index.json — 9개 형태
 - tools.md, tools/, tools-index.json — 도구 카드
+- tools/openshell-security.md — 버전별 실행 경계·정책 조사; 제품 적용은 ../product/agent-design.md
 - skills-index.json — 전체 metadata 원본
 - skills/ — 자동 생성 도메인/작업 뷰
 - recipes-index.json — 미션 레시피 검색 metadata

@@ -21,7 +21,7 @@ description: 사용자가 `/learn` (또는 Codex의 `$learn`)으로 명시 호�
    - 사용자 승인은 5단계 통합 게이트에서 일괄 처리한다 (여기서는 메모 확정만)
 
 2. **현재 작업 영역 추론**
-   - root map 파일(`CLAUDE.md` 또는 `AGENTS.md`)의 "영역별 가이드" 섹션을 읽어 후보 영역 목록 확보
+   - root map 원본 `AGENTS.md`의 "영역별 가이드" 섹션을 읽어 후보 영역 목록 확보. CLAUDE.md가 `@./AGENTS.md` 참조이면 원본을 읽는다
    - 다음 우선순위로 영역 단서를 본다:
      1. 대화에 명시된 경로 (예: "apps/frontend/Login.tsx 수정")
      2. 최근 Edit/Write로 수정한 파일의 위치
@@ -31,7 +31,9 @@ description: 사용자가 `/learn` (또는 Codex의 `$learn`)으로 명시 호�
 3. **대상 가이드 파일 결정**
    - 영역 폴더에 `CLAUDE.md`만 있으면 → 그 파일에 누적
    - 영역 폴더에 `AGENTS.md`만 있으면 → 그 파일에 누적
-   - 양쪽 다 있으면 (both 모드) → 양쪽 모두 누적 (sync hook이 commit 시 추가 보정)
+   <!-- prev: both 양쪽 본문에 누적 → 2026-10-07 사용자 요청으로 가이드 참조 방식 전환. -->
+   - CLAUDE.md가 `@./AGENTS.md` 참조이면 → AGENTS.md에만 누적하며 CLAUDE.md는 변경하지 않는다
+   - 양쪽에 실제 본문이 있으면 → 현행 가이드 규칙을 확인하고, 승인 없이 양방향 복사하거나 전환하지 않는다
 
 4. **중복 체크**
    - 대상 가이드 파일의 "⚠️ LEARNED CAUTIONS" 섹션을 읽어 동일/유사 내용이 이미 있는지 확인

@@ -1,4 +1,4 @@
-"""Synchronize staged guide pairs without overwriting unstaged work."""
+"""Check canonical guide imports and safely synchronize remaining skill pairs."""
 import argparse
 import json
 from pathlib import Path
@@ -6,6 +6,12 @@ import subprocess
 
 def git(root,*args):
     return subprocess.run(['git','-C',str(root),*args],capture_output=True)
+
+def reference_content(left,right):
+    a,b=Path(left),Path(right)
+    if a.name=='AGENTS.md' and b.name=='CLAUDE.md' and a.parent==b.parent:
+        return b'@./AGENTS.md\n'
+    return None
 
 def guide_case_errors(root,pairs):
     root=Path(root)
@@ -42,6 +48,13 @@ def synchronize(root,check=False):
             p=root/name
             if not p.resolve().is_relative_to(root):raise ValueError('Guide path escapes repository')
         a,b=working(left),working(right)
+        reference=reference_content(left,right)
+        if reference is not None:
+            if a is None or b!=reference:
+                errors.append(left+' / '+right+': requires AGENTS.md and exact @./AGENTS.md import; no automatic overwrite')
+            if not check and (indexed(left) is None or indexed(right)!=reference):
+                errors.append(left+' / '+right+': staged guides must include the canonical file and valid import')
+            continue
         if a is None and b is None:continue
         if check:
             if a is None or b is None or a!=b:errors.append(left+' / '+right+': different or missing')
@@ -76,4 +89,4 @@ if __name__=='__main__':
     if result.returncode:p.exit(2,'Not a Git repository\n')
     try:n=synchronize(result.stdout.decode().strip(),a.check)
     except (ValueError,OSError) as e:p.exit(1,str(e)+'\n')
-    print('Guide pairs OK' if a.check else f'Synchronized {n} guide file(s)')
+    print('Guide imports and skill pairs OK' if a.check else f'Guide imports checked; synchronized {n} skill file(s)')
