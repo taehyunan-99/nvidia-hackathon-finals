@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <title>두루 — 함께 이어지는 두 개의 고리</title>
+  <path d="M29 20a14 14 0 1 0 0 24l8-8" stroke="#76b900" stroke-width="8" stroke-linecap="round"/>
+  <path d="M35 44a14 14 0 1 0 0-24l-8 8" stroke="#426700" stroke-width="8" stroke-linecap="round"/>
+</svg>
