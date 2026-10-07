@@ -4,6 +4,7 @@
 
 | 바로 할 일 | 파일 |
 |---|---|
+| 가족 검증기·에이전트 병행 개발 | [family-v1 계약·판정 규칙](contracts/family-v1.md) · [schema](contracts/family-v1.schema.json) · [사전 시험 사례](contracts/family-v1.cases.json) |
 | NIM 요청·도구 선택 응답·도구 반환 형태 | [공급자 형식 예시](contracts/nim-tool-call.example.json) — 미호출 합성 예시 |
 | 다른 조합의 입력·출력·실패 형태 | [9개 조합 계약](contracts/combinations.md) · [schema](contracts/mission.schema.json) · [정상·보류·실패 예시](contracts/mission-fixtures.json) |
 | 프런트 데이터 형식 확인 | [research-v1 JSON Schema](contracts/research.schema.json) |

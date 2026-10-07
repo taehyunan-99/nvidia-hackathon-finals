@@ -1,0 +1,11 @@
+**
+!agent/
+!agent/**
+!scripts/
+!scripts/model_policy.py
+!scripts/probe_family_sources.py
+!docs/
+!docs/playbooks/
+!docs/playbooks/model-policy.json
+agent/.venv/
+agent/**/__pycache__/
