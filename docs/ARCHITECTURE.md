@@ -58,7 +58,47 @@ flowchart LR
 | 코드 검증기 | 날짜·필수 조건·출처 연결·도구 인자·결과 일관성 검사 | 모델이 자기 답만으로 근거와 완료를 인증하지 못하게 함 |
 | 실행 제어 | 호출 예산·단계·재시도·종료 및 관측 이벤트 관리 | 재시도를 실제 요청 수에서 제외하거나 오류를 성공으로 바꾸지 않음 |
 
-기존 단일 Nemotron/NIM + NAT 구성은 [ADR의 제안](ADR.md#adr-004--모델과-에이전트-구성)이다. 구체 모델·endpoint·버전·호환성은 실제 연결 전 확인한다.
+단일 Nemotron/NIM + NAT ReAct 구성은 [ADR-012](ADR.md#adr-012--단일-react와-제한된-자료-도구)의 구현 기준이다. 구체 모델·endpoint·버전·호환성은 실제 연결 전 확인한다.
+
+## 구현 기준 조합
+
+에이전트 형태와 도구 책임을 우선 고정한다. 아래 이름은 프로젝트에서 구현할 함수의 설계 이름이며 NAT에 이미 설치된 도구가 아니다. 필드 schema는 후속 입출력 계약에서 정의한다.
+
+| 층 | 선택 | 책임·적용 경계 |
+|---|---|---|
+| 판단 | 단일 NAT `react_agent` | 자료 관측 후 추가 확인·질문·대안·종료 선택; 웹과 CLI에서 같은 실행 계층 사용 |
+| 모델 | hosted Nemotron / NIM | Brev sandbox에서 허용된 외부 추론 endpoint 호출; 실제 모델 ID·권한·ReAct 응답은 연결 확인 후 고정 |
+| 제품 자료 도구 | `search_experiences`, `get_experience_detail` | 서울 예약 API 후보 조회와 서비스 ID별 상세 확인; 원문·출처 ID·조회 시점·누락·충돌 반환 |
+| 공식 보충 자료 도구 | `read_official_source` | 서버가 관리하는 허용 출처 ID의 안내 조회; 임의 URL·redirect로 허용 범위 확대 금지 |
+| 공통 자료 도구 | `search_input`, `read_input` | sandbox 안에서 허용 input 자료 검색·읽기; 문서 위치·식별자·원문 근거 반환 |
+| 공통 산출물 도구 | `write_output` | 검증된 실행별 결과를 output 하위에 저장; 제공 원본 변경·경로 탈출 금지 |
+| 검증·실행 제어 | Python + Pydantic + 공통 모델 정책 | 도구 호출 전 인자·권한 검증, 날짜·조건·출처·결과 검사, 실제 요청 예산·단계·재시도 제어 |
+| 실행 경계 | OpenShell | 모델 연결과 자료 도구를 실제 경계 안에서 실행; 허용/차단 실측 |
+
+### 기존 Linux 실행 대상
+
+사용자가 확인한 기존 VM `finals-bridge` / `8pn8l6yr1`을 에이전트·OpenShell 통합 대상으로 사용한다. GCP 2 CPU·8GB RAM·GPU 없음, Ubuntu 22.04.5 x86_64·커널 6.8·Docker 29.8.2·OpenShell 0.1.2이며 SSH 별칭은 `finals-bridge`, 사용자는 `ubuntu`다. 팀원은 자기 Brev 계정으로 인증하며 접속 endpoint는 갱신 결과를 따른다.
+
+[기존 연결 시험](playbooks/aws-brev-deployment.md#12-모델-없는-연결-시험-구현)과 사용자 제공 검증에서는 AWS→sandbox→결과 반환, 인증·파일 거부, 단절 복구·중복 방지, 이미지 교체를 통과했다. 이는 현재 세션의 재검증이나 NAT·모델·문화 API 통합 성공이 아니다. 새 프로젝트는 별도 폴더에서 개발하고 `/opt/nvidia-finals-bridge` 코드·정책을 보존한다. 기존 시험의 outbound/provider 미허용 정책을 임의 확대하지 않고 제품 sandbox의 허용 모델·자료 정책을 별도 준비한다.
+
+현재 VM은 NIM LLM의 GPU 실행 조건을 충족하지 않으므로 모델 직접 서빙을 첫 구현에 넣지 않는다. hosted 모델 접근이 실패하면 모델 연결을 미해결로 남기고, GPU 자원·모델별 메모리·예산을 확인한 별도 선택을 한다. 기존 연결 시험의 sandbox 512Mi 제한은 NAT 서비스의 검증된 메모리 요구량이 아니므로 실제 워크로드 크기로 확인한다.
+
+제품 실행에는 제품 조회·보충 자료 도구를, 공통 CLI에는 공통 파일·산출물 도구를 노출한다. 작업 목적이 허용한 경우에만 도구 집합을 추가한다. 같은 실행 계층을 사용해도 공통 테스트에 서울 API를 강제하지 않는다.
+
+추가 질문은 임의 채팅 도구가 아니라 검증된 질문 카드와 대기 상태로 반환한다. 응답한 선택값으로 해당 탐색을 이어가되 기존 결과·판정과 조건 변경을 연결한다. 최종 응답은 진입점별 schema를 검사한 뒤 표시·저장하며, 검증기와 종료·예산 검사는 모델의 도구 선택에 맡기지 않는다.
+
+### 선택한 개발·검증 스킬
+
+| 적용 단계 | 스킬 | 사용할 목적 |
+|---|---|---|
+| 에이전트 설정 | [nat-agent-configuration](https://github.com/NVIDIA/NeMo-Agent-Toolkit/blob/c7e1162a1c7ff18bbd797e090a56cad97c281c92/skills/nat-agent-configuration/SKILL.md) | 설치 버전의 ReAct·모델·도구 설정 확인 |
+| 도구 구현 | [nat-tools-and-functions](https://github.com/NVIDIA/NeMo-Agent-Toolkit/blob/c7e1162a1c7ff18bbd797e090a56cad97c281c92/skills/nat-tools-and-functions/SKILL.md) | typed Python 함수·실패 반환·등록 discovery 연결 |
+| UI 구현 | [nvidia-ui](../.agents/skills/nvidia-ui/SKILL.md) | 확정 토큰과 실제 상태로 카드·실행 화면 구성 |
+| 판단·화면·제출 검사 | [agent-rubric](../.agents/skills/agent-rubric/SKILL.md), [frontend-rubric](../.agents/skills/frontend-rubric/SKILL.md), [submission-check](../.agents/skills/submission-check/SKILL.md) | 실제 판단 변화·화면 일치·필수 요건 확인 |
+
+이 스킬들은 개발·검증 에이전트의 지침이며 사용자 요청마다 실행하는 모델 도구가 아니다. 선택은 설치·스킬 원문 적용·함수 구현을 완료했다는 뜻이 아니다. 제품 런타임 판단 지침은 별도 ReAct 설정과 검증된 작업 입력으로 제공한다.
+
+최소 연결은 실제 도구 한 개의 인자→코드 실행→관측 사용→종료로 확인한다. 이후 요약/상세 충돌·조건 변경·후보 없음·자료 오류의 사례에서 행동이 달라지는지 확인하고, 공통 CLI와 OpenShell 정책 거부를 같은 실행 경계에서 검증한다. 오프라인 검사와 live 연결 성공을 구분한다.
 
 ## 데이터 흐름과 계약 초안
 
@@ -140,9 +180,9 @@ CLI 명령명·인자명·파일 schema·종료 코드는 plan P2에서 확정�
 | 항목 | 현재 상태 | 필요한 결정/증거 |
 |---|---|---|
 | 웹·백엔드 | React/TypeScript/Vite + Python/FastAPI/Pydantic 채택 | 버전 고정·빌드·입출력 계약·NAT 연결 검증 |
-| 모델·NAT | 기존 제안 | 실제 접근 가능한 endpoint·모델, 도구 호출·응답 계약 연결 확인 |
-| 자료 접근 | 서울 예약 API + 공식 상세 안내 | 정식 인증·현재 후보 반환·허용 상세 출처·갱신 방법 확인 |
-| AWS/Brev | AWS 배포 희망, 배치 미정 | 단일 호스트 또는 분리 배치, 비용 상한·종료 책임·서버 간 인증 |
+| 모델·NAT | 단일 ReAct + Nemotron/NIM 구현 기준 채택 | 실제 접근 가능한 endpoint·모델·버전, 파싱·도구 실행·응답 계약 연결 확인 |
+| 자료 접근 | 서울 예약 API + 공식 상세 안내의 개발 호스트 조회 확인 | sandbox 내부 연결·전체 후보 범위·허용 상세 출처·갱신 방법 확인 |
+| AWS/Brev | AWS 웹 배포 방향, 기존 Brev VM을 sandbox 통합 대상으로 선택 | 기존 모델 없는 bridge와 제품 연결 구분; 비용 상한·종료 책임·제품 인증·hosted 모델 허용 정책 |
 | 세션·저장 | 현재 탐색만 지원; 로그인·재방문 복원·이력·찜 제외 | 익명 작업 격리·만료·정리, 실행 상태·공유 호출 예산·공통 테스트 산출물 보관 |
 | 공개 접근 | 외부 사용자 직접 테스트 방향 | 실제 HTTPS 경로·인증·권한·정책 집행 확인 |
 
