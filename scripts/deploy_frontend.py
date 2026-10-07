@@ -20,6 +20,7 @@ def run(args, **kwargs):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--api-origin", help="HTTPS hostname for the live API origin")
     parser.add_argument("--init", action="store_true", help="Connect existing CloudFront to Duru on first deployment")
     parser.add_argument("--ssh-key", required=True)
     parser.add_argument("--known-hosts", required=True)
@@ -61,7 +62,11 @@ def main():
         archive = Path(directory) / "image.tar"
         run(["docker", "save", "-o", str(archive), image])
         env = Path(directory) / "origin.env"
-        env.write_text(f"DURU_ORIGIN_TOKEN={state['token']}\n")
+        map_values = dict(line.split("=", 1) for line in (ROOT / "frontend/.env.local").read_text().splitlines()
+                          if line.strip() and not line.startswith("#") and "=" in line)
+        map_id = map_values.get("NAVER_MAP_CLIENT_ID", "").strip().strip("\"'")
+        if not map_id or not map_id.isalnum(): parser.error("Missing or invalid NAVER_MAP_CLIENT_ID")
+        env.write_text(f"DURU_ORIGIN_TOKEN={state['token']}\nNAVER_MAP_CLIENT_ID={map_id}\n")
         env.chmod(0o600)
         run([*ssh, "mkdir -p ~/duru-upload && chmod 700 ~/duru-upload"])
         run(["scp", *ssh_options, str(archive), str(env), f"ec2-user@{host}:duru-upload/"])
@@ -75,7 +80,7 @@ if ! sudo docker network inspect duru-edge --format '{{range .Containers}}{{.Nam
     sudo docker network connect duru-edge bio3-web-1
 fi
 image=IMAGE
-sudo docker run -d --name duru-candidate --env-file /opt/duru/origin.env -p 127.0.0.1:18081:80 "$image" >/dev/null
+sudo docker run -d --name duru-candidate --add-host host.docker.internal:host-gateway --env-file /opt/duru/origin.env -p 127.0.0.1:18081:80 "$image" >/dev/null
 trap 'sudo docker rm -f duru-candidate >/dev/null 2>&1 || true' EXIT
 sleep 2
 curl -fsS http://127.0.0.1:18081/healthz >/dev/null
@@ -86,7 +91,7 @@ if sudo docker container inspect duru-frontend >/dev/null 2>&1; then
     sudo docker stop duru-frontend >/dev/null
     sudo docker rename duru-frontend duru-rollback
 fi
-sudo docker run -d --name duru-frontend --restart unless-stopped --network duru-edge --env-file /opt/duru/origin.env -p 127.0.0.1:8080:80 "$image" >/dev/null
+sudo docker run -d --name duru-frontend --add-host host.docker.internal:host-gateway --restart unless-stopped --network duru-edge --env-file /opt/duru/origin.env -p 127.0.0.1:8080:80 "$image" >/dev/null
 sleep 2
 if ! curl -fsS http://127.0.0.1:8080/healthz >/dev/null; then
     sudo docker rm -f duru-frontend >/dev/null
@@ -146,6 +151,27 @@ sudo docker ps --filter name=duru-frontend --format '{{.Names}} {{.Status}}'
         save()
     if "distribution" not in state:
         parser.error("Container deployed; rerun with --init to finish CloudFront setup")
+    if args.api_origin:
+        current = aws("cloudfront", "get-distribution-config", "--id", state["distribution"])
+        config = current["DistributionConfig"]
+        api_origin = {"Id": "duru-api", "DomainName": args.api_origin, "OriginPath": "",
+            "CustomHeaders": {"Quantity": 1, "Items": [{"HeaderName": "X-Duru-Origin", "HeaderValue": state["token"]}]},
+            "CustomOriginConfig": {"HTTPPort": 80, "HTTPSPort": 443, "OriginProtocolPolicy": "https-only",
+                "OriginSslProtocols": {"Quantity": 1, "Items": ["TLSv1.2"]}, "OriginReadTimeout": 60, "OriginKeepaliveTimeout": 5}}
+        config["Origins"]["Items"] = [o for o in config["Origins"]["Items"] if o["Id"] != "duru-api"] + [api_origin]
+        config["Origins"]["Quantity"] = len(config["Origins"]["Items"])
+        behavior = {**config["DefaultCacheBehavior"], "PathPattern": "/api/*", "TargetOriginId": "duru-api", "ViewerProtocolPolicy": "https-only",
+            "SmoothStreaming": False, "AllowedMethods": {"Quantity": 7, "Items": ["GET", "HEAD", "OPTIONS", "PUT", "PATCH", "POST", "DELETE"],
+                "CachedMethods": {"Quantity": 2, "Items": ["GET", "HEAD"]}}, "Compress": True,
+            "CachePolicyId": "4135ea2d-6df8-44a3-9df3-4b5a84be39ad",
+            "OriginRequestPolicyId": "b689b0a8-53d0-40ab-baf2-68738e2966ac",
+            "TrustedSigners": {"Enabled": False, "Quantity": 0}, "TrustedKeyGroups": {"Enabled": False, "Quantity": 0}}
+        items = [b for b in config.get("CacheBehaviors", {}).get("Items", []) if b["PathPattern"] != "/api/*"]
+        config["CacheBehaviors"] = {"Quantity": len(items)+1, "Items": [behavior]+items}
+        aws("cloudfront", "update-distribution", "--id", state["distribution"], "--if-match", current["ETag"],
+            "--distribution-config", json.dumps(config))
+        state["api_origin"] = args.api_origin
+        save()
     current = aws("cloudfront", "get-distribution-config", "--id", state["distribution"])
     origin = next(o for o in current["DistributionConfig"]["Origins"]["Items"] if o["Id"] == "duru-ec2")
     if origin["DomainName"] != instance["PublicDnsName"]:

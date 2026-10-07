@@ -9,6 +9,19 @@ server {
         access_log off;
         return 200 'ok';
     }
+    location = /api/maps-config {
+        if ($http_x_duru_origin != "${DURU_ORIGIN_TOKEN}") { return 403; }
+        default_type application/json;
+        add_header Cache-Control "no-store";
+        return 200 '{"clientId":"${NAVER_MAP_CLIENT_ID}"}';
+    }
+    location /api/ {
+        if ($http_x_duru_origin != "${DURU_ORIGIN_TOKEN}") { return 403; }
+        proxy_pass http://host.docker.internal:28081;
+        proxy_read_timeout 60s;
+        proxy_set_header X-Run-Owner $http_x_run_owner;
+        add_header Cache-Control "no-store";
+    }
     location / {
         if ($http_x_duru_origin != "${DURU_ORIGIN_TOKEN}") { return 403; }
         try_files $uri $uri/ /index.html;

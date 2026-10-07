@@ -121,7 +121,13 @@ class SeoulSources:
 
     def card(self, candidate_id):
         row = self.rows[candidate_id]
-        return {'id': candidate_id, 'title': row['SVCNM'], 'place': row.get('PLACENM', ''),
+        coordinates = None
+        try:
+            latitude, longitude = float(row['Y']), float(row['X'])
+            if 33 <= latitude <= 39 and 124 <= longitude <= 132:
+                coordinates = {'latitude': latitude, 'longitude': longitude}
+        except (KeyError, ValueError, TypeError): pass
+        return {'id': candidate_id, 'coordinates': coordinates, 'title': row['SVCNM'], 'place': row.get('PLACENM', ''),
             'district': row.get('AREANM', ''), 'booking_text': row.get('SVCSTATNM', ''),
             'official_url': DETAIL_BASE + candidate_id, 'operating_start': row.get('SVCOPNBGNDT'),
             'operating_end': row.get('SVCOPNENDDT'), 'cost': row.get('PAYATNM', '미확인')}

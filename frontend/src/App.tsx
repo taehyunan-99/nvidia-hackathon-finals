@@ -11,7 +11,6 @@ import {
   type Grade,
   type Interest,
   type Run,
-  type Scenario,
   type State,
   interestLabels,
   gradeLabels,
@@ -19,16 +18,9 @@ import {
   summarize,
 } from "./contract";
 import { liveRun, resumeLive } from "./live";
-import { buildMockRun } from "./mock";
 import { MapResults } from "./MapResults";
 
-const liveConfigured = import.meta.env.VITE_AGENT_MODE === "live";
-const mapPreview = import.meta.env.DEV && new URLSearchParams(location.search).get("mapDemo") === "1";
-const mapPreviewRun = mapPreview ? buildMockRun({
-  interests: ["history", "craft", "performance"], grades: ["3"],
-  guardians: "1", date: null, district: "all",
-}) : null;
-
+const liveConfigured = true;
 // The shared JavaScript renderer infers its demo tool IDs too narrowly.
 const drawActivity = renderActivity as unknown as (
   root: HTMLElement,
@@ -42,14 +34,6 @@ const dates = [
   ["2026-10-11", "10월 11일", "일요일"],
   ["2026-10-17", "10월 17일", "토요일"],
   ["2026-10-18", "10월 18일", "일요일"],
-];
-const scenarios: [Scenario, string][] = [
-  ["normal", "일반 탐색"],
-  ["conflict", "자료 충돌"],
-  ["empty", "후보 없음"],
-  ["failure", "조회 실패"],
-  ["policy", "정책 거부"],
-  ["budget", "실행 한도 종료"],
 ];
 const icons: Record<State, string> = {
   empty: "○",
@@ -168,6 +152,10 @@ function Activity({
   useEffect(() => {
     if (graph.current) {
       drawActivity(graph.current, run, count, { tools, playing });
+      if (run.mode === "live") {
+        const status = graph.current.querySelector(".nv-description");
+        if (status) status.textContent = `${run.events[count - 1]?.label || "실행 대기"} · ${run.status === "running" ? "실제 분석 진행 중" : "실제 관측 기록"}`;
+      }
       layoutActivityLabels(graph.current);
     }
     if (flow.current)
@@ -254,18 +242,16 @@ export default function App() {
   const [tab, setTab] = useState<"explore" | "team">("explore");
   const [screen, setScreen] = useState<
     "input" | "analysis" | "question" | "results"
-  >(mapPreview ? "results" : "input");
+  >("input");
   const [step, setStep] = useState(0);
   const [conditions, setConditions] = useState<Conditions>(readConditions);
-  const [scenario, setScenario] = useState<Scenario>("normal");
-  const [run, setRun] = useState<Run | null>(mapPreviewRun);
-  const [count, setCount] = useState(mapPreviewRun?.events.length ?? 0),
+  const [run, setRun] = useState<Run | null>(null);
+  const [count, setCount] = useState(0),
     [playing, setPlaying] = useState(false);
   const liveRequest = useRef<AbortController | null>(null);
   const [livePending, setLivePending] = useState(false);
   const [liveError, setLiveError] = useState("");
-  const [answer, setAnswer] = useState<Grade[]>([]),
-    [compared, setCompared] = useState<string[]>([]);
+  const [compared, setCompared] = useState<string[]>([]);
   useEffect(() => {
     saveConditions(conditions);
   }, [conditions]);
@@ -286,7 +272,7 @@ export default function App() {
       );
   }
   const headingContainer = useRef<HTMLElement>(null);
-  const ended = !!run && count >= run.events.length;
+  const ended = !!run && !livePending && count >= run.events.length;
   useEffect(() => {
     headingContainer.current?.querySelector<HTMLElement>("h1")?.focus();
   }, [tab, screen, step]);
@@ -303,7 +289,7 @@ export default function App() {
   }, [ended, run]);
   const change = <K extends keyof Conditions>(key: K, value: Conditions[K]) =>
     setConditions((v) => ({ ...v, [key]: value }));
-  function start(next = conditions, skipQuestion = false) {
+  function start(next = conditions) {
     setConditions(next);
     liveRequest.current?.abort();
     setLiveError("");
@@ -312,17 +298,19 @@ export default function App() {
       liveRequest.current = controller;
       setLivePending(true);
       setRun(null);
-      liveRun(next, controller.signal).then(result => {
+      liveRun(next, controller.signal, progress => {
+        if (!controller.signal.aborted) { setRun(progress); setCount(progress.events.length); }
+      }).then(result => {
         if (controller.signal.aborted) return;
         setRun(result); setCount(result.events.length); setLivePending(false);
       }).catch(error => {
         if (controller.signal.aborted) return;
         setLiveError(error.message); setLivePending(false);
+        setRun(progress => progress ? { ...progress, status: "failed", outcome: "failed", next_action: error.message } : null);
       });
-    } else setRun(buildMockRun(next, scenario, skipQuestion));
+    }
     setCount(0);
     setCompared([]);
-    setAnswer([]);
     setPlaying(!liveEnabled);
     setScreen("analysis");
   }
@@ -331,11 +319,16 @@ export default function App() {
     const controller = new AbortController();
     liveRequest.current?.abort(); liveRequest.current = controller;
     setLivePending(true); setLiveError(""); setScreen("analysis"); setRun(null);
-    resumeLive(run, option, controller.signal).then(result => {
+    resumeLive(run, option, controller.signal, progress => {
+      if (!controller.signal.aborted) { setRun(progress); setCount(progress.events.length); }
+    }).then(result => {
       if (controller.signal.aborted) return;
       setRun(result); setCount(result.events.length); setLivePending(false);
     }).catch(error => {
-      if (!controller.signal.aborted) { setLiveError(error.message); setLivePending(false); }
+      if (!controller.signal.aborted) {
+        setLiveError(error.message); setLivePending(false);
+        setRun(progress => progress ? { ...progress, status: "failed", outcome: "failed", next_action: error.message } : null);
+      }
     });
   }
   function edit() {
@@ -488,7 +481,7 @@ export default function App() {
                             [
                               "관심 있는 분야를 모두 골라 주세요.",
                               "자녀의 학년은 여러 개를 선택할 수 있어요. 아직 정하지 않아도 괜찮아요.",
-                              "날짜가 미정이어도 후보를 살펴볼 수 있어요. 아래 날짜는 화면 체험용입니다.",
+                              "날짜가 미정이어도 후보를 살펴볼 수 있어요. 선택한 날짜를 공식 운영기간과 대조합니다.",
                             ][step]
                           }
                         </p>
@@ -580,7 +573,7 @@ export default function App() {
                                               ? "동반하지 않음"
                                               : id === "1"
                                                 ? "1명"
-                                                : "2명 이상"
+                                                : id === "2" ? "2명" : "2명 이상"
                                         }
                                         selected={conditions.guardians === id}
                                         onClick={() => change("guardians", id)}
@@ -661,26 +654,6 @@ export default function App() {
                       </div>
                     </section>
                   </div>
-                  {new URLSearchParams(window.location.search).get("demo") ===
-                    "1" && !liveEnabled && (
-                    <details className="demo-controls">
-                      <summary>화면 검증용 예시 설정</summary>
-                      <p>
-                        외부 호출 없이 화면의 상태 전환을 확인합니다. 실제 추천
-                        품질·정책 검증 결과가 아닙니다.
-                      </p>
-                      <div className="choices compact">
-                        {!liveEnabled && scenarios.map(([id, label]) => (
-                          <Choice
-                            key={id}
-                            title={label}
-                            selected={scenario === id}
-                            onClick={() => setScenario(id)}
-                          />
-                        ))}
-                      </div>
-                    </details>
-                  )}
                 </>
               )}
               {screen === "analysis" && liveEnabled && !run && (
@@ -700,9 +673,7 @@ export default function App() {
                       </p>
                       <Status state={state}>
                         {!ended
-                          ? playing
-                            ? "예시 재생 중"
-                            : "예시 재생 일시정지"
+                          ? "실제 분석 진행 중"
                           : run.outcome === "question"
                             ? "추가 조건 확인"
                             : run.status === "failed"
@@ -712,18 +683,19 @@ export default function App() {
                                 : run.mode === "live" ? "조회·검증 완료" : "예시 검증 완료"}
                       </Status>
                     </div>
+                    {liveError && <p role="alert">{liveError}</p>}
                     <Activity
                       compact
                       key={run.run_id}
                       run={run}
                       count={count}
-                      playing={playing && tab === "explore"}
+                      playing={(livePending || playing) && tab === "explore"}
                     />
                     <div className="nv-actions playback">
-                      {!ended && (
+                      {!ended && !livePending && (
                         <>
                           <Button onClick={() => setPlaying(!playing)}>
-                            {playing ? "예시 재생 일시정지" : "예시 재생 계속"}
+                            {playing ? "탐색 대기" : "예시 재생 계속"}
                           </Button>
                           <Button
                             onClick={() => {
@@ -752,32 +724,6 @@ export default function App() {
                     {run.questionCard.options.map(option => <Button key={option.id} onClick={() => answerLive(option.id)}>{option.label}</Button>)}
                     <Button onClick={() => setScreen("results")}>미확인 후보 보기</Button>
                     <Button onClick={edit}>조건 수정</Button>
-                  </div>
-                </section>
-              )}
-              {screen === "question" && run && !run.questionCard && (
-                <section className="nv-card question">
-                  <h1 tabIndex={-1}>자녀가 어느 학년에 해당하나요?</h1>
-                  <p className="nv-description">
-                    후보마다 참여 대상이 달라요. 여러 자녀가 함께하면 해당
-                    학년을 모두 선택해 주세요.
-                  </p>
-                  <div className="nv-card-content">
-                    <GradeChoices value={answer} onChange={setAnswer} />
-                  </div>
-                  <div className="nv-actions nv-card-actions">
-                    <Button
-                      primary
-                      disabled={!answer.length}
-                      onClick={() =>
-                        start({ ...run.conditions, grades: answer }, true)
-                      }
-                    >
-                      이 조건으로 확인
-                    </Button>
-                    <Button onClick={() => start(run.conditions, true)}>
-                      미정으로 계속 탐색
-                    </Button>
                   </div>
                 </section>
               )}
@@ -825,15 +771,15 @@ export default function App() {
                         <Button primary onClick={edit}>
                           조건 수정하기
                         </Button>
-                        {run.outcome === "failed" && scenario !== "policy" && (
-                          <Button onClick={() => start(run.conditions, true)}>
+                        {run.outcome === "failed" && (
+                          <Button onClick={() => start(run.conditions)}>
                             {run.mode === "live" ? "다시 탐색" : "예시 다시 실행"}
                           </Button>
                         )}
                       </div>
                     </section>
                   )}
-                  {mapPreview && run.candidates.length > 0 ? (
+                  {run.candidates.length > 0 ? (
                     <MapResults key={run.run_id} candidates={run.candidates} />
                   ) : <div className="nv-card-grid results-grid">
                     {run.candidates.map((candidate) => (
@@ -1044,7 +990,7 @@ export default function App() {
       <div className="sr-only" role="status" aria-live="polite">
         {tab === "explore" && screen === "analysis"
           ? !playing && !ended
-            ? "예시 재생 일시정지"
+            ? "탐색 대기"
             : run?.events[count - 1]?.label
           : screen === "results"
             ? resultTitle

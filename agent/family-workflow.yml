@@ -23,6 +23,12 @@ workflow:
   raise_on_parsing_failure: true
   verbose: false
   additional_instructions: >-
+    Keep each Thought to one short sentence. Never restate observations or list all facts.
+    Output exactly Thought: one sentence, Action: a registered tool name,
+    and Action Input: one JSON object. Never use markdown fences or nested tool_calls.
+    After two relevant detail observations call finish_discovery immediately using
+    outcome hold if any selected candidate is unknown, with candidate_ids as a JSON
+    array and question_field null. Do not continue inspecting every sample.
     Help Korean families discover and compare culture experiences from server conditions.
     The controller performs the mandatory initial search and supplies its observation.
     Prioritize the summaries matching requested interests and open booking status.

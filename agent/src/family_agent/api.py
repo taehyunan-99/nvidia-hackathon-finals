@@ -148,8 +148,10 @@ def create_app(worker=live_worker):
     def get(job_id: str, x_run_owner: str | None = Header(default=None)):
         job = owned(job_id, x_run_owner)
         with lock:
+            runtime = _active_runtimes.get(job_id)
+            events = [{**event, 'seq': i+1, 'request_id': job_id} for i, event in enumerate(list(runtime.events))] if runtime else []
             return {'run_id': job_id, 'status': job['status'], 'conditions_revision': job['revision'],
-                'result': deepcopy(job['result']), 'error_code': job.get('error_code')}
+                'events': events, 'result': deepcopy(job['result']), 'error_code': job.get('error_code')}
 
     @app.delete('/api/runs/{job_id}', status_code=202)
     def cancel(job_id: str, x_run_owner: str | None = Header(default=None)):

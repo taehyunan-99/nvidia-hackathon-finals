@@ -51,9 +51,9 @@ python -m family_agent.run --live --challenge --request /hackathon/input/challen
 
 ## 웹 연결
 
-실제 API는 **OpenShell 안에서** `uvicorn family_agent.api:app --host 127.0.0.1 --port 8000 --workers 1 --no-access-log`로 실행한다. `POST /api/runs`, 소유권 확인을 거치는 `GET/DELETE /api/runs/{id}`, 질문 카드의 `POST /api/runs/{id}/resume`을 제공한다. 소유권 토큰은 요청 생성 시 서버가 발급하고 `X-Run-Owner`로 전달한다. 한 작업의 다른 revision·다른 소유자·허용되지 않은 질문 답은 거부한다. 결과는 worker 종료 후 실행별 output에 봉인하고 기존 하네스의 안전한 JSON 회수 함수를 통과시킨다. 작업은 메모리에서 관리하며 완료 후 30분 만료, 최대 32건·대기/실행 4건이다.
+실제 API는 **OpenShell 안에서** `uvicorn family_agent.api:app --host 127.0.0.1 --port 8000 --workers 1 --no-access-log`로 실행한다. `POST /api/runs`, 소유권 확인을 거치는 `GET/DELETE /api/runs/{id}`, 질문 카드의 `POST /api/runs/{id}/resume`을 제공한다. 소유권 토큰은 요청 생성 시 서버가 발급하고 `X-Run-Owner`로 전달한다. 한 작업의 다른 revision·다른 소유자·허용되지 않은 질문 답은 거부한다. 결과는 worker 종료 후 실행별 output에 봉인하고 기존 하네스의 안전한 JSON 회수 함수를 통과시킨다. 실행 중 GET은 같은 소유권 검사 후 순번·요청 ID가 포함된 실제 관측 이벤트를 반환하며, 최종 결과는 저장·회수 완료 전 반환하지 않는다. 작업은 메모리에서 관리하며 완료 후 30분 만료, 최대 32건·대기/실행 4건이다.
 
-운영자 포워딩은 `openshell forward service <name> --target-port 8000 --local 127.0.0.1:8000`이며 브라우저에 CLI나 gateway 자격증명을 제공하지 않는다. 로컬 Vite `/api/runs` proxy가 같은 8000번 포트로 연결된다. `VITE_AGENT_MODE=live npm run dev`로 실제 모드를 선택하고 기본은 기존 mock이다. live 화면은 실제 실행 관측을 표시하며 모델 이벤트를 정책 집행 증거로 표시하지 않는다. AWS의 기존 공개 합성 사이트를 이 명령만으로 교체하지 않는다.
+운영자 포워딩은 `openshell forward service <name> --target-port 8000 --local 127.0.0.1:8000`이며 브라우저에 CLI나 gateway 자격증명을 제공하지 않는다. 로컬 Vite `/api/runs` proxy가 같은 8000번 포트로 연결된다. `npm run dev`는 실제 모드만 제공한다. 합성 실행 진입점은 제거했다. live 화면은 실제 실행 관측을 표시하며 모델 이벤트를 정책 집행 증거로 표시하지 않는다. 공개 사이트의 실제 연결과 서비스 운영은 [수동 배포](../docs/playbooks/frontend-deployment.md)를 따른다.
 
 검사: 이미지에서 `python -m unittest discover -s /opt/family-minimum/agent/tests`; 검증기 사전 정답은 `python agent/contracts/check_validation.py`; 프런트는 `npm run build`, `npm test`, `npm run test:browser`. 단위 검사와 NAT 합성 graph, 실제 모델/자료 조회, OpenShell 정책 집행을 구분한다. Nemotron 3 Super에는 1,024토큰 제한 내 ReAct 응답을 위해 `enable_thinking=false`를 적용한다. [NVIDIA 모델 API](https://docs.api.nvidia.com/nim/reference/nvidia-nemotron-3-super-120b-a12b-infer).
 
@@ -66,7 +66,9 @@ python -m family_agent.run --live --challenge --request /hackathon/input/challen
 
 NAT 등록·실행·종료와 검증기·호출 제어의 합성 검사는 통과했고, 실제 가족 탐색은 공식 sample과 상세를 읽어 4개 제외·1개 미확인으로 종료했다. **실제 챌린지 완주는 미검증**이다. 이전 실제 챌린지 시도는 초기 템플릿 오류 또는 읽기 반복·종료 검증 문제로 실패/10단계 한도 종료했으며 성공으로 사용하지 않는다. 최신 줄 번호 인용과 코드의 작은 자료 묶음 선조회는 합성 검사만 통과했다. 팀원은 실제 제공 패키지·새 추가 조건·정상 output·종료 코드·금지 접근/전송·원문 지시 처리·서버와 키 비노출을 확인해야 한다.
 
-기존 Brev의 `family-agent-mvp` sandbox와 전용 모델 provider를 재사용할 수 있으나 실행 전 이미지·effective policy·예산 장부를 확인한다. 제품과 공통 모드를 동시에 실행하지 않는다. CLI에는 `challenge-policy.yaml`을 적용하고 일일 장부를 새로 초기화하지 않는다. 부모 프로젝트의 `/opt/nvidia-finals-bridge`와 기존 gateway·다른 sandbox·예선 저장소는 수정하지 않는다. 일반 사이트의 프런트/API/OpenShell 왕복과 공개 사이트 배포는 다음 프런트 세션의 담당이며 현재 공개 사이트는 합성 상태다. 웹 챌린지 화면·전용 API·모드 전환은 제거했다.
+기존 Brev의 `family-agent-mvp` sandbox와 전용 모델 provider를 재사용할 수 있으나 실행 전 이미지·effective policy·예산 장부를 확인한다. 제품과 공통 모드를 동시에 실행하지 않는다. CLI에는 `challenge-policy.yaml`을 적용하고 일일 장부를 새로 초기화하지 않는다. 부모 프로젝트의 `/opt/nvidia-finals-bridge`와 기존 gateway·다른 sandbox·예선 저장소는 수정하지 않는다. 일반 사이트는 별도 `family-progress` 제품 sandbox에 연결돼 있다. 기존 sandbox의 API는 정지했으며 CLI를 재개하기 전 현재 일일 장부를 대조한다. 웹 챌린지 화면·전용 API·모드 전환은 제거했다.
+
+제품 웹은 두 후보의 근거를 조회한 뒤 관측한 판정을 모델에 다시 전달해 제한된 비교를 마무리하도록 안내한다. 마지막 공개 왕복은 모델 3회·자료 1회·41.44초로 후보 2개를 반환했고 날짜 미정 때문에 정상 보류했다. 단계 한도 종료와 앞선 실패는 이 성공 사례와 구분한다.
 
 ## 챌린지 CLI
 

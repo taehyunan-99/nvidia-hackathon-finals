@@ -1,6 +1,6 @@
 # 두루 프런트 수동 배포
 
-공개 주소: [두루](https://d25wpps17lj0dn.cloudfront.net/). 현재 공개 대상은 합성 예시 데이터로 동작하는 프런트다. 실제 에이전트·공식 API·OpenShell과의 연결 성공을 뜻하지 않는다.
+공개 주소: [두루](https://d25wpps17lj0dn.cloudfront.net/). 공개 대상은 실제 OpenShell 가족 에이전트에 연결된 프런트다. 합성 실행 진입점은 제거했다. 전체 검색·잔여석·예약 확정은 제공하지 않는다.
 
 ## 구성
 
@@ -9,6 +9,16 @@
 CloudFront → 기존 Caddy 80번 → 전용 Docker 네트워크 `duru-edge` → `duru-frontend` 순서다. CloudFront는 서버 전용 요청 헤더를 붙이며 Caddy와 nginx가 이를 확인한다. EC2의 기존 CloudFront 전용 ingress를 유지하고 두루의 8080번은 localhost에만 연다. CloudFront→EC2 구간은 현재 HTTP다. 서버 API·사용자 민감 데이터를 연결하기 전 origin HTTPS를 별도로 구성해야 한다. [AWS origin 접근 제한](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/restrict-access-to-load-balancer.html).
 
 기존 예선 컨테이너·API·Brev SSH 터널은 유지한다. Caddy 설정에 두루 전용 분기만 추가하고 기존 분기는 보존한다. 예선의 중지된 CloudFront 주소를 두루로 전환했으므로 해당 공개 주소는 이제 두루 화면이다. CloudFront의 기존 origin 설정은 보존한다.
+
+## 실제 API 연결
+
+`/api/*`는 캐시를 끄고 POST/DELETE와 `X-Run-Owner`를 전달한다. CloudFront의 별도 `duru-api` origin은 HTTPS를 사용한다. 현재 발표용 origin은 AWS의 `duru-api-origin.service`가 제공하는 Cloudflare Quick Tunnel이다. nginx는 기존 서버 전용 요청 헤더를 검사하므로 터널 주소만으로 API에 접근할 수 없다. [Quick Tunnel 공식 안내](https://developers.cloudflare.com/tunnel/get-started/quick-tunnels/)는 이 경로를 임시 개발·시연 용도로 한정한다. 프로세스 재시작 시 origin 주소가 바뀌므로 공개 주소의 API origin을 갱신해야 한다. 지속 운영에는 고정 HTTPS origin으로 교체한다.
+
+nginx → Docker host의 172.17.0.1:28081 → AWS `duru-agent-tunnel.service`의 인증 SSH → Brev 127.0.0.1:8001 → `duru-progress-forward.service` → OpenShell `family-progress` 8000 → 실제 API 순서다. Brev의 `duru-progress-api.service`가 단일 API worker를 감독한다. 기존 예선/bridge 서비스와 터널은 보존했다. 공개 ingress 포트와 새 VM은 추가하지 않았다.
+
+제품 sandbox는 `finals-family-agent:progress` 이미지와 `agent/policy.yaml`, 기존 전용 NVIDIA provider를 사용한다. `agent/Web.Dockerfile`은 기존 검증된 base 위에 최신 코드만 설치한다. 이전 API를 종료한 뒤 일일 장부를 그대로 복사했다. 이전 `family-agent-mvp`·`family-agent-web`의 API는 정지 상태다. 이전 sandbox/CLI를 다시 실행하기 전 현재 제품 장부와 운영 집계를 대조해야 하며 동시 실행·장부 초기화는 금지한다.
+
+지도 Client ID는 `frontend/.env.local`에서 읽어 서버 환경으로 전달한다. Client Secret은 전송하지 않는다. Maps Web 서비스 URL에 공개 도메인을 추가하고 저장해야 한다.
 
 ## 이후 배포
 
@@ -20,6 +30,8 @@ python3 scripts/deploy_frontend.py \
   --known-hosts /검증된/known_hosts \
   --host-key-alias 15.164.174.7
 ```
+
+API origin 주소가 변경되면 같은 수동 명령에 `--api-origin <새 HTTPS 호스트명>`을 추가한다. CloudFront `Deployed`, `/api/health`, 실제 POST→소유권 GET→후보·근거·지도 표시를 확인한다. 터널·worker 장애 시 해당 systemd 서비스를 확인하고, API origin 터널을 재시작했다면 새 주소를 먼저 반영한다.
 
 호스트 키 별칭은 최초 등록 때 사용한 주소다. 접속 주소는 AWS에서 매번 조회하지만 검증한 서버 키를 유지한다. 임의로 `StrictHostKeyChecking`을 끄지 않는다. 최초 CloudFront 연결에서만 `--init`을 사용했다. 이후에는 위 수동 명령만 사용한다. GitHub workflow·webhook 배포 연동은 추가하지 않았다.
 

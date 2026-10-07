@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { type AssessedCandidate, interestLabels, gradeLabels } from "./contract";
+import { type AssessedCandidate } from "./contract";
 
 declare global {
   interface Window { navermap_authFailure?: () => void }
@@ -31,6 +31,7 @@ export function MapResults({ candidates }: { candidates: AssessedCandidate[] }) 
   const [selected, setSelected] = useState(candidates[0].id);
   const [error, setError] = useState("");
   const [ready, setReady] = useState(false);
+  const [attempt, setAttempt] = useState(0);
   const container = useRef<HTMLDivElement>(null);
   const markers = useRef<{ id: string; marker: naver.maps.Marker; button: HTMLButtonElement }[]>([]);
   const active = candidates.find(candidate => candidate.id === selected)!;
@@ -50,8 +51,8 @@ export function MapResults({ candidates }: { candidates: AssessedCandidate[] }) 
         zoomControl: true, scrollWheel: false,
         zoomControlOptions: { position: maps.Position.TOP_RIGHT },
       });
-      const first = candidates[0].testCoordinates!;
-      const firstPoint = new maps.LatLng(first.latitude, first.longitude);
+      const first = candidates.find(candidate => candidate.testCoordinates)?.testCoordinates;
+      const firstPoint = new maps.LatLng(first?.latitude ?? 37.572, first?.longitude ?? 126.986);
       const bounds = new maps.LatLngBounds(firstPoint, firstPoint);
       candidates.forEach((candidate, index) => {
         const coords = candidate.testCoordinates;
@@ -84,7 +85,7 @@ export function MapResults({ candidates }: { candidates: AssessedCandidate[] }) 
       markers.current = [];
       delete window.navermap_authFailure;
     };
-  }, [candidates]);
+  }, [candidates, attempt]);
 
   useEffect(() => {
     markers.current.forEach(({ id, marker, button }) => {
@@ -94,8 +95,8 @@ export function MapResults({ candidates }: { candidates: AssessedCandidate[] }) 
     });
   }, [selected, ready]);
 
-  return <section className="map-results" aria-label="후보와 지도 연결 테스트">
-    <p className="map-demo-note">지도 연결 테스트 · 아래 좌표는 임시 지점이며 실제 체험 장소와 무관합니다.</p>
+  return <section className="map-results" aria-label="후보와 지도">
+    <p className="map-demo-note">공식 자료에 좌표가 있는 후보만 지도에 표시합니다.</p>
     <div className="map-candidate-selector" role="group" aria-label="후보 선택">
       <span>후보 선택</span>
       {candidates.map((candidate, index) => <button key={candidate.id}
@@ -111,8 +112,8 @@ export function MapResults({ candidates }: { candidates: AssessedCandidate[] }) 
           data-selected={selected === active.id} key={active.id}
         >
           <div className="section-heading">
-            <span className="map-card-number">{activeIndex + 1} · {interestLabels[active.interest]}</span>
-            <span className="eyebrow">합성 예시</span>
+            <span className="map-card-number">{activeIndex + 1} · 문화체험</span>
+            <span className="eyebrow">공식 자료</span>
           </div>
           <h2 className="map-candidate-title">{active.title}</h2>
           <div className="map-fit-checks" aria-label="가족 조건 확인">
@@ -134,31 +135,32 @@ export function MapResults({ candidates }: { candidates: AssessedCandidate[] }) 
           <p className="map-place">{active.place}</p>
           <div className="map-next-check">
             <strong>선택 전에 확인</strong>
-            {active.checks.filter(check => check.verdict === "unknown").map(check => <p key={check.label}>{check.detail}</p>)}
+            {active.checks.filter(check => check.verdict === "unknown").map(check => <p key={check.label}>{check.label} · {check.detail}</p>)}
             <p>실제 운영·잔여석·신청 경로는 아직 확인되지 않았어요.</p>
           </div>
           <details className="map-card-details">
-            <summary>대상·준비물·예시 근거 보기</summary>
-            <dl><div><dt>참여 대상</dt><dd>{active.grades.map(grade => gradeLabels[grade]).join(" · ")}</dd></div>
-              <div><dt>보호자</dt><dd>{active.guardianRequired ? "동반 필요" : "동반 필수 아님"}</dd></div>
+            <summary>대상·준비물·근거 보기</summary>
+            <dl><div><dt>참여 대상</dt><dd>{active.checks.find(check => check.label === "학년")?.detail || "참여 대상 미확인"}</dd></div>
+              <div><dt>보호자</dt><dd>{active.checks.find(check => check.label === "동반 조건")?.detail || "동반 조건 미확인"}</dd></div>
               <div><dt>준비물</dt><dd>{active.preparation}</dd></div></dl>
             {active.evidence.map(evidence => <div className="map-card-evidence" key={evidence.id}>
               <strong>{evidence.title}</strong><blockquote>{evidence.quote}</blockquote><span>{evidence.source}</span>
             </div>)}
           </details>
-          <div className="map-card-footer"><span>● {activeIndex + 1}번 마커와 연결됨</span>
+          <a className="nv-button nv-secondary" href={active.officialUrl} target="_blank" rel="noopener noreferrer">공식 신청 안내</a>
+          <div className="map-card-footer"><span>{active.testCoordinates ? `● ${activeIndex + 1}번 마커와 연결됨` : "위치 좌표 미확인"}</span>
             <span>번호 또는 마커로 후보 전환</span></div>
         </article>
       </div>
-      <aside className="map-panel" aria-label="예시 후보 위치 지도">
+      <aside className="map-panel" aria-label="후보 위치 지도">
         <div className="naver-map" ref={container} aria-label="네이버 지도">
           {!ready && !error && <p className="map-message" role="status">지도를 불러오는 중…</p>}
         </div>
-        {error && <p className="map-error" role="alert">{error} 후보 목록은 계속 확인할 수 있어요.</p>}
+        {error && <div className="map-error" role="alert"><p>{error} 후보 목록은 계속 확인할 수 있어요.</p><button className="nv-button nv-secondary" onClick={() => { sdkPromise = undefined; setError(""); setReady(false); setAttempt(value => value + 1); }}>지도 다시 연결</button></div>}
         <div className="map-selection" role="status" aria-live="polite">
           <span className="eyebrow">선택한 후보 · {candidates.indexOf(active) + 1}번</span>
           <strong>{active.title}</strong>
-          <span>임시 좌표 {active.testCoordinates?.latitude.toFixed(4)}, {active.testCoordinates?.longitude.toFixed(4)}</span>
+          <span>{active.testCoordinates ? `좌표 ${active.testCoordinates.latitude.toFixed(4)}, ${active.testCoordinates.longitude.toFixed(4)}` : "공식 자료의 위치 좌표 미확인"}</span>
         </div>
       </aside>
     </div>
