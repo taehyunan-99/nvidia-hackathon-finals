@@ -7,5 +7,9 @@
 !docs/
 !docs/playbooks/
 !docs/playbooks/model-policy.json
+!docs/catalog/
+!docs/catalog/contracts/
+!docs/catalog/contracts/family-v1.schema.json
+!docs/catalog/contracts/family-v1.cases.json
 agent/.venv/
 agent/**/__pycache__/
