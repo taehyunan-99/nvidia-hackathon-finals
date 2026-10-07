@@ -18,11 +18,12 @@
     "react-dom": "19.3.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.58.0",
+    "@types/navermaps": "^3.9.2",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "6.1.2",
-    "vite": "8.3.3",
     "typescript": "7.0.2",
-    "@playwright/test": "^1.58.0"
+    "vite": "8.3.3"
   }
 }

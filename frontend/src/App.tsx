@@ -19,6 +19,13 @@ import {
   summarize,
 } from "./contract";
 import { buildMockRun } from "./mock";
+import { MapResults } from "./MapResults";
+
+const mapPreview = import.meta.env.DEV && new URLSearchParams(location.search).get("mapDemo") === "1";
+const mapPreviewRun = mapPreview ? buildMockRun({
+  interests: ["history", "craft", "performance"], grades: ["3"],
+  guardians: "1", date: null, district: "all",
+}) : null;
 
 // The shared JavaScript renderer infers its demo tool IDs too narrowly.
 const drawActivity = renderActivity as unknown as (
@@ -241,12 +248,12 @@ export default function App() {
   const [tab, setTab] = useState<"explore" | "team">("explore");
   const [screen, setScreen] = useState<
     "input" | "analysis" | "question" | "results"
-  >("input");
+  >(mapPreview ? "results" : "input");
   const [step, setStep] = useState(0);
   const [conditions, setConditions] = useState<Conditions>(readConditions);
   const [scenario, setScenario] = useState<Scenario>("normal");
-  const [run, setRun] = useState<Run | null>(null);
-  const [count, setCount] = useState(0),
+  const [run, setRun] = useState<Run | null>(mapPreviewRun);
+  const [count, setCount] = useState(mapPreviewRun?.events.length ?? 0),
     [playing, setPlaying] = useState(false);
   const [answer, setAnswer] = useState<Grade[]>([]),
     [compared, setCompared] = useState<string[]>([]);
@@ -733,7 +740,9 @@ export default function App() {
                       </div>
                     </section>
                   )}
-                  <div className="nv-card-grid results-grid">
+                  {mapPreview && run.candidates.length > 0 ? (
+                    <MapResults key={run.run_id} candidates={run.candidates} />
+                  ) : <div className="nv-card-grid results-grid">
                     {run.candidates.map((candidate) => (
                       <article className="nv-card candidate" key={candidate.id}>
                         <div
@@ -846,7 +855,7 @@ export default function App() {
                         </div>
                       </article>
                     ))}
-                  </div>
+                  </div>}
                   {compared.length > 0 && (
                     <section className="comparison nv-card">
                       <div className="section-heading">
@@ -928,14 +937,6 @@ export default function App() {
                       ))}
                     </details>
                   )}
-                  <details className="execution-details">
-                    <summary>이번 판단 과정 다시 보기</summary>
-                    <Activity
-                      run={run}
-                      count={run.events.length}
-                      playing={false}
-                    />
-                  </details>
                   <Security run={run} count={count} />
                 </>
               )}

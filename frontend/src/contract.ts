@@ -41,6 +41,7 @@ export interface Candidate {
   district: "jongno" | "jung";
   experience: string;
   place: string;
+  testCoordinates?: { latitude: number; longitude: number };
   dates: string[];
   time: string;
   grades: Grade[];
