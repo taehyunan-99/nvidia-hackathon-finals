@@ -1,0 +1,1449 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:family-culture:family-v1",
+  "title": "Family validator and agent contracts",
+  "$ref": "#/$defs/validation_input",
+  "$defs": {
+    "range": {
+      "type": "object",
+      "properties": {
+        "minimum": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "maximum": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "minimum",
+        "maximum"
+      ],
+      "additionalProperties": false
+    },
+    "child": {
+      "type": "object",
+      "properties": {
+        "member_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "grade": {
+          "anyOf": [
+            {
+              "enum": [
+                "preschool",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "teen"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "age_years": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/range"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "member_id",
+        "grade",
+        "age_years"
+      ],
+      "additionalProperties": false
+    },
+    "conditions": {
+      "type": "object",
+      "properties": {
+        "interests": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "history",
+              "craft",
+              "performance"
+            ]
+          },
+          "minItems": 0
+        },
+        "district": {
+          "enum": [
+            "all",
+            "jongno",
+            "jung"
+          ]
+        },
+        "children": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/child"
+              },
+              "minItems": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "composition_complete": {
+          "type": "boolean"
+        },
+        "guardians": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/range"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "visit_date": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "delivery_mode": {
+          "anyOf": [
+            {
+              "enum": [
+                "in_person",
+                "online"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "interests",
+        "district",
+        "children",
+        "composition_complete",
+        "guardians",
+        "visit_date",
+        "delivery_mode"
+      ],
+      "additionalProperties": false
+    },
+    "evidence": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "source_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "candidate_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "quote": {
+          "type": "string",
+          "minLength": 1
+        },
+        "locator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "retrieved_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "source_id",
+        "candidate_id",
+        "quote",
+        "locator",
+        "retrieved_at"
+      ],
+      "additionalProperties": false
+    },
+    "fact": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:-]+$"
+            },
+            "evidence_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.:-]+$"
+              },
+              "minItems": 1
+            },
+            "applies_to": {
+              "enum": [
+                "child",
+                "family",
+                "session"
+              ]
+            },
+            "scope_match": {
+              "enum": [
+                "applicable",
+                "not_applicable",
+                "unresolved"
+              ]
+            },
+            "field": {
+              "const": "allowed_age_range"
+            },
+            "value": {
+              "$ref": "#/$defs/range"
+            }
+          },
+          "required": [
+            "id",
+            "evidence_ids",
+            "applies_to",
+            "scope_match",
+            "field",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:-]+$"
+            },
+            "evidence_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.:-]+$"
+              },
+              "minItems": 1
+            },
+            "applies_to": {
+              "enum": [
+                "child",
+                "family",
+                "session"
+              ]
+            },
+            "scope_match": {
+              "enum": [
+                "applicable",
+                "not_applicable",
+                "unresolved"
+              ]
+            },
+            "field": {
+              "const": "allowed_grades"
+            },
+            "value": {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "preschool",
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5",
+                  "6",
+                  "teen"
+                ]
+              },
+              "minItems": 1
+            }
+          },
+          "required": [
+            "id",
+            "evidence_ids",
+            "applies_to",
+            "scope_match",
+            "field",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:-]+$"
+            },
+            "evidence_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.:-]+$"
+              },
+              "minItems": 1
+            },
+            "applies_to": {
+              "enum": [
+                "child",
+                "family",
+                "session"
+              ]
+            },
+            "scope_match": {
+              "enum": [
+                "applicable",
+                "not_applicable",
+                "unresolved"
+              ]
+            },
+            "field": {
+              "const": "guardian_min"
+            },
+            "value": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "id",
+            "evidence_ids",
+            "applies_to",
+            "scope_match",
+            "field",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:-]+$"
+            },
+            "evidence_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.:-]+$"
+              },
+              "minItems": 1
+            },
+            "applies_to": {
+              "enum": [
+                "child",
+                "family",
+                "session"
+              ]
+            },
+            "scope_match": {
+              "enum": [
+                "applicable",
+                "not_applicable",
+                "unresolved"
+              ]
+            },
+            "field": {
+              "const": "guardian_exact"
+            },
+            "value": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "id",
+            "evidence_ids",
+            "applies_to",
+            "scope_match",
+            "field",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:-]+$"
+            },
+            "evidence_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.:-]+$"
+              },
+              "minItems": 1
+            },
+            "applies_to": {
+              "enum": [
+                "child",
+                "family",
+                "session"
+              ]
+            },
+            "scope_match": {
+              "enum": [
+                "applicable",
+                "not_applicable",
+                "unresolved"
+              ]
+            },
+            "field": {
+              "const": "participant_max"
+            },
+            "value": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "id",
+            "evidence_ids",
+            "applies_to",
+            "scope_match",
+            "field",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:-]+$"
+            },
+            "evidence_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.:-]+$"
+              },
+              "minItems": 1
+            },
+            "applies_to": {
+              "enum": [
+                "child",
+                "family",
+                "session"
+              ]
+            },
+            "scope_match": {
+              "enum": [
+                "applicable",
+                "not_applicable",
+                "unresolved"
+              ]
+            },
+            "field": {
+              "const": "operating_period"
+            },
+            "value": {
+              "type": "object",
+              "properties": {
+                "start": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "end": {
+                  "type": "string",
+                  "format": "date"
+                }
+              },
+              "required": [
+                "start",
+                "end"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "id",
+            "evidence_ids",
+            "applies_to",
+            "scope_match",
+            "field",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:-]+$"
+            },
+            "evidence_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.:-]+$"
+              },
+              "minItems": 1
+            },
+            "applies_to": {
+              "enum": [
+                "child",
+                "family",
+                "session"
+              ]
+            },
+            "scope_match": {
+              "enum": [
+                "applicable",
+                "not_applicable",
+                "unresolved"
+              ]
+            },
+            "field": {
+              "const": "session_dates"
+            },
+            "value": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "date"
+              },
+              "minItems": 1
+            }
+          },
+          "required": [
+            "id",
+            "evidence_ids",
+            "applies_to",
+            "scope_match",
+            "field",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:-]+$"
+            },
+            "evidence_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.:-]+$"
+              },
+              "minItems": 1
+            },
+            "applies_to": {
+              "enum": [
+                "child",
+                "family",
+                "session"
+              ]
+            },
+            "scope_match": {
+              "enum": [
+                "applicable",
+                "not_applicable",
+                "unresolved"
+              ]
+            },
+            "field": {
+              "const": "weekdays"
+            },
+            "value": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 7
+              },
+              "minItems": 1
+            }
+          },
+          "required": [
+            "id",
+            "evidence_ids",
+            "applies_to",
+            "scope_match",
+            "field",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:-]+$"
+            },
+            "evidence_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.:-]+$"
+              },
+              "minItems": 1
+            },
+            "applies_to": {
+              "enum": [
+                "child",
+                "family",
+                "session"
+              ]
+            },
+            "scope_match": {
+              "enum": [
+                "applicable",
+                "not_applicable",
+                "unresolved"
+              ]
+            },
+            "field": {
+              "const": "booking_status"
+            },
+            "value": {
+              "enum": [
+                "open",
+                "closed",
+                "full",
+                "cancelled",
+                "unknown"
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "evidence_ids",
+            "applies_to",
+            "scope_match",
+            "field",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:-]+$"
+            },
+            "evidence_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.:-]+$"
+              },
+              "minItems": 1
+            },
+            "applies_to": {
+              "enum": [
+                "child",
+                "family",
+                "session"
+              ]
+            },
+            "scope_match": {
+              "enum": [
+                "applicable",
+                "not_applicable",
+                "unresolved"
+              ]
+            },
+            "field": {
+              "const": "booking_period"
+            },
+            "value": {
+              "type": "object",
+              "properties": {
+                "start": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "end": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              },
+              "required": [
+                "start",
+                "end"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "id",
+            "evidence_ids",
+            "applies_to",
+            "scope_match",
+            "field",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:-]+$"
+            },
+            "evidence_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.:-]+$"
+              },
+              "minItems": 1
+            },
+            "applies_to": {
+              "enum": [
+                "child",
+                "family",
+                "session"
+              ]
+            },
+            "scope_match": {
+              "enum": [
+                "applicable",
+                "not_applicable",
+                "unresolved"
+              ]
+            },
+            "field": {
+              "const": "delivery_mode"
+            },
+            "value": {
+              "enum": [
+                "in_person",
+                "online"
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "evidence_ids",
+            "applies_to",
+            "scope_match",
+            "field",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:-]+$"
+            },
+            "evidence_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.:-]+$"
+              },
+              "minItems": 1
+            },
+            "applies_to": {
+              "enum": [
+                "child",
+                "family",
+                "session"
+              ]
+            },
+            "scope_match": {
+              "enum": [
+                "applicable",
+                "not_applicable",
+                "unresolved"
+              ]
+            },
+            "field": {
+              "const": "interest_tags"
+            },
+            "value": {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "history",
+                  "craft",
+                  "performance"
+                ]
+              },
+              "minItems": 1
+            }
+          },
+          "required": [
+            "id",
+            "evidence_ids",
+            "applies_to",
+            "scope_match",
+            "field",
+            "value"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "validation_input": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "family-v1"
+        },
+        "request_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "conditions_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "as_of": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "conditions": {
+          "$ref": "#/$defs/conditions"
+        },
+        "candidate_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "trusted_source_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.:-]+$"
+          },
+          "minItems": 1
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          },
+          "minItems": 0
+        },
+        "facts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/fact"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "schema_version",
+        "request_id",
+        "conditions_revision",
+        "as_of",
+        "conditions",
+        "candidate_id",
+        "trusted_source_ids",
+        "evidence",
+        "facts"
+      ],
+      "additionalProperties": false
+    },
+    "check": {
+      "type": "object",
+      "properties": {
+        "verdict": {
+          "enum": [
+            "suitable",
+            "unsuitable",
+            "unknown"
+          ]
+        },
+        "reason_code": {
+          "enum": [
+            "matched",
+            "explicitly_unrestricted",
+            "not_requested",
+            "missing_user_input",
+            "missing_source_fact",
+            "scope_unresolved",
+            "conflicting_evidence",
+            "age_mismatch",
+            "grade_mismatch",
+            "guardian_missing",
+            "party_size_exceeded",
+            "session_mismatch",
+            "booking_closed",
+            "booking_full",
+            "booking_cancelled",
+            "booking_window_expired",
+            "booking_state_unknown",
+            "delivery_mismatch",
+            "interest_mismatch",
+            "partial_composition",
+            "age_range_ambiguous",
+            "count_range_ambiguous"
+          ]
+        },
+        "evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.:-]+$"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "verdict",
+        "reason_code",
+        "evidence_ids"
+      ],
+      "additionalProperties": false
+    },
+    "need": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": [
+            "user_input",
+            "detail",
+            "official_source",
+            "alternative"
+          ]
+        },
+        "field": {
+          "enum": [
+            "age",
+            "grade",
+            "companions",
+            "visit_date",
+            "booking",
+            "delivery",
+            "interest"
+          ]
+        },
+        "reason_code": {
+          "enum": [
+            "matched",
+            "explicitly_unrestricted",
+            "not_requested",
+            "missing_user_input",
+            "missing_source_fact",
+            "scope_unresolved",
+            "conflicting_evidence",
+            "age_mismatch",
+            "grade_mismatch",
+            "guardian_missing",
+            "party_size_exceeded",
+            "session_mismatch",
+            "booking_closed",
+            "booking_full",
+            "booking_cancelled",
+            "booking_window_expired",
+            "booking_state_unknown",
+            "delivery_mismatch",
+            "interest_mismatch",
+            "partial_composition",
+            "age_range_ambiguous",
+            "count_range_ambiguous"
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "field",
+        "reason_code"
+      ],
+      "additionalProperties": false
+    },
+    "validation_output": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "family-v1"
+        },
+        "request_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "conditions_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "candidate_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "checks": {
+          "type": "object",
+          "properties": {
+            "age": {
+              "$ref": "#/$defs/check"
+            },
+            "grade": {
+              "$ref": "#/$defs/check"
+            },
+            "companions": {
+              "$ref": "#/$defs/check"
+            },
+            "visit_date": {
+              "$ref": "#/$defs/check"
+            },
+            "booking": {
+              "$ref": "#/$defs/check"
+            },
+            "delivery": {
+              "$ref": "#/$defs/check"
+            },
+            "interest": {
+              "$ref": "#/$defs/check"
+            }
+          },
+          "required": [
+            "age",
+            "grade",
+            "companions",
+            "visit_date",
+            "booking",
+            "delivery",
+            "interest"
+          ],
+          "additionalProperties": false
+        },
+        "overall": {
+          "enum": [
+            "suitable",
+            "unsuitable",
+            "unknown"
+          ]
+        },
+        "needs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/need"
+          },
+          "minItems": 0
+        },
+        "ignored_evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.:-]+$"
+          },
+          "minItems": 0
+        },
+        "availability": {
+          "const": "unverified"
+        }
+      },
+      "required": [
+        "schema_version",
+        "request_id",
+        "conditions_revision",
+        "candidate_id",
+        "checks",
+        "overall",
+        "needs",
+        "ignored_evidence_ids",
+        "availability"
+      ],
+      "additionalProperties": false
+    },
+    "search_input": {
+      "type": "object",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "conditions_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "conditions": {
+          "$ref": "#/$defs/conditions"
+        },
+        "cursor": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "page_size": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "request_id",
+        "conditions_revision",
+        "conditions",
+        "cursor",
+        "page_size"
+      ],
+      "additionalProperties": false
+    },
+    "search_output": {
+      "type": "object",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "conditions_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "status": {
+          "enum": [
+            "ok",
+            "empty",
+            "error",
+            "policy_denied"
+          ]
+        },
+        "candidate_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.:-]+$"
+          },
+          "minItems": 0
+        },
+        "next_cursor": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scope": {
+          "type": "object",
+          "properties": {
+            "district": {
+              "enum": [
+                "all",
+                "jongno",
+                "jung"
+              ]
+            },
+            "interests": {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "history",
+                  "craft",
+                  "performance"
+                ]
+              },
+              "minItems": 0
+            },
+            "coverage": {
+              "enum": [
+                "sample",
+                "bounded",
+                "complete_for_query"
+              ]
+            },
+            "pages_read": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "limit_reached": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "district",
+            "interests",
+            "coverage",
+            "pages_read",
+            "limit_reached"
+          ],
+          "additionalProperties": false
+        },
+        "error_code": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "request_id",
+        "conditions_revision",
+        "status",
+        "candidate_ids",
+        "next_cursor",
+        "scope",
+        "error_code"
+      ],
+      "additionalProperties": false
+    },
+    "detail_input": {
+      "type": "object",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "conditions_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "candidate_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        }
+      },
+      "required": [
+        "request_id",
+        "conditions_revision",
+        "candidate_id"
+      ],
+      "additionalProperties": false
+    },
+    "official_input": {
+      "type": "object",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "conditions_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "candidate_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "source_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        }
+      },
+      "required": [
+        "request_id",
+        "conditions_revision",
+        "candidate_id",
+        "source_id"
+      ],
+      "additionalProperties": false
+    },
+    "detail_output": {
+      "type": "object",
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "conditions_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "candidate_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "source_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "status": {
+          "enum": [
+            "ok",
+            "empty",
+            "error",
+            "policy_denied"
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          },
+          "minItems": 0
+        },
+        "facts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/fact"
+          },
+          "minItems": 0
+        },
+        "error_code": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "request_id",
+        "conditions_revision",
+        "candidate_id",
+        "source_id",
+        "status",
+        "evidence",
+        "facts",
+        "error_code"
+      ],
+      "additionalProperties": false
+    },
+    "question_card": {
+      "type": "object",
+      "properties": {
+        "question_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "request_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "conditions_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "field": {
+          "enum": [
+            "children",
+            "age_years",
+            "grade",
+            "guardians",
+            "visit_date",
+            "delivery_mode"
+          ]
+        },
+        "member_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.:-]+$"
+              },
+              "label": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "label"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 2
+        }
+      },
+      "required": [
+        "question_id",
+        "request_id",
+        "conditions_revision",
+        "field",
+        "member_id",
+        "options"
+      ],
+      "additionalProperties": false
+    },
+    "resume_input": {
+      "type": "object",
+      "properties": {
+        "question_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "request_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "conditions_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "selected_option_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        }
+      },
+      "required": [
+        "question_id",
+        "request_id",
+        "conditions_revision",
+        "selected_option_id"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

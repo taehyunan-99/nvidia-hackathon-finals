@@ -1,0 +1,35 @@
+version: 1
+filesystem_policy:
+  include_workdir: false
+  read_only: [/usr, /bin, /lib, /lib64, /etc, /proc, /dev/urandom, /opt/family-minimum, /hackathon/input]
+  read_write: [/hackathon/output, /tmp, /dev/null]
+landlock:
+  compatibility: hard_requirement
+process:
+  run_as_user: "1000"
+  run_as_group: "1000"
+network_policies:
+  seoul_sample:
+    endpoints:
+      - host: openapi.seoul.go.kr
+        port: 8088
+        protocol: rest
+        enforcement: enforce
+        rules:
+          - allow:
+              method: GET
+              path: /sample/json/tvYeyakCOllect/1/5/
+    binaries:
+      - path: /usr/local/bin/python3.12
+  hosted_nvidia:
+    endpoints:
+      - host: integrate.api.nvidia.com
+        port: 443
+        protocol: rest
+        enforcement: enforce
+        rules:
+          - allow:
+              method: POST
+              path: /v1/chat/completions
+    binaries:
+      - path: /usr/local/bin/python3.12

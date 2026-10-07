@@ -9,6 +9,7 @@
 | [ARCHITECTURE](../ARCHITECTURE.md) | 구성요소 책임·데이터 흐름·실행/보안 경계·구현 미결정 |
 | [ADR](../ADR.md) | 결정의 배경·대안·이유·영향과 채택 상태 |
 | [데이터와 근거](data-sources.md) | 실제 출처·조회 범위·자료 접근과 확장 한계 |
+| [family-v1 계약](../catalog/contracts/family-v1.md) | 가족 검증 입력·출력·도구·질문 재개와 합성 시험의 기대 판정; 구현 성공은 아님 |
 
 기존 MVP·선택 기능·성공 기준은 INTENT와 PRD로, 제안 계약은 ARCHITECTURE로 이관했다. 선택 기능의 데이터·제약은 데이터와 근거 문서에서 확인한다. [에이전트 설계 진입](agent-design.md)은 새 설계와 기존 실행 자료를 연결한다.
 
