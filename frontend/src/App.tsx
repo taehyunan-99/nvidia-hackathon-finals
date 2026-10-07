@@ -18,9 +18,11 @@ import {
   tools,
   summarize,
 } from "./contract";
+import { liveRun, resumeLive } from "./live";
 import { buildMockRun } from "./mock";
 import { MapResults } from "./MapResults";
 
+const liveConfigured = import.meta.env.VITE_AGENT_MODE === "live";
 const mapPreview = import.meta.env.DEV && new URLSearchParams(location.search).get("mapDemo") === "1";
 const mapPreviewRun = mapPreview ? buildMockRun({
   interests: ["history", "craft", "performance"], grades: ["3"],
@@ -91,18 +93,21 @@ function Choice({
   description,
   onClick,
   number,
+  disabled = false,
 }: {
   selected: boolean;
   title: string;
   description?: string;
   onClick: () => void;
   number?: string;
+  disabled?: boolean;
 }) {
   return (
     <button
       type="button"
       className="choice"
       aria-pressed={selected}
+      disabled={disabled}
       onClick={onClick}
     >
       {number && <span className="choice-number">{number}</span>}
@@ -245,6 +250,7 @@ function Team() {
   );
 }
 export default function App() {
+  const liveEnabled = liveConfigured;
   const [tab, setTab] = useState<"explore" | "team">("explore");
   const [screen, setScreen] = useState<
     "input" | "analysis" | "question" | "results"
@@ -255,6 +261,9 @@ export default function App() {
   const [run, setRun] = useState<Run | null>(mapPreviewRun);
   const [count, setCount] = useState(mapPreviewRun?.events.length ?? 0),
     [playing, setPlaying] = useState(false);
+  const liveRequest = useRef<AbortController | null>(null);
+  const [livePending, setLivePending] = useState(false);
+  const [liveError, setLiveError] = useState("");
   const [answer, setAnswer] = useState<Grade[]>([]),
     [compared, setCompared] = useState<string[]>([]);
   useEffect(() => {
@@ -296,14 +305,43 @@ export default function App() {
     setConditions((v) => ({ ...v, [key]: value }));
   function start(next = conditions, skipQuestion = false) {
     setConditions(next);
-    setRun(buildMockRun(next, scenario, skipQuestion));
+    liveRequest.current?.abort();
+    setLiveError("");
+    if (liveEnabled) {
+      const controller = new AbortController();
+      liveRequest.current = controller;
+      setLivePending(true);
+      setRun(null);
+      liveRun(next, controller.signal).then(result => {
+        if (controller.signal.aborted) return;
+        setRun(result); setCount(result.events.length); setLivePending(false);
+      }).catch(error => {
+        if (controller.signal.aborted) return;
+        setLiveError(error.message); setLivePending(false);
+      });
+    } else setRun(buildMockRun(next, scenario, skipQuestion));
     setCount(0);
     setCompared([]);
     setAnswer([]);
-    setPlaying(true);
+    setPlaying(!liveEnabled);
     setScreen("analysis");
   }
+  function answerLive(option: string) {
+    if (!run) return;
+    const controller = new AbortController();
+    liveRequest.current?.abort(); liveRequest.current = controller;
+    setLivePending(true); setLiveError(""); setScreen("analysis"); setRun(null);
+    resumeLive(run, option, controller.signal).then(result => {
+      if (controller.signal.aborted) return;
+      setRun(result); setCount(result.events.length); setLivePending(false);
+    }).catch(error => {
+      if (!controller.signal.aborted) { setLiveError(error.message); setLivePending(false); }
+    });
+  }
   function edit() {
+    liveRequest.current?.abort();
+    setLivePending(false);
+    setLiveError("");
     setPlaying(false);
     setRun(null);
     setCount(0);
@@ -364,7 +402,7 @@ export default function App() {
           </a>
         </nav>
         {tab === "explore" && screen !== "input" && (
-          <span className="mode-tag">MOCK · 예시 실행</span>
+          <span className="mode-tag">{liveEnabled ? "실제 탐색 · 공개 sample" : "MOCK · 예시 실행"}</span>
         )}
       </header>
       <div className="app-shell simple-shell">
@@ -485,16 +523,53 @@ export default function App() {
                           {step === 1 && (
                             <>
                               <fieldset>
-                                <legend>함께하는 자녀의 학년</legend>
+                                <legend>함께하는 자녀 수</legend>
+                                <div className="choices compact">
+                                  {([null, 1, 2, 3] as const).map(number => <Choice key={String(number)} title={number === null ? "자녀 수 미정" : `자녀 ${number}명`} selected={(conditions.children?.length || null) === number} onClick={() => {
+                                    const children = number === null ? null : Array.from({ length: number }, (_, i) => conditions.children?.[i] || { member_id: `child-${i + 1}`, grade: null, age_years: null });
+                                    setConditions(v => ({ ...v, children, composition_complete: false, grades: children?.flatMap(c => c.grade ? [c.grade] : []) || v.grades }));
+                                  }} />)}
+                                </div>
+                              </fieldset>
+                              {conditions.children?.map((child, index) => <fieldset key={child.member_id}>
+                                <legend>자녀 {index + 1} · 학년과 만 나이</legend>
+                                <GradeChoices value={child.grade ? [child.grade] : []} onChange={selected => {
+                                  const children = conditions.children!.map((c, i) => i === index ? { ...c, grade: selected.at(-1) || null } : c);
+                                  setConditions(v => ({ ...v, children, grades: children.flatMap(c => c.grade ? [c.grade] : []) }));
+                                }} />
+                                <label className="nv-label" htmlFor={`age-family-${index}`}>자녀 {index + 1}의 만 나이</label>
+                                <select className="nv-input" id={`age-family-${index}`} value={child.age_years?.minimum ?? 'unknown'} onChange={e => {
+                                  const age = e.target.value === 'unknown' ? null : { minimum: Number(e.target.value), maximum: Number(e.target.value) };
+                                  change('children', conditions.children!.map((c, i) => i === index ? { ...c, age_years: age } : c));
+                                }}>
+                                  <option value="unknown">만 나이 미정</option>{Array.from({ length: 19 }, (_, age) => <option key={age} value={age}>만 {age}세</option>)}
+                                </select>
+                              </fieldset>)}
+                              {!conditions.children && <fieldset>
+                                <legend>함께하는 자녀의 학년 종류 · 구성 미정</legend>
                                 <GradeChoices
                                   value={conditions.grades}
                                   onChange={(v) => change("grades", v)}
                                 />
+                                <p>자녀 수가 미정이면 개별 나이·가족 전체 적합성을 확정하지 않습니다.</p>
+                              </fieldset>}
+                              <fieldset>
+                                <legend>가족 구성 확인</legend>
+                                <div className="choices compact">
+                                  <Choice title="입력한 구성원이 전부예요" disabled={!conditions.children} selected={conditions.composition_complete === true} onClick={() => change('composition_complete', true)} />
+                                  <Choice title="추가 동반자나 구성 미정" selected={!conditions.composition_complete} onClick={() => change('composition_complete', false)} />
+                                </div>
+                              </fieldset>
+                              <fieldset>
+                                <legend>체험 방식</legend>
+                                <div className="choices compact">
+                                  {([null, 'in_person', 'online'] as const).map(value => <Choice key={String(value)} title={value === null ? '방식 미정' : value === 'in_person' ? '대면 체험' : '온라인 체험'} selected={(conditions.delivery_mode || null) === value} onClick={() => change('delivery_mode', value)} />)}
+                                </div>
                               </fieldset>
                               <fieldset>
                                 <legend>함께하는 보호자</legend>
                                 <div className="choices compact">
-                                  {(["unknown", "0", "1", "2+"] as const).map(
+                                  {(["unknown", "0", "1", "2", "2+"] as const).map(
                                     (id) => (
                                       <Choice
                                         key={id}
@@ -519,7 +594,7 @@ export default function App() {
                           {step === 2 && (
                             <>
                               <fieldset>
-                                <legend>희망 날짜 · 2026년 10월 예시</legend>
+                                <legend>{liveEnabled ? "희망 날짜 · 2026년 10월" : "희망 날짜 · 2026년 10월 예시"}</legend>
                                 <div className="choices dates">
                                   <Choice
                                     title="아직 미정"
@@ -579,7 +654,7 @@ export default function App() {
                                 step < 2 ? setStep(step + 1) : start()
                               }
                             >
-                              {step < 2 ? "다음" : "예시 체험 찾기"}
+                              {step < 2 ? "다음" : liveEnabled ? "체험 찾기" : "예시 체험 찾기"}
                             </Button>
                           </div>
                         </div>
@@ -587,7 +662,7 @@ export default function App() {
                     </section>
                   </div>
                   {new URLSearchParams(window.location.search).get("demo") ===
-                    "1" && (
+                    "1" && !liveEnabled && (
                     <details className="demo-controls">
                       <summary>화면 검증용 예시 설정</summary>
                       <p>
@@ -595,7 +670,7 @@ export default function App() {
                         품질·정책 검증 결과가 아닙니다.
                       </p>
                       <div className="choices compact">
-                        {scenarios.map(([id, label]) => (
+                        {!liveEnabled && scenarios.map(([id, label]) => (
                           <Choice
                             key={id}
                             title={label}
@@ -607,6 +682,13 @@ export default function App() {
                     </details>
                   )}
                 </>
+              )}
+              {screen === "analysis" && liveEnabled && !run && (
+                <section className="nv-card" role="status">
+                  <h1 tabIndex={-1}>{livePending ? "공식 자료와 조건을 확인하고 있어요" : "탐색을 완료하지 못했어요"}</h1>
+                  <p>{liveError || "실제 조회가 끝나면 확인한 후보와 근거를 보여드립니다."}</p>
+                  {!livePending && <Button onClick={edit}>조건 수정</Button>}
+                </section>
               )}
               {screen === "analysis" && run && (
                 <>
@@ -627,7 +709,7 @@ export default function App() {
                               ? "조회 실패"
                               : run.status === "partial"
                                 ? "확인 필요"
-                                : "예시 검증 완료"}
+                                : run.mode === "live" ? "조회·검증 완료" : "예시 검증 완료"}
                       </Status>
                     </div>
                     <Activity
@@ -662,7 +744,18 @@ export default function App() {
                   </section>
                 </>
               )}
-              {screen === "question" && run && (
+              {screen === "question" && run?.questionCard && (
+                <section className="nv-card question">
+                  <h1 tabIndex={-1}>추가 조건을 확인해 주세요</h1>
+                  <p>{run.next_action}</p>
+                  <div className="nv-actions">
+                    {run.questionCard.options.map(option => <Button key={option.id} onClick={() => answerLive(option.id)}>{option.label}</Button>)}
+                    <Button onClick={() => setScreen("results")}>미확인 후보 보기</Button>
+                    <Button onClick={edit}>조건 수정</Button>
+                  </div>
+                </section>
+              )}
+              {screen === "question" && run && !run.questionCard && (
                 <section className="nv-card question">
                   <h1 tabIndex={-1}>자녀가 어느 학년에 해당하나요?</h1>
                   <p className="nv-description">
@@ -706,7 +799,7 @@ export default function App() {
                   <div className="section-heading result-count">
                     <h2>
                       {run.candidates.length
-                        ? `비교할 예시 후보 ${run.candidates.length}개`
+                        ? `비교할 ${run.mode === "mock" ? "예시 " : ""}후보 ${run.candidates.length}개`
                         : "확인 결과"}
                     </h2>
                     <Status state={state}>
@@ -734,7 +827,7 @@ export default function App() {
                         </Button>
                         {run.outcome === "failed" && scenario !== "policy" && (
                           <Button onClick={() => start(run.conditions, true)}>
-                            예시 다시 실행
+                            {run.mode === "live" ? "다시 탐색" : "예시 다시 실행"}
                           </Button>
                         )}
                       </div>
@@ -762,10 +855,8 @@ export default function App() {
                         <div className="candidate-body">
                           <div className="section-heading">
                             <span className="eyebrow">
-                              {candidate.district === "jongno"
-                                ? "종로구"
-                                : "중구"}{" "}
-                              · 합성 예시
+                              {candidate.districtLabel || (candidate.district === "jongno" ? "종로구" : candidate.district === "jung" ? "중구" : "서울")}{" "}
+                              · {run.mode === "live" ? "공식 조회 · 공개 sample" : "합성 예시"}
                             </span>
                             <Status
                               state={
@@ -784,6 +875,7 @@ export default function App() {
                             {candidate.experience}
                           </p>
                           <p className="recommendation">{candidate.reason}</p>
+                          {candidate.officialUrl && <a href={candidate.officialUrl} target="_blank" rel="noreferrer">공식 신청 안내 확인</a>}
                           <dl className="candidate-meta">
                             <div>
                               <dt>장소</dt>
@@ -872,7 +964,7 @@ export default function App() {
                         <div className="nv-table-wrap">
                           <table className="nv-table">
                             <caption className="sr-only">
-                              선택한 예시 체험 비교
+                              {run.mode === "live" ? "선택한 체험 비교" : "선택한 예시 체험 비교"}
                             </caption>
                             <thead>
                               <tr>
@@ -928,7 +1020,7 @@ export default function App() {
                   {run.excluded.length > 0 && (
                     <details className="execution-details">
                       <summary>
-                        조건이 맞지 않아 제외한 예시 · {run.excluded.length}개
+                        조건이 맞지 않아 제외한 후보 · {run.excluded.length}개
                       </summary>
                       {run.excluded.map((c) => (
                         <p key={c.id}>
@@ -970,11 +1062,10 @@ function Security({ run, count }: { run: Run; count: number }) {
   return (
     <details className="security execution-details">
       <summary>
-        실행·보안 기록 <span>MOCK · 실제 정책 검증 전</span>
+        실행·보안 기록 <span>{run.mode === "live" ? "실제 모델·자료 실행 · 정책 증거는 별도 확인" : "MOCK · 실제 정책 검증 전"}</span>
       </summary>
       <p>
-        이 화면은 도구 선택과 상태 표현을 확인하는 예시입니다. 실제 OpenShell
-        허용·차단 결과는 아직 없습니다.
+        {run.mode === "live" ? "실제 실행의 도구·검증 관측입니다. 정책 허용·차단은 운영자의 실행 증거로 별도 확인합니다." : "이 화면은 도구 선택과 상태 표현을 확인하는 예시입니다. 실제 OpenShell 허용·차단 결과는 아직 없습니다."}
       </p>
       <dl>
         <div>
@@ -983,7 +1074,7 @@ function Security({ run, count }: { run: Run; count: number }) {
         </div>
         <div>
           <dt>외부 모델·자료 호출</dt>
-          <dd>없음 · 브라우저의 합성 자료만 사용</dd>
+          <dd>{run.mode === "live" ? "실제 hosted 모델과 공식 자료 조회" : "없음 · 브라우저의 합성 자료만 사용"}</dd>
         </div>
         <div>
           <dt>정책 집행</dt>

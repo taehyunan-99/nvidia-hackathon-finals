@@ -4,7 +4,10 @@ export type Grade = "preschool" | "1" | "2" | "3" | "4" | "5" | "6" | "teen";
 export interface Conditions {
   interests: Interest[];
   grades: Grade[];
-  guardians: "unknown" | "0" | "1" | "2+";
+  guardians: "unknown" | "0" | "1" | "2" | "2+";
+  children?: { member_id: string; grade: Grade | null; age_years: { minimum: number; maximum: number | null } | null }[] | null;
+  composition_complete?: boolean;
+  delivery_mode?: "in_person" | "online" | null;
   date: string | null;
   district: "all" | "jongno" | "jung";
 }
@@ -38,7 +41,9 @@ export interface Candidate {
   id: string;
   title: string;
   interest: Interest;
-  district: "jongno" | "jung";
+  district: "all" | "jongno" | "jung";
+  districtLabel?: string;
+  officialUrl?: string;
   experience: string;
   place: string;
   testCoordinates?: { latitude: number; longitude: number };
@@ -57,12 +62,15 @@ export interface AssessedCandidate extends Candidate {
 }
 export interface Run {
   run_id: string;
-  mode: "mock";
+  mode: "mock" | "live";
   conditions: Conditions;
   scenario: Scenario;
   status: "completed" | "partial" | "failed";
   outcome: "results" | "empty" | "question" | "failed" | "limited";
   question: "grades" | null;
+  conditionsRevision?: number;
+  questionCard?: { question_id: string; field: string; member_id: string | null;
+    options: { id: string; label: string }[] } | null;
   events: Observation[];
   candidates: AssessedCandidate[];
   excluded: { id: string; title: string; reason: string }[];
@@ -85,6 +93,7 @@ export const gradeLabels: Record<Grade, string> = {
 };
 export const initialConditions: Conditions = {
   interests: [],
+  children: null, composition_complete: false, delivery_mode: null,
   grades: [],
   guardians: "unknown",
   date: null,

@@ -4,8 +4,16 @@
 !scripts/
 !scripts/model_policy.py
 !scripts/probe_family_sources.py
+!scripts/openshell_harness/
+!scripts/openshell_harness/probe.py
+!scripts/openshell_harness/network_probe.py
+!scripts/openshell_harness/output.py
 !docs/
 !docs/playbooks/
 !docs/playbooks/model-policy.json
+!docs/catalog/
+!docs/catalog/contracts/
+!docs/catalog/contracts/family-v1.schema.json
+!docs/catalog/contracts/family-v1.cases.json
 agent/.venv/
 agent/**/__pycache__/
