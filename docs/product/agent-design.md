@@ -20,6 +20,6 @@
 
 ## 스킬·확장·검증
 
-개발 시 `nat-agent-configuration`, `nat-tools-and-functions`를 검토한다. 스킬 설치만으로 런타임 함수가 생기지 않는다. [공통 흐름](../playbooks/agent-flow.md)·[하네스](../playbooks/harness.md)·[공통 계약](../catalog/contracts.md)은 재사용 자료이며 제품 구현 성공이나 최종 schema가 아니다.
+에이전트·자료 도구·개발 스킬은 [구현 기준 조합](../ARCHITECTURE.md#구현-기준-조합)을 따른다. 단일 NAT ReAct를 사용하며 `nat-agent-configuration`, `nat-tools-and-functions`를 개발 지침으로 선택했다. 스킬 설치만으로 런타임 함수가 생기지 않는다. [공통 흐름](../playbooks/agent-flow.md)·[하네스](../playbooks/harness.md)·[공통 계약](../catalog/contracts.md)은 재사용 자료이며 제품 구현 성공이나 최종 schema가 아니다.
 
 화면에는 `nvidia-ui`를 재사용하고, `agent-rubric`·`frontend-rubric`·`submission-check`는 각각 실제 판단·화면·필수 경계를 확인한다. [주제 선정 기준](../evaluation/topic-selection.md)과 구현 품질·공식 배점은 구분한다. 검사 선택은 [CI 원칙](../operations/ci-policy.md)을 따른다.

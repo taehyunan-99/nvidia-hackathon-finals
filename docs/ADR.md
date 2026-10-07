@@ -30,6 +30,7 @@
 ## ADR-004 — 모델과 에이전트 구성
 
 - 상태: 제안 · 기존 에이전트 설계에서 이관.
+- 후속 결정: 에이전트 형태·도구·개발 스킬은 ADR-012로 구체화했다. 실제 모델 ID·endpoint·버전·연결 검증은 남아 있다.
 - 배경: 조건의 자유서술과 자료 충돌을 해석하고 다음 도구를 선택할 실행 구조가 필요하다.
 - 제안: 단일 Nemotron/NIM + NAT 에이전트와 코드 검증기를 사용한다. 날짜 계산·형식·예산 제어는 코드가 맡는다.
 - 대안과 검토 상태: 단순 필터는 비교 기준으로 사용한다. 다중 에이전트·Retriever/MCP는 필요가 확인될 때 검토하며 채택하지 않았다. 특정 대안의 우월성이 입증된 상태는 아니다.
@@ -94,3 +95,15 @@
 - 결정: 공통 요청 파일·추가 조건을 받는 CLI를 두고, 모델 호출·근거 판단·도구 검증·예산·OpenShell 실행을 제품과 공유한다. 결과는 공통 요청의 목적에 맞춰 output에 저장한다.
 - 이유: 카드 중심 MVP를 유지하면서 제품과 테스트의 판단·안전 구현이 분리되는 것을 막는다. CLI는 팀의 실행 방식이며 주최 측이 요구한 특정 도구나 출력 형식이 아니다.
 - 영향: ADR-009의 카드 전용 입력은 제품 웹에 적용한다. 실제 정책 거부는 모델의 거절과 구분해 검사하며, 네트워크 검증에는 통제된 목적지와 합성 데이터만 사용한다. 계약은 ARCHITECTURE, 수용 기준은 PRD C01–C05에 둔다.
+
+## ADR-012 — 단일 ReAct와 제한된 자료 도구
+
+- 상태: 구현 기준 채택 · 2026-10-07 사용자의 에이전트·도구·스킬 조합 우선 확정 요청에 따른 기술 선택. 모델 연결·설치·통합 성공은 미검증.
+- 배경: 공식 상세 안내의 연령·동반·운영일 조건과 API 요약이 충돌하거나 누락될 때, 관측 후 추가 조회·질문·대안·종료를 선택해야 한다. 제품과 공통 테스트는 같은 판단·검증·예산 계층을 사용한다.
+- 결정: 기존 Brev VM의 OpenShell sandbox에서 단일 NAT `react_agent`·자료 도구·Python/Pydantic 검증기를 실행하고, 모델은 hosted Nemotron/NIM을 호출한다. 자료 도구는 Python NAT 함수로 직접 등록한다. 구체 도구 책임과 개발 스킬은 [구현 기준 조합](ARCHITECTURE.md#구현-기준-조합)에 둔다.
+- 대안: NAT Tool Calling, 고정 Sequential Executor, 전문 에이전트 분담. 공식 ReAct 문서는 도구 사이의 관측·판단 반복을 설명하므로 현재 요구에 맞는 출발점으로 선택했다. 여러 역할을 나눌 만큼 독립된 전문 과업은 아직 확인하지 않았다. 성능 비교나 품질 우위가 실측된 결정은 아니다.
+- 영향: ReAct 응답 파싱 실패·추가 호출·지연을 검증해야 한다. 모델의 내부 추론을 UI·로그에 그대로 내보내지 않고 실제 도구 실행·판정 근거·종료 사유만 표시한다. 모든 파싱 재시도·숨은 provider 재시도에도 공통 호출 예산을 적용한다.
+- 도입 범위: MVP에는 전문 다중 에이전트·장기 메모리·벡터 DB·전체 RAG Blueprint·MCP 서버·별도 Guardrails를 추가하지 않는다. 현재 자료는 API·HTML·공통 파일 도구와 검증기로 처리하고, 실제 자료 추출 실패가 확인될 때 추가 구성의 필요성을 재검토한다.
+- 실행 환경 검토: 사용자가 확인한 기존 `finals-bridge`는 2 CPU·8GB RAM·GPU 없음이며, [연결 시험 문서](playbooks/aws-brev-deployment.md#12-모델-없는-연결-시험-구현)도 같은 환경을 기록한다. Brev에서 에이전트를 실행하는 것과 Brev에서 모델을 직접 서빙하는 것은 별개다. 현재 VM은 GPU를 요구하는 NVIDIA NIM LLM의 로컬 서빙 조건을 충족하지 않으므로 hosted 연결을 첫 구현 기준으로 선택한다. 새 GPU 자원 생성이나 비용 집행은 이 선택에 포함하지 않는다.
+- 남은 확인: 현재 사용할 수 있는 Nemotron 모델 ID와 endpoint, 해당 모델의 한국어 조건 해석·ReAct 파싱·실제 도구 실행, 배포 호스트의 NAT/OpenShell 버전, 서울 API의 sandbox 내부 연결. 개발 호스트의 정식 인증 조회는 자료 근거 문서에 기록한다. 실패 시 같은 성공으로 기록하거나 자동으로 다른 agent·모델을 채택하지 않는다.
+- 근거: [NAT ReAct](https://docs.nvidia.com/nemo/agent-toolkit/latest/components/agents/react-agent/react-agent.html), [NAT Tool Calling](https://docs.nvidia.com/nemo/agent-toolkit/latest/components/agents/tool-calling-agent/tool-calling-agent.html), [NIM LLM 실행 조건](https://docs.nvidia.com/nim/large-language-models/1.14.0/getting-started.html), [자료 근거](product/data-sources.md). 공식 NAT latest의 표시 버전은 1.8이며 준비 자료의 예선 설치 기준 1.9.0과 다르므로 실제 설치 schema를 우선한다. 확인일 2026-10-07.

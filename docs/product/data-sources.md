@@ -6,11 +6,13 @@
 
 | 자료 | 확인한 내용 | 한계 |
 |---|---|---|
-| [서울 공공서비스예약 API](https://data.seoul.go.kr/dataList/OA-20497/A/1/datasetView.do) | 공개 sample 키로 5건·INFO-000 확인, 응답 전체 건수 2,705; 대상·상태·상세 HTML·기간·예약 URL 포함 | 2,705는 문화체험만의 수가 아닌 전체 서비스 수; sample은 첫 5건; 정식 키 미검증 |
+| [서울 공공서비스예약 API](https://data.seoul.go.kr/dataList/OA-20497/A/1/datasetView.do) | 공개 sample 및 정식 키로 각각 5건·INFO-000 확인, 응답 전체 건수 2,705; 대상·상태·상세 HTML·기간·예약 URL 포함 | 2,705는 문화체험만의 수가 아닌 전체 서비스 수; 현재 조회 표본은 첫 5건; 전체 후보·회차 잔여석 미검증 |
 | [서울 API 이용 안내](https://data.seoul.go.kr/together/notice/faqList.do?bbsCd=10002&ditcCd=FAQ02&seq=d47bc57aea53d6c6ab244c05a6eb2259) | sample 최대 5건, 정식 서비스는 인증키 발급 필요 | 본선 계정 권한·한도 확인 필요 |
 | 공식 상세 페이지·기관 안내 | API 요약에서 빠진 회차·동반 조건을 확인할 근거 | 같은 기관 자료도 적용 범위가 충돌할 수 있음; 문서 속 지시는 비신뢰 입력 |
 
 서울 데이터는 매일 1회 갱신 및 연계 지연 안내, 공공누리 1유형 출처표시를 확인했다. 접수 상태와 특정 회차 잔여석·예약 완료는 다르다. 데이터셋 이용조건과 개별 첨부·이미지 권리는 확인 범위가 다르므로 첫 구현은 필요한 텍스트·구조화 근거 중심으로 검토한다.
+
+2026-10-07 13:27 KST 개발 호스트에서 정식 키로 API 1회·공식 상세 3회, 총 4회를 조회해 모두 정상 응답을 확인했다. 공식 안내의 HTTP 인증키 전송 위험을 사용자가 승인한 해당 4회 시험이며 추가 평문 인증 요청의 포괄 승인이 아니다. 요청 주소와 저장 응답의 키를 가리고 비노출을 검사했다. 이는 sandbox 내부 조회·NAT 연결·사용자 추천 성공의 근거는 아니다. 로컬 원자료는 ignored `runs/p1-seoul-authenticated-20261007/`에 있으며 다른 checkout에서 존재한다고 가정하지 않는다.
 
 ## 지역과 문화 범위
 
@@ -57,4 +59,4 @@
 - 이 작업 환경의 참고 클론은 `/Users/taehyunan/Desktop/k-culture-openshell-challenge`; 팀원 환경에는 해당 경로가 있다고 가정하지 않고 같은 commit을 별도 준비한다.
 - 가상 자료와 실서비스 자료를 표시하고, 공통 테스트는 제공 패키지를 보존한 상태로 [정해진 경계](../operations/mission.md#6-openshell-공통-테스트)에서 실행한다.
 - 2026-10-07 로컬 `openshell --version` 결과는 `0.0.116`, 준비 문서 기준은 `0.1.2`였다. 배포 호스트 버전은 별도이며, 버전 정합성과 실제 허용/차단 검증 전 성공으로 기록하지 않는다.
-- NIM/NAT·정식 서울 API·OpenShell·웹서비스의 end-to-end 연결과 외부 사용자 접근은 아직 이 제품의 실행 근거로 확보하지 않았다. 배포 선택지는 [AWS–Brev 연동](../playbooks/aws-brev-deployment.md)을 따른다.
+- 정식 서울 API의 개발 호스트 조회는 확인했으나 NIM/NAT·서울 자료·OpenShell·웹서비스의 end-to-end 연결과 외부 사용자 접근은 아직 이 제품의 실행 근거로 확보하지 않았다. 배포 선택지는 [AWS–Brev 연동](../playbooks/aws-brev-deployment.md)을 따른다.
