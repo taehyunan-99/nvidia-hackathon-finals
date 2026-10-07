@@ -2,6 +2,8 @@
 
 | 목적 | 진입 |
 |---|---|
+| 목적·요구사항·구조·결정 | [INTENT](intent/INTENT.md) · [PRD](PRD.md) · [ARCHITECTURE](ARCHITECTURE.md) · [ADR](ADR.md) |
+| 구현 순서·의존성·단계별 완료 조건 | [MVP 구현 계획](plan.md) |
 | 현재 제품·한국 가족 MVP·선택 기능 | [제품 정의](product/README.md) · [에이전트 설계](product/agent-design.md) · [데이터 근거](product/data-sources.md) |
 | 공식 상세 미션·100점 배점·17:20 제출 | [본선 미션과 제출 요건](operations/mission.md) |
 | 구현 중·제출 전 필수 사항 반복 점검 | [submission-check 스킬](../.agents/skills/submission-check/SKILL.md) |
