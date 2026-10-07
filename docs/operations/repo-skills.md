@@ -26,6 +26,8 @@
 
 ## 함께 쓰는 본선 스킬
 
+- [submission-check](../../.agents/skills/submission-check/SKILL.md): `$submission-check` 또는 제출 전 점검 요청으로 공식 필수 요건·policy·README·데모·발표·제출 묶음을 반복 확인; 준비와 실제 제출은 별도 판정.
+
 - [topic-rubric](../../.agents/skills/topic-rubric/SKILL.md): 구현 전 주제 후보를 topic-v1으로 평가; 구현 점수와 분리.
 
 - [agent-rubric](../../.agents/skills/agent-rubric/SKILL.md): agent-v2 내부 100점으로 판단·도구·결과·실행 제어를 평가.

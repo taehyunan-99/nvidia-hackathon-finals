@@ -14,6 +14,8 @@
 
 ## OpenShell
 
+본선의 OpenShell 필수 조건과 외부 사용자 테스트 요구는 [v0.1.2 보안정책 분석](../../catalog/tools/openshell-security.md)·[배포 준비](../openshell-deployment.md)를 우선한다. 아래 일반 실패 대안은 필수 도구를 제외할 근거가 아니다.
+
 [설치](https://docs.nvidia.com/openshell/latest/about/installation)와 [정책](https://docs.nvidia.com/openshell/latest/how-it-works/policies/overview)을 읽고 선택 환경에 맞는 CLI/runtime을 준비한다. `uv add openshell`은 Python SDK 경로이며 모든 daemon/host 배포가 끝났다는 뜻이 아니다.
 읽을 파일 하나·허용 endpoint 하나로 시작해 허용/차단을 각각 확인한다. 외부 쓰기 작업은 실제 미션 권한과 멱등성 검사를 갖춘 뒤 연결한다.
 

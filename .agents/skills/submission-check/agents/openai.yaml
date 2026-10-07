@@ -1,0 +1,4 @@
+interface:
+  display_name: "Submission Check"
+  short_description: "본선 필수 요건과 제출 묶음을 근거로 반복 점검"
+  default_prompt: "Use $submission-check to inspect the current hackathon project against the required deliverables and report unmet or unverified items."

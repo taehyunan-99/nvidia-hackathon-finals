@@ -4,6 +4,8 @@
 
 ## 가장 빠른 진입
 
+2026-10-07 공개된 [본선 미션·공통 테스트·공식 배점·제출 요건](docs/operations/mission.md)을 먼저 확인한다. OpenShell 필수, `/hackathon` 경계 검증, **17:20 제출**을 기준으로 하며 내부 루브릭과 공식 배점을 구분한다. 반복 제출 점검은 [$submission-check](.agents/skills/submission-check/SKILL.md)를 사용한다.
+
 <!-- prev: 미션 조합 검색부터 시작 → 2026-10-05 사용자 승인으로 주제 선정 후 조합·실행·평가 순서로 연결. -->
 1. [주제 선정 기준](docs/evaluation/topic-selection.md)으로 후보를 비교한 뒤 [미션에서 시작](docs/playbooks/README.md) 또는 `python3 scripts/lookup.py "미션 핵심어" --kind recipe`.
 2. 결과의 guide/quickstart를 읽고 [도구](docs/catalog/tools.md)·[agent 형태](docs/catalog/agent-types.md)를 선택.
@@ -46,7 +48,7 @@
 ## 운영 기준
 
 <!-- prev: 공동 최소 연결 후 분담, 개인별 담당·목표 시각 미확정 → 2026-10-06 사용자 결정으로 11:30까지 주제·문서·계약 정리 후 단계별 분담, 15:00 공동 점검·16:00 발표 준비 시간표 반영. -->
-[2인 개발·로컬 시연](docs/operations/workflow.md): 11:30까지 주제·문서·입출력 계약을 함께 정리한 뒤 단계별로 분담하고, 15:00부터 공동 점검·16:00부터 발표 준비를 진행한다. 배포 없이 로컬 시연을 목표로 하며 시간표의 A/B는 특정 팀원에게 미리 배정한 이름이 아니다. [입출력 계약](docs/catalog/contracts.md) → [실행 흐름 화면](docs/design/agent-flow.md) → [리허설](docs/playbooks/rehearsal.md)을 재사용하며 [확정 디자인](docs/design/README.md)의 미세 비교는 재개하지 않는다.
+[2인 개발·로컬 시연](docs/operations/workflow.md): 11:30까지 주제·문서·입출력 계약을 함께 정리한 뒤 단계별로 분담하고, 15:00부터 공동 점검·16:00부터 발표 준비를 진행한다. 2026-10-07 추가 요구에 따라 한국 문화·OpenShell 필수·외부 사용자 직접 테스트를 전제로 [보안정책](docs/catalog/tools/openshell-security.md)과 [배포 경로](docs/playbooks/openshell-deployment.md)를 조사한다. Brev $500 등록과 AWS 배포 희망은 확인했으며 구체적인 배치·사용 예산은 미정이다. 인스턴스 생성은 이후에 진행하고 시간표의 A/B는 특정 팀원에게 미리 배정한 이름이 아니다. [입출력 계약](docs/catalog/contracts.md) → [실행 흐름 화면](docs/design/agent-flow.md) → [리허설](docs/playbooks/rehearsal.md)을 재사용하며 [확정 디자인](docs/design/README.md)의 미세 비교는 재개하지 않는다.
 
 ## 저장소 운영 스킬
 
