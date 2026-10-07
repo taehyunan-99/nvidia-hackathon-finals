@@ -12,6 +12,8 @@
 | 한국 문화 미션·OpenShell 필수 조건 | [보안정책·샌드박스 분석](catalog/tools/openshell-security.md) · [외부 사용자 테스트 배포](playbooks/openshell-deployment.md) |
 | Brev에 OpenShell 샌드박스 준비 | [호스트 접속·설치·정책 검증·종료](playbooks/brev-openshell-setup.md) |
 | AWS 웹/API와 Brev 에이전트 연결 | [배치·인증·통신·복구](playbooks/aws-brev-deployment.md) |
+| 두루 합성 프런트 실행·검사·수동 배포 | [프런트 README](../frontend/README.md) · [Docker·AWS 배포](playbooks/frontend-deployment.md) |
+| 모델 없는 보안 하네스·남은 통합 조치 | [파일·반출·결과 회수 검사](playbooks/openshell-harness.md) |
 | 조합과 실제 사용 순서 | [playbooks](playbooks/README.md) |
 | 프런트/에이전트 입출력 연결 | [계약·schema·fixture](catalog/contracts.md) |
 | 도구 선택·분석 과정 화면 | [실행 흐름 컴포넌트](design/agent-flow.md) |

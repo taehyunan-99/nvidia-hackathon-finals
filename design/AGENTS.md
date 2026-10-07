@@ -18,6 +18,8 @@ nvidia-ui 스킬을 읽고 확정값을 보존한다. 상태 묶음까지 확정
 ## 5. WHERE — 의존성과 경계
 실제 서비스 범위는 ../docs/product/README.md가 원본이며 이 폴더의 시안은 구현 완료 근거가 아니다. ../.agents/skills/nvidia-ui/assets/의 tokens.css·components.css·agent-flow.css·agent-flow.mjs를 사용한다. 기본 데이터는 ../docs/playbooks/examples/research/fixtures.json이며 source=live는 runs/research-live.json의 저장 기록을 재생한다. 문서는 ../docs/design/에 둔다.
 
+제품의 React 프런트는 ../frontend/에 있으며 실행·검사·임시 계약은 ../frontend/README.md를 따른다. 이 폴더의 정적 시안과 제품 프런트의 역할을 구분한다.
+
 ## 6. WHY — 배경
 NVIDIA를 참고한 독립 디자인이며 로고/공식 제품 인증이 아니다.
 알려진 사실/기존 결정만 기재했다. 추가 도메인 고유 함정은 사용자 확인 후 보완한다.

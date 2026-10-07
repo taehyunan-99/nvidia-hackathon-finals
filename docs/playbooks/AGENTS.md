@@ -10,6 +10,8 @@
 - brev-event-guide.md — GPU 필요성 판단·당일 등록/접속/백업/종료 안내
 - brev-openshell-setup.md — Brev 호스트·OpenShell 설치와 허용/거부 확인
 - openshell-deployment.md, aws-brev-deployment.md — 외부 사용자 배포와 AWS/Brev 서버 간 연결·인증·복구
+- openshell-harness.md — 검증된 합성 파일·반출·결과 회수 경계와 실제 패키지·에이전트 통합 후속 조치
+- frontend-deployment.md — 두루 합성 프런트의 Docker·AWS 수동 배포와 복구
 - README.md, missions/ — 미션별 조합
 - quickstarts/ — 실제 시작 절차
 - skill-setup.md — 최신/고정 스킬 확보

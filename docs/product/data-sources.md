@@ -58,5 +58,5 @@
 - 공통 테스트 원본: [사용자 포크](https://github.com/taehyunan-99/k-culture-openshell-challenge), 확인 commit `714e2e8d32f9b77e763a2458ca11b1270e80abf6`. 준비/제품 저장소 `nvidia-hackathon-finals`와 구분한다.
 - 이 작업 환경의 참고 클론은 `/Users/taehyunan/Desktop/k-culture-openshell-challenge`; 팀원 환경에는 해당 경로가 있다고 가정하지 않고 같은 commit을 별도 준비한다.
 - 가상 자료와 실서비스 자료를 표시하고, 공통 테스트는 제공 패키지를 보존한 상태로 [정해진 경계](../operations/mission.md#6-openshell-공통-테스트)에서 실행한다.
-- 2026-10-07 로컬 `openshell --version` 결과는 `0.0.116`, 준비 문서 기준은 `0.1.2`였다. 배포 호스트 버전은 별도이며, 버전 정합성과 실제 허용/차단 검증 전 성공으로 기록하지 않는다.
-- 정식 서울 API의 개발 호스트 조회는 확인했으나 NIM/NAT·서울 자료·OpenShell·웹서비스의 end-to-end 연결과 외부 사용자 접근은 아직 이 제품의 실행 근거로 확보하지 않았다. 배포 선택지는 [AWS–Brev 연동](../playbooks/aws-brev-deployment.md)을 따른다.
+- 2026-10-07 로컬 OpenShell은 `0.0.116`, Brev CLI·gateway는 `0.1.2`로 확인했다. Brev의 합성 파일·반출·결과 회수 실행 범위는 [하네스](../playbooks/openshell-harness.md)를 따르며 실제 챌린지 패키지·모델·자료 통합 성공과 구분한다.
+- 정식 서울 API의 개발 호스트 조회와 [합성 프런트 공개](../playbooks/frontend-deployment.md)는 확인했으나 NIM/NAT·서울 자료·OpenShell·웹서비스를 연결한 실제 추천과 외부 사용자의 과업 완주는 아직 미검증이다. 실행 연결은 [AWS–Brev 연동](../playbooks/aws-brev-deployment.md)을 따른다.

@@ -5,7 +5,10 @@
 
 ## 가장 빠른 진입
 
-**현재 MVP:** 한국 가족의 자녀 연령·동반 조건·날짜를 검증하고 후보·근거·다음 확인을 제시한다. GPS·지도·이동수단·영어 화면·현장 통역 검색은 작업 중 채택/제외할 서브미션이며 핵심 완료 조건이 아니다. OpenShell과 공통 테스트는 필수다. [설계](docs/product/agent-design.md) · [데이터 근거](docs/product/data-sources.md).
+<!-- prev: 참여조건 검증 중심의 요약 → 2026-10-07 update에서 INTENT의 체험 발견·비교 목적과 현재 구현 상태를 반영. -->
+**현재 MVP:** 한국 가족이 관심 분야에서 함께할 문화체험을 발견·비교·선택하도록 돕고, 자녀 연령·동반 조건·날짜를 근거와 대조한다. GPS·지도·이동수단·영어 화면·현장 통역 검색은 작업 중 채택/제외할 서브미션이며 핵심 완료 조건이 아니다. OpenShell과 공통 테스트는 필수다. [설계](docs/product/agent-design.md) · [데이터 근거](docs/product/data-sources.md).
+
+React 합성 프런트·AWS 수동 공개, 모델 없는 AWS–Brev 연결 시험, 최소 보안 하네스가 구현돼 있다. 실제 모델/API·에이전트·공통 챌린지 완주는 별도 통합 대상이다. 프런트 실행·검사는 [frontend/README.md](frontend/README.md), 보안 기반과 남은 세 통합 조치는 [OpenShell 하네스](docs/playbooks/openshell-harness.md)를 따른다.
 
 2026-10-07 공개된 [본선 미션·공통 테스트·공식 배점·제출 요건](docs/operations/mission.md)을 먼저 확인한다. OpenShell 필수, `/hackathon` 경계 검증, **17:20 제출**을 기준으로 하며 내부 루브릭과 공식 배점을 구분한다. 반복 제출 점검은 [$submission-check](.agents/skills/submission-check/SKILL.md)를 사용한다.
 
@@ -29,7 +32,9 @@
 - [docs/operations/AGENTS.md](docs/operations/AGENTS.md) — 행사 조건·저장소 운영 방법.
 - [docs/design/AGENTS.md](docs/design/AGENTS.md) — 디자인 지침과 선택 기록 위치.
 - [design/AGENTS.md](design/AGENTS.md) — 조정 가능한 HTML 시안과 미리보기.
-- [scripts/AGENTS.md](scripts/AGENTS.md) — 검색·확보·probe·분류·채점·검증·sync.
+- [scripts/AGENTS.md](scripts/AGENTS.md) — 검색·확보·probe·분류·채점·보안 하네스·연결 시험·수동 배포·sync.
+
+`frontend/`는 별도 가이드 신설 없이 이 루트 규칙과 [기존 README](frontend/README.md)의 실행·임시 계약·mock 경계를 적용한다. `design/`의 정적 시안과 제품 프런트를 혼동하지 않는다. 사람용 개요·실행 안내는 README, 에이전트의 작업 규칙·영역 지도는 AGENTS.md를 원본으로 두고 중복 본문은 링크로 연결한다.
 
 ## 공통 경계
 
@@ -52,10 +57,11 @@
 
 ## 운영 기준
 
-AWS와 Brev를 함께 사용할 경우 [연동 절차](docs/playbooks/aws-brev-deployment.md)를 확인한다. PR #3에서 조사한 배치·인증·복구 선택지이며 실제 배포 성공이나 해당 배치 확정을 뜻하지 않는다. 모델 호출·원격 자원 사용은 기존 승인 범위와 예산을 따른다.
+<!-- prev: PR #3 배포 선택지 조사만 안내 → 2026-10-07 update에서 PR #6·#10의 연결 시험·합성 프런트 공개를 구분해 반영. -->
+AWS와 Brev를 함께 사용할 경우 [연동 절차](docs/playbooks/aws-brev-deployment.md)를 확인한다. 초기 조사와 이후 모델 없는 연결 시험이 함께 기록돼 있다. 두루 합성 프런트의 실제 공개·수동 배포는 [프런트 운영](docs/playbooks/frontend-deployment.md), Brev 0.1.2의 합성 보안 검증은 [하네스](docs/playbooks/openshell-harness.md)를 따른다. 모델 호출·원격 자원 사용은 기존 승인 범위와 예산을 따른다.
 
 <!-- prev: 공동 최소 연결 후 분담, 개인별 담당·목표 시각 미확정 → 2026-10-06 사용자 결정으로 11:30까지 주제·문서·계약 정리 후 단계별 분담, 15:00 공동 점검·16:00 발표 준비 시간표 반영. -->
-[2인 개발·로컬 시연](docs/operations/workflow.md): 11:30까지 주제·문서·입출력 계약을 함께 정리한 뒤 단계별로 분담하고, 15:00부터 공동 점검·16:00부터 발표 준비를 진행한다. 2026-10-07 추가 요구에 따라 한국 문화·OpenShell 필수·외부 사용자 직접 테스트를 전제로 [보안정책](docs/catalog/tools/openshell-security.md)과 [배포 경로](docs/playbooks/openshell-deployment.md)를 조사한다. Brev $500 등록과 AWS 배포 희망은 확인했으며 구체적인 배치·사용 예산은 미정이다. 인스턴스 생성은 이후에 진행하고 시간표의 A/B는 특정 팀원에게 미리 배정한 이름이 아니다. [입출력 계약](docs/catalog/contracts.md) → [실행 흐름 화면](docs/design/agent-flow.md) → [리허설](docs/playbooks/rehearsal.md)을 재사용하며 [확정 디자인](docs/design/README.md)의 미세 비교는 재개하지 않는다.
+[2인 개발·로컬 시연](docs/operations/workflow.md): 11:30까지 주제·문서·입출력 계약을 함께 정리한 뒤 단계별로 분담하고, 15:00부터 공동 점검·16:00부터 발표 준비를 진행하는 계획이다. 시간표의 A/B는 특정 팀원에게 미리 배정한 이름이 아니다. 현재는 기존 AWS의 합성 프런트와 기존 Brev VM을 사용하며 새 인스턴스 생성·예산 확대를 전제하지 않는다. [입출력 계약](docs/catalog/contracts.md) → [실행 흐름 화면](docs/design/agent-flow.md) → [리허설](docs/playbooks/rehearsal.md)을 재사용하며 [확정 디자인](docs/design/README.md)의 미세 비교는 재개하지 않는다. 이번 보안 개발은 본선·챌린지 최소 범위로 제한하고 이후 작업은 실제 패키지 배치·에이전트 연결·최종 정책 재검증에 집중한다.
 
 ## 저장소 운영 스킬
 
