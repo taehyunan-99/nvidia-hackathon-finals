@@ -5,11 +5,36 @@ from pathlib import Path
 import tempfile
 import unittest
 from unittest.mock import patch
+import subprocess
+from types import SimpleNamespace
 
 from openshell_harness import probe
 
 
 class BoundaryTests(unittest.TestCase):
+    def test_child_attempts_do_not_read_or_modify_unprotected_controls(self):
+        with tempfile.TemporaryDirectory() as root, patch.object(probe, 'ROOT', Path(root)):
+            for name in probe.CONTROLS:
+                (Path(root) / name).mkdir()
+                (Path(root) / name / 'control.txt').write_text('synthetic unchanged')
+            checks = probe.child_checks()
+            self.assertEqual(len(checks), 3)
+            self.assertTrue(all(row['status'] == 'not_denied' for row in checks.values()))
+            for name in probe.CONTROLS:
+                self.assertEqual((Path(root) / name / 'control.txt').read_text(), 'synthetic unchanged')
+
+    def test_child_failure_is_inconclusive(self):
+        for error in (OSError('hidden'), subprocess.TimeoutExpired('hidden', 10)):
+            with patch.object(probe.subprocess, 'run', side_effect=error):
+                self.assertTrue(all(row['status'] == 'inconclusive'
+                                    for row in probe.child_checks().values()))
+
+    def test_malformed_child_result_is_inconclusive(self):
+        for raw in ('[]', '{"checks":[]}', 'not-json', '{}'):
+            with patch.object(probe.subprocess, 'run', return_value=SimpleNamespace(returncode=0, stdout=raw)):
+                self.assertTrue(all(row['status'] == 'inconclusive'
+                                    for row in probe.child_checks().values()))
+
     def test_missing_file_is_not_denial(self):
         with tempfile.TemporaryDirectory() as root:
             self.assertEqual(probe.denied_open(Path(root) / 'missing', os.O_RDONLY),

@@ -1,6 +1,8 @@
 # 미션에서 실행까지
 
-현재 구현 대상은 [한국 가족 문화체험 MVP](../product/README.md)다. [제품 설계](../product/agent-design.md)에서 범위를 확인한 뒤 필요한 조합만 선택한다.
+현재 구현 대상은 [한국 가족 문화체험 MVP](../product/README.md)다. 단일 NAT ReAct·hosted Nemotron/NIM 조합은 [제품 설계](../product/agent-design.md)의 구현 기준을 따르며, 아래 미션 목록은 다른 조합이 필요할 때 사용하는 준비 자료다.
+
+현재 실행 경로는 [프런트 README](../../frontend/README.md), [Docker·AWS 수동 배포](frontend-deployment.md), [OpenShell 하네스와 남은 세 통합 조치](openshell-harness.md)에서 확인한다. 합성 프런트·모델 없는 연결/경계 검증과 실제 제품 에이전트 통합을 구분한다.
 
 2026-10-07 공개된 [상세 미션·공통 테스트·공식 배점·제출 요건](../operations/mission.md)을 먼저 읽는다. 한국 문화 에이전트와 OpenShell 실제 경계 검증을 함께 구현하며 제출은 **17:20**까지다. 기술 준비는 [보안정책 분석](../catalog/tools/openshell-security.md)과 [Brev/별도 환경·배포 준비](openshell-deployment.md)를 따른다.
 

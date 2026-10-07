@@ -16,6 +16,8 @@
 
 - [공식 미션](../operations/mission.md): 필수 조건·공통 테스트·제출 요건의 원본.
 - [운영 기준](../operations/workflow.md): 2인 분담·일정·배포 방향; 개인별 담당 미확정.
-- [AWS–Brev 배포 조사](../playbooks/aws-brev-deployment.md): 배치·인증·복구의 선택지이며 실제 배포 성공 또는 두 환경 사용 확정이 아님.
+- [AWS–Brev 연결](../playbooks/aws-brev-deployment.md): 배치·인증·복구의 조사와 기존 모델 없는 연결 시험; 실제 에이전트 통합과 구분.
+- [프런트 구현](../../frontend/README.md) · [Docker·AWS 수동 배포](../playbooks/frontend-deployment.md): 공개된 합성 예시 화면의 실행·검증·운영 경계.
+- [OpenShell 하네스](../playbooks/openshell-harness.md): 합성 파일·반출·결과 회수 검증과 실제 패키지 배치→에이전트 연결→최종 정책 재검증의 남은 세 조치.
 
 개인 인계 파일과 `docs/plan.md`는 위 제품 문서를 대체하지 않는다.

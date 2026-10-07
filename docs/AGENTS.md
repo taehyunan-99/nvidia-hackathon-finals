@@ -6,6 +6,7 @@
 ## 2. CONTENTS — 파일과 기술
 - intent/INTENT.md — 사용자 문제·목적·기능 방향
 - PRD.md / ARCHITECTURE.md / ADR.md — 요구사항 / 구조 / 결정 이유의 원본
+- plan.md — 단계별 구현 순서·의존성·완료 조건; 개인 HANDOFF와 구분
 - product/ — 제품 문서 진입·데이터 근거
 - catalog/ — 기술/스킬 원본과 탐색 뷰
 - playbooks/ — 조합·quickstart
