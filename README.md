@@ -1,8 +1,10 @@
 # 두루 — NVIDIA Hackathon Finals
 
+> **서비스 사이트:** [두루 웹 서비스](https://d25wpps17lj0dn.cloudfront.net/)
+
 한국 가족이 관심 있는 문화 분야에서 함께할 체험을 발견하고 후보를 비교·선택하도록 돕는다. 초기 범위는 서울의 전통문화·역사 체험이며, 자녀 연령·동반 조건·날짜를 출처와 대조해 적합·부적합·확인 필요를 구분한다. 목적과 제외 범위는 [INTENT](docs/intent/INTENT.md), 기능 요구사항은 [PRD](docs/PRD.md)를 따른다.
 
-[배포된 데모](https://d25wpps17lj0dn.cloudfront.net/) · [소스 저장소](https://github.com/taehyunan-99/nvidia-hackathon-finals) · [공식 미션과 제출 요건](docs/operations/mission.md)
+[소스 저장소](https://github.com/taehyunan-99/nvidia-hackathon-finals) · [공식 미션과 제출 요건](docs/operations/mission.md)
 
 ## 미션과 현재 구현 범위
 
