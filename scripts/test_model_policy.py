@@ -1,4 +1,5 @@
 from dataclasses import replace
+from contextlib import closing
 from datetime import datetime, timezone
 from pathlib import Path
 import sqlite3
@@ -52,7 +53,7 @@ class PolicyTests(unittest.TestCase):
         self.assertEqual(b({}),{})
         self.assertEqual(b.count,3); self.assertEqual(sender.call_count,3)
         self.assertEqual(self.now,95)
-        with sqlite3.connect(self.path) as conn:self.assertEqual(conn.execute('SELECT used FROM requests').fetchone()[0],3)
+        with closing(sqlite3.connect(self.path)) as conn:self.assertEqual(conn.execute('SELECT used FROM requests').fetchone()[0],3)
 
     def test_retry_stops_at_three_attempts(self):
         error=urllib.error.HTTPError('https://example.invalid',429,'limited',{},None)
