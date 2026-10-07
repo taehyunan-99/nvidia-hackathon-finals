@@ -69,3 +69,89 @@ NAT 등록·실행·종료와 검증기·호출 제어의 합성 검사는 통�
 기존 Brev의 `family-agent-mvp` sandbox와 전용 모델 provider를 재사용할 수 있으나 실행 전 이미지·effective policy·예산 장부를 확인한다. 제품과 공통 모드를 동시에 실행하지 않는다. CLI에는 `challenge-policy.yaml`을 적용하고 일일 장부를 새로 초기화하지 않는다. 부모 프로젝트의 `/opt/nvidia-finals-bridge`와 기존 gateway·다른 sandbox·예선 저장소는 수정하지 않는다. 일반 사이트는 별도 `family-progress` 제품 sandbox에 연결돼 있다. 기존 sandbox의 API는 정지했으며 CLI를 재개하기 전 현재 일일 장부를 대조한다. 웹 챌린지 화면·전용 API·모드 전환은 제거했다.
 
 제품 웹은 두 후보의 근거를 조회한 뒤 관측한 판정을 모델에 다시 전달해 제한된 비교를 마무리하도록 안내한다. 마지막 공개 왕복은 모델 3회·자료 1회·41.44초로 후보 2개를 반환했고 날짜 미정 때문에 정상 보류했다. 단계 한도 종료와 앞선 실패는 이 성공 사례와 구분한다.
+
+## 챌린지 CLI
+
+[챌린지 포크](https://github.com/kongbeankong/k-culture-openshell-challenge)의
+`714e2e8d32f9b77e763a2458ca11b1270e80abf6` 원본 구조를 사용한다. 실제 패키지는 이
+저장소에 복사하지 않았다. 운영자가 원본 `hackathon/`을 보존해 `/hackathon`에 배치하고,
+레포 루트 `TASK.md`의 별도 읽기 전용 사본을 `/hackathon/TASK.md`에 배치한다. workload
+빌드 context의 `hackathon/TASK.md`에 과업 사본을 넣으면 기존 Workload.Dockerfile로
+함께 배치할 수 있다. input/restricted/secrets 원본은 덮어쓰거나 삭제하지 않는다.
+
+기본 CLI는 무통신 준비 모드다. `run --live`에서만 기존
+`family_agent.challenge.ChallengeRuntime`과
+`execute(runtime, 'challenge-workflow.yml', runtime.query)`를 실행한다. TASK 원문은
+`{request_id, task}`로, 추가 조건은 별도 `additional` 문자열로 전달한다.
+CLI는 서울/서울 밖·자료 관련성·음식·가족 조건을 미리 판정하지 않는다.
+가족 에이전트와 검증기 구현은 재작성하지 않았다.
+
+Linux와 Python 3.11+에서 저장소 실행 시 `PYTHONPATH=agent/src`를 설정한다.
+준비 명령은 표준 라이브러리만 사용하며 live는 agent/pyproject.toml의 의존성이 필요하다.
+Windows에서는 파일 경계를 완화하지 않고 `linux_file_boundary_required`로 실패한다.
+
+```sh
+PYTHONPATH=agent/src python -m family_minimum.challenge_cli inspect
+PYTHONPATH=agent/src python -m family_minimum.challenge_cli search "운영"
+PYTHONPATH=agent/src python -m family_minimum.challenge_cli read travel/visitor_group.json
+PYTHONPATH=agent/src python -m family_minimum.challenge_cli run
+PYTHONPATH=agent/src python -m family_minimum.challenge_cli run --live --additional-conditions "오후 1시까지 종료"
+```
+
+기본 과업은 TASK.md이며 요청 내용은 코드에 하드코딩하지 않는다. `--request`는 새로운
+요청을 위한 선택 override다. TASK 누락·빈 내용·심볼릭 링크·크기 초과는 오류로 종료한다.
+준비 검사만 `--local-root /absolute/path/to/challenge-repo`를 하위 명령 앞에 지정할 수
+있다. 이 루트는 `TASK.md`와 `hackathon/`을 가진 레포 경로다. local-root와 live의
+조합은 거부하며 live는 고정된 `/hackathon` 경계를 사용한다.
+
+실제 실행은 OpenShell 안에서만 운영하며 이미지·effective policy·provider·공유 일일
+장부를 먼저 확인한다. `MODEL_LEDGER_RECONCILED=yes`, `MODEL_DAILY_LEDGER`,
+`MODEL_ID`, `NVIDIA_API_KEY`가 필요하다. 키는 환경/provider에서만 받고 CLI 인자·
+출력·이미지에 넣지 않는다. 장부를 새로 초기화하지 않는다. 기존 정책의 NVIDIA
+추론 endpoint와 공유 모델 adapter·요청/단계/시간/재시도 예산을 재사용한다.
+이 설명은 live 호출 승인을 대신하지 않으며 이번 연결 검사는 실제 모델을 호출하지 않았다.
+
+`run`은 새 32자리 ID를 발급해 `output/<run_id>/result.json`에 `{job_id, result}`를
+저장한다. 사용자 임의 출력 경로는 받지 않는다. 파일 쓰기·동기화 후 최종 이름으로
+공개하며 기존 결과를 덮어쓰지 않는다. 저장 실패는 `artifact_saved=false`로 반환한다.
+
+결과 외피는 `challenge-cli-v1`이고 실제 반환은 `agent_result`의
+`challenge-agent-v1`을 보존한다. `finish_results/finish_hold/finish_limited/finish_failed`는
+각각 완료·확인 필요·한도 종료·실패로 표시한다. 한도·실패도 관측한 출처와 기록을
+남기며 성공 초안으로 바꾸지 않는다. 추가 조건을 변경하면 새 실행 ID·입력 hash를
+사용하므로 이전 결과와 섞이지 않는다. 이 저장은 웹 소유권/회수 통합을 대신하지 않는다.
+
+`events`에는 실제 TASK 읽기·자료 목록 조회·도구 시도·응답·모델 요청 수·종료를
+현재 실행 ID와 순번으로 연결한다. `used_sources`는 실제 읽은 자료를 인용 여부로 구분하고
+`unread_sources`는 미조회 자료를 기록한다. 미인용이나 미조회를 '무관해서 제외했다'는
+에이전트 판단으로 꾸미지 않는다. 내부 추론·인증값·금지 파일 내용을 기록하지 않는다.
+
+파일 조회는 기존 에이전트 registry와 원문/줄 번호 계약을 유지하되 연결 adapter의
+`InputFiles`로 상대 경로·심볼릭 링크·하드링크·FIFO·파일 크기를 검사한다. 실패한 도구
+시도는 애플리케이션 오류로 기록한다. `access_denials=[]`와
+`policy_verification=unverified`는 실제 정책 검사를 통과했다는 뜻이 아니다. 실제
+OpenShell 집행 로그를 연결하기 전에는 정책 거부 근거를 만들어내지 않는다.
+
+| 종료 코드 | 의미 |
+|---|---|
+| 0 | 조회 정상 처리 또는 실제 에이전트 완료/확인 필요 결과 저장 |
+| 1 | 실제 에이전트 설정·연결·실행 실패; 저장 성공 여부는 별도 필드 |
+| 2 | 잘못된 명령·요청·루트 또는 local-root와 live의 조합 |
+| 4 | 무통신 요청 준비·미연결 결과 저장 |
+| 5 | 파일 조회·저장·실행 환경 실패 |
+| 6 | 실제 에이전트의 한도 종료 결과 저장 |
+
+실제 정책은 [challenge-policy.yaml](challenge-policy.yaml), 무통신 준비 정책은
+[challenge-preparation-policy.yaml](challenge-preparation-policy.yaml)이다.
+둘 다 TASK와 input을 읽기 전용으로 허용하고 restricted/secrets는 허용하지 않는다.
+실제 정책은 기존 모델 endpoint만 허용하며 준비 정책은 네트워크 허용이 없다.
+실제 집행·키 비노출·반출 검사는 [OpenShell 하네스](../docs/playbooks/openshell-harness.md)의
+후속 통합 단계에서 별도로 확인한다.
+
+```sh
+PYTHONPATH=agent/src python -m unittest discover -s agent/tests -p 'test_challenge*.py'
+```
+
+실제 NAT graph와 합성 모델 transport로 CLI 입력→자료 관측→종료→저장 왕복을
+검사한다. Windows의 Linux/NAT 검사 skip을 전체 성공으로 해석하지 않는다.
+실제 제공 패키지·모델·OpenShell 완주는 아직 검증하지 않았다.
