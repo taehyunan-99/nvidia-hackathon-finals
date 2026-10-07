@@ -1,9 +1,9 @@
-"""Validate local documentation, catalog coverage, cross-references and both guides."""
+"""Validate local documentation, catalog coverage, guide imports and skill pairs."""
 from pathlib import Path
 import json
 import re
 from urllib.parse import unquote
-from sync_guides import guide_case_errors
+from sync_guides import guide_case_errors, reference_content
 R=Path(__file__).resolve().parents[1]
 EXCLUDED={'.git','.venv','node_modules','__pycache__','reference-skills','.backups'}
 errors=[]
@@ -44,7 +44,12 @@ for row in recipes:
 pairs=json.loads((R/'scripts/guide-pairs.json').read_text())
 errors.extend(guide_case_errors(R,pairs))
 for a,b in pairs:
-    if not (R/a).is_file() or not (R/b).is_file() or (R/a).read_bytes()!=(R/b).read_bytes():errors.append(a+': both mismatch')
+    expected=reference_content(a,b)
+    if not (R/a).is_file() or not (R/b).is_file():
+        errors.append(a+': guide or partner missing')
+        continue
+    if (R/b).read_bytes()!=(expected if expected is not None else (R/a).read_bytes()):
+        errors.append(a+': import or skill-pair mismatch')
     if a.endswith('/AGENTS.md'):
         headings=re.findall(r'^## [1-7]\. ',(R/a).read_text(),re.M)
         if len(headings)!=7:errors.append(a+': needs seven sections')

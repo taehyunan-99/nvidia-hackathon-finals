@@ -8,6 +8,8 @@
 - model-policy.md, model-policy.json — 본선 공통 모델 호출 기본값·적용 경계
 - rehearsal.md, examples/research/ — 오프라인 계약 리허설·합성 fixture와 긴 라이브 분석의 조건부 시연 압축
 - brev-event-guide.md — GPU 필요성 판단·당일 등록/접속/백업/종료 안내
+- brev-openshell-setup.md — Brev 호스트·OpenShell 설치와 허용/거부 확인
+- openshell-deployment.md, aws-brev-deployment.md — 외부 사용자 배포와 AWS/Brev 서버 간 연결·인증·복구
 - README.md, missions/ — 미션별 조합
 - quickstarts/ — 실제 시작 절차
 - skill-setup.md — 최신/고정 스킬 확보
@@ -26,7 +28,7 @@
 - 전문 GPU stack을 모두 기본 설치하지 않는다 — 7시간 내 핵심 경로 검증이 우선이다.
 
 ## 5. WHERE — 의존성과 경계
-evaluation의 주제 선정 기준을 받아 catalog의 도구·agent 형태로 실행 조합을 만든다. 실행 후 evaluation의 구현 평가 양식에 근거를 연결한다.
+현재 구현 범위는 ../product/README.md를 먼저 따른다. evaluation의 주제 선정 기준을 받아 catalog의 도구·agent 형태로 실행 조합을 만든다. 실행 후 evaluation의 구현 평가 양식에 근거를 연결한다.
 
 ## 6. WHY — 배경
 설명만 있는 링크 목록에서 실제 첫 행동까지 시간을 줄이는 것이 목적이다.

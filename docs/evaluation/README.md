@@ -1,5 +1,7 @@
 # 주제 선정과 구현 평가
 
+현재 제품의 범위는 [가족 문화체험 MVP](../product/README.md)를 따른다. GPS·지도·영어·통역은 채택 전까지 MVP 평가의 필수 조건이 아니다.
+
 2026-10-07 공식 심사는 [본선 미션의 100점 배점](../operations/mission.md#8-공식-심사-배점)을 따른다. 아래 내부 루브릭과 공식 점수를 합산·환산하지 않는다.
 
 구현 전에는 [주제 선정 기준](topic-selection.md)으로 후보를 비교하고, 선정 후 [조합 선택](../playbooks/recipes.md) → [실행](../playbooks/README.md) → 아래 구현 평가로 진행한다. 기준의 배경이 필요할 때 [선정 과정·장단점 분석](topic-analysis.md), 과거 실행 사실은 [예선 구현 근거](bio3-review.md)를 읽는다.

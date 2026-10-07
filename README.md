@@ -1,12 +1,13 @@
 # NVIDIA Hackathon Finals
 
-새 미션에서 **어떤 조합을 쓸지 고르고, 어떻게 실행·검증할지 빠르게 찾는 준비 저장소**.
+**한국 가족의 문화체험 참여조건을 검증하는 본선 서비스**를 위한 제품 정의와 실행·검증 준비 저장소. 현재는 설계와 데이터 조사 단계이며 실제 제품의 end-to-end 동작은 미검증이다.
 문서는 [docs](docs/README.md)에 구조화했다. 공식 조건은 [행사 안내](docs/operations/event.md)에 보존하며, 합의한 작업 방향은 [2인 개발·로컬 시연 운영](docs/operations/workflow.md)에서 찾는다.
 
 ## 먼저 찾을 것
 
 | 지금 필요한 것 | 읽을 곳 |
 |---|---|
+| 확정 MVP와 선택 기능을 확인한다 | [제품 정의](docs/product/README.md) · [에이전트 설계](docs/product/agent-design.md) · [데이터 근거](docs/product/data-sources.md) |
 | 본선에서 만들 주제를 비교한다 | [주제 선정 기준](docs/evaluation/topic-selection.md) · [선정 과정과 장단점](docs/evaluation/topic-analysis.md) |
 | 두 사람이 구현·통합·시연한다 | [2인 개발·로컬 시연 운영](docs/operations/workflow.md) |
 | 프런트와 에이전트의 데이터를 맞춘다 | [입출력 계약·schema·예시 JSON](docs/catalog/contracts.md) · [다른 조합 9개](docs/catalog/contracts/combinations.md) |
@@ -34,13 +35,15 @@ python3 scripts/lookup.py --domain knowledge --function setup --kind skill
 
 ## 문서 구조
 
+- [docs/product](docs/product/README.md) — 한국 가족 MVP·서브미션·제안 계약·데이터 근거.
+
 - [docs/catalog](docs/catalog/README.md) — 409개 스킬의 원본 metadata, 도메인/작업별 탐색, agent·도구 카드.
 - [docs/playbooks](docs/playbooks/README.md) — 10개 미션 조합, 9개 최소 실행 안내, 하네스·예제·스킬 확보법.
 - [docs/evaluation](docs/evaluation/README.md) — 주제 선정 기준, 에이전트·프런트별 구현 평가, 통합 관문과 양식.
-- [docs/operations](docs/operations/event.md) — 행사·준비 항목, [both 동기화](docs/operations/guide-sync.md).
+- [docs/operations](docs/operations/event.md) — 행사·준비 항목, [가이드 참조·스킬 동기화](docs/operations/guide-sync.md).
 - [docs/design](docs/design/README.md) — 디자인 스킬과 [UI 비교 시안](design/playground.html) 진입.
 
-실행 코드는 `scripts/`, 정적 UI는 `design/`, 공통 개발 스킬은 `.agents/skills/`, Claude 진입은 `.claude/skills/`에 있다. 작업 전 [AGENTS.md](AGENTS.md) 또는 동일 내용의 [CLAUDE.md](CLAUDE.md)를 읽는다.
+실행 코드는 `scripts/`, 정적 UI는 `design/`, 공통 개발 스킬은 `.agents/skills/`, Claude 진입은 `.claude/skills/`에 있다. 작업 전 [AGENTS.md](AGENTS.md) 또는 이를 `@`로 참조하는 [CLAUDE.md](CLAUDE.md)를 읽는다.
 
 ## 사용 전 확인
 
@@ -49,8 +52,8 @@ python3 scripts/lookup.py --domain knowledge --function setup --kind skill
 
 ## 로컬 검사
 
-`python3 scripts/validate.py`는 링크·원본 인덱스 범위·분류·조합 연결·both 가이드를 검사한다.
+`python3 scripts/validate.py`는 링크·원본 인덱스 범위·분류·조합 연결·가이드 참조를 검사한다.
 `python3 -m unittest discover -s scripts -p 'test_*.py'`는 검색·채점·모델 응답 검사·동기화 보호 동작을 검사한다.
 `python3 scripts/probe_nim.py`는 기본 dry-run이며 실제 호출은 `--live`에서만 수행한다.
 
-사용 순서: [주제 선정](docs/evaluation/topic-selection.md) → [조합 선택](docs/playbooks/recipes.md) → [최소 실행](docs/playbooks/README.md) → [구현 평가](docs/evaluation/README.md).
+사용 순서: [확정 MVP](docs/product/README.md) → [조합 선택](docs/playbooks/recipes.md) → [최소 실행](docs/playbooks/README.md) → [구현 평가](docs/evaluation/README.md).

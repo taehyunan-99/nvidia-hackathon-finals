@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Both-mode guide sync. Never silently skip a missing synchronizer.
+# Check canonical guide imports and sync skill copies without overwriting work.
 set -euo pipefail
 repo_root="$(git rev-parse --show-toplevel)"
 exec bash "$repo_root/scripts/sync-agents-md.sh"

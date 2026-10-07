@@ -10,10 +10,10 @@
 | PR 생성·갱신 | [pull-request](../../.agents/skills/pull-request/SKILL.md) | 요청 시 push/PR; GitHub remote/auth/base 필요 |
 | 병합 후 정리 | [after-pr](../../.agents/skills/after-pr/SKILL.md) | 특정 merged PR 확인 후 해당 branch/worktree만 정리 |
 | 테스트 설계·검토 | [project-test-maker](../../.agents/skills/project-test-maker/SKILL.md) | 요청 모드에 따른 테스트 전략/생성/검증; 초기 analyze는 읽기 전용 |
-| 가이드 초기화 | [agentic-project-init](../../.agents/skills/agentic-project-init/SKILL.md) | 현재 7섹션 both+hook을 보존하도록 본선 적용 규칙 반영 |
+| 가이드 초기화 | [agentic-project-init](../../.agents/skills/agentic-project-init/SKILL.md) | 현재 7섹션 AGENTS 원본·CLAUDE 참조+검사 hook을 보존 |
 | 가이드 갱신 | [update](../../.agents/skills/update/SKILL.md) | 인터뷰·충돌 검토, 기존 학습 기록 보존; 본선 형식 대응 규칙 적용 |
 | 가이드 품질 점검 | [guide-audit](../../.agents/skills/guide-audit/SKILL.md) | 문서 가이드의 품질 평가; 제품 agent 루브릭과 다른 평가 |
-| 주의사항 기록 | [learn](../../.agents/skills/learn/SKILL.md) | 기존 본선의 양쪽 가이드 내 학습 방식 유지; 예선 별도 파일 방식은 [참고 사본](../../.agents/skills/learn/references/bio3-variant.md)으로 보존 |
+| 주의사항 기록 | [learn](../../.agents/skills/learn/SKILL.md) | AGENTS 원본의 기존 학습 영역에만 기록; 예선 별도 파일 방식은 [참고 사본](../../.agents/skills/learn/references/bio3-variant.md)으로 보존 |
 
 ## 커밋·PR 공통 규칙
 
@@ -38,6 +38,7 @@
 
 ## 가이드 형식
 
-본선은 7섹션·동일 본문 both·sync hook을 사용한다. init/update는 본선 대응 규칙을 먼저 읽고, learn은 현재 가이드의 학습 영역을 사용한다. 예선 참고자료의 별도 학습 파일·CLAUDE import 방식을 자동 적용하지 않는다.
+<!-- prev: 7섹션·동일 본문 both·sync hook → 2026-10-07 사용자 요청으로 AGENTS 원본·CLAUDE @ 참조 전환. -->
+본선은 7섹션 AGENTS.md 원본과 CLAUDE.md의 `@./AGENTS.md` 참조를 사용한다. init/update는 본선 대응 규칙을 먼저 읽고, learn은 AGENTS.md의 기존 학습 영역을 사용한다. hook은 가이드 참조와 index를 검사하며 learn 스킬 본체 사본만 동기화한다. 별도 학습 파일 방식으로 자동 전환하지 않는다.
 
 운영 방향은 [2인 개발·로컬 시연](workflow.md)을 따른다. handoff의 단계/중단 지점은 요청한 작업의 상태 기록이며 본선 시간표가 아니다.
