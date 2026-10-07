@@ -13,6 +13,8 @@ npm run dev
 
 기본 주소는 http://127.0.0.1:5173 이다. 로컬 미리보기이며 공개 배포가 아니다. 빌드 결과는 `dist/`에 생성된다.
 
+공개 프런트: [두루](https://d25wpps17lj0dn.cloudfront.net/). Docker와 기존 AWS를 통한 배포·복구 방법은 [수동 배포](../docs/playbooks/frontend-deployment.md)를 따른다. 현재 예시 데이터 화면이며 실제 에이전트 연결은 별도다.
+
 ```sh
 npm run build
 npm test

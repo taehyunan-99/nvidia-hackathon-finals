@@ -3,6 +3,8 @@
 **한국 가족의 문화체험 참여조건을 검증하는 본선 서비스**를 위한 제품 정의와 실행·검증 준비 저장소. 현재는 설계와 데이터 조사 단계이며 실제 제품의 end-to-end 동작은 미검증이다.
 문서는 [docs](docs/README.md)에 구조화했다. 공식 조건은 [행사 안내](docs/operations/event.md)에 보존하며, 합의한 작업 방향은 [2인 개발·로컬 시연 운영](docs/operations/workflow.md)에서 찾는다.
 
+[두루 프런트 열기](https://d25wpps17lj0dn.cloudfront.net/) · [Docker·AWS 수동 배포](docs/playbooks/frontend-deployment.md). 공개 화면은 현재 합성 예시 데이터로 동작한다.
+
 ## 먼저 찾을 것
 
 | 지금 필요한 것 | 읽을 곳 |
