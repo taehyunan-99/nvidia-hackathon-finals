@@ -16,6 +16,7 @@ const fixtures: Candidate[] = [
     experience:
       "옛 지도와 오늘의 거리를 비교하고 가족만의 역사 지도를 만드는 체험입니다.",
     place: "서울 종로구 · 예시 역사교육관",
+    testCoordinates: { latitude: 37.5788, longitude: 126.9770 },
     dates: ["2026-10-10", "2026-10-17"],
     time: "10:00–11:30",
     grades: ["1", "2", "3", "4", "5", "6", "teen"],
@@ -32,6 +33,7 @@ const fixtures: Candidate[] = [
     experience:
       "전통 문양을 살펴보고 한지와 나무로 가족의 소품을 함께 만듭니다.",
     place: "서울 종로구 · 예시 전통공방",
+    testCoordinates: { latitude: 37.5741, longitude: 126.9852 },
     dates: ["2026-10-10", "2026-10-11", "2026-10-17"],
     time: "14:00–15:30",
     grades: ["1", "2", "3", "4", "5", "6"],
@@ -48,6 +50,7 @@ const fixtures: Candidate[] = [
     experience:
       "국악기의 소리를 듣고 장구 장단을 따라 연주하며 우리 음악을 알아봅니다.",
     place: "서울 중구 · 예시 문화교육실",
+    testCoordinates: { latitude: 37.5663, longitude: 126.9977 },
     dates: ["2026-10-11", "2026-10-18"],
     time: "11:00–12:00",
     grades: ["preschool", "1", "2", "3", "4", "5", "6", "teen"],
