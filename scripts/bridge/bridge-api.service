@@ -1,0 +1,20 @@
+[Unit]
+Description=NVIDIA finals isolated trial job API
+After=network-online.target openshell-gateway.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+EnvironmentFile=%h/.config/nvidia-finals-bridge/api.env
+ExecStart=/usr/bin/python3 /opt/nvidia-finals-bridge/bridge_api.py --port 18080
+Restart=always
+RestartSec=5
+UMask=0077
+NoNewPrivileges=yes
+ProtectSystem=strict
+ReadWritePaths=%h/.local/state/nvidia-finals-bridge %h/.config/openshell
+StandardOutput=null
+StandardError=null
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,21 @@
+[Unit]
+Description=Stop only the finals-bridge Brev instance at the trial deadline
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=finals-ops
+Group=finals-ops
+WorkingDirectory=/var/lib/nvidia-finals-ops
+ExecStart=/opt/nvidia-finals-bridge/bin/brev stop finals-bridge
+TimeoutStartSec=120
+Restart=on-failure
+RestartSec=30
+UMask=0077
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/var/lib/nvidia-finals-ops
+StandardOutput=null
+StandardError=null
