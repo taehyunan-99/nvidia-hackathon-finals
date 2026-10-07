@@ -1,0 +1,22 @@
+server {
+    listen 80;
+    server_tokens off;
+    root /usr/share/nginx/html;
+    add_header X-Content-Type-Options nosniff always;
+    add_header Referrer-Policy strict-origin-when-cross-origin always;
+
+    location = /healthz {
+        access_log off;
+        return 200 'ok';
+    }
+    location / {
+        if ($http_x_duru_origin != "${DURU_ORIGIN_TOKEN}") { return 403; }
+        try_files $uri $uri/ /index.html;
+        add_header Cache-Control "no-cache";
+    }
+    location /assets/ {
+        if ($http_x_duru_origin != "${DURU_ORIGIN_TOKEN}") { return 403; }
+        try_files $uri =404;
+        add_header Cache-Control "public, max-age=31536000, immutable";
+    }
+}
