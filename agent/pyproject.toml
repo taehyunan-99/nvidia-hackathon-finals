@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "family-nat-minimum"
 version = "0.1.0"
 requires-python = ">=3.11,<3.14"
-dependencies = ["nvidia-nat[langchain]==1.9.0"]
+dependencies = ["nvidia-nat[langchain]==1.9.0", "jsonschema>=4.25,<5"]
 
 [project.entry-points."nat.components"]
 family_minimum = "family_minimum.register"
