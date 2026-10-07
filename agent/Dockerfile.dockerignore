@@ -4,6 +4,10 @@
 !scripts/
 !scripts/model_policy.py
 !scripts/probe_family_sources.py
+!scripts/openshell_harness/
+!scripts/openshell_harness/probe.py
+!scripts/openshell_harness/network_probe.py
+!scripts/openshell_harness/output.py
 !docs/
 !docs/playbooks/
 !docs/playbooks/model-policy.json

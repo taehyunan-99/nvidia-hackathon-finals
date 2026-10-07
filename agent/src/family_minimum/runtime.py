@@ -3,6 +3,7 @@ import os
 import threading
 import time
 import urllib.request
+import urllib.error
 from contextvars import ContextVar
 from pathlib import Path
 
@@ -61,9 +62,12 @@ class Runtime:
             self.steps += 1
             payload = {'model': self.model, 'messages': messages, 'temperature': 0.0,
                 'max_tokens': self.policy.max_output_tokens, 'stream': False}
+            if self.model == 'nvidia/nemotron-3-super-120b-a12b':
+                payload['chat_template_kwargs'] = {'enable_thinking': False}
             if stop:
                 payload['stop'] = stop
             before = self.budget.count
+            error = {}
             try:
                 data = self.budget(payload)
                 choice = data['choices'][0]
@@ -71,9 +75,13 @@ class Runtime:
                 if choice.get('finish_reason') == 'length' or not isinstance(content, str) or not content.strip():
                     raise ValueError('Invalid or truncated model response')
                 return content
+            except Exception as exc:
+                error = {'error_code': type(exc).__name__}
+                if isinstance(exc, urllib.error.HTTPError): error['http_status'] = exc.code
+                raise
             finally:
                 self.events.append({'kind': 'model', 'step': self.steps,
-                    'physical_requests': self.budget.count - before})
+                    'physical_requests': self.budget.count - before, **error})
 
     def search(self, query):
         if query != 'seoul_public_sample':

@@ -6,8 +6,10 @@ ENV FAMILY_PROJECT_ROOT=/opt/family-minimum
 COPY agent /opt/family-minimum/agent
 COPY scripts/model_policy.py scripts/probe_family_sources.py /opt/family-minimum/scripts/
 COPY scripts/openshell_harness/probe.py /opt/family-minimum/scripts/policy_probe.py
-COPY docs/playbooks/model-policy.json /opt/family-minimum/docs/playbooks/model-policy.json
+COPY scripts/openshell_harness/network_probe.py /opt/family-minimum/scripts/network_probe.py
+COPY scripts/openshell_harness/output.py /opt/family-minimum/scripts/openshell_harness/output.py
 COPY docs/catalog/contracts/family-v1.schema.json docs/catalog/contracts/family-v1.cases.json /opt/family-minimum/docs/catalog/contracts/
+COPY docs/playbooks/model-policy.json /opt/family-minimum/docs/playbooks/model-policy.json
 RUN pip install --no-cache-dir ./agent
 RUN mkdir -p /hackathon/input /hackathon/output /hackathon/restricted /hackathon/secrets \
     && printf 'PUBLIC_CONTROL\n' > /hackathon/input/control.txt \

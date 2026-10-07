@@ -25,7 +25,7 @@ test("input, observation, evidence, comparison and team round trip", async ({
   page.on("pageerror", (e) => errors.push(e.message));
   await input(page);
   await page.getByRole("button", { name: "초등 2학년", exact: false }).click();
-  await page.getByRole("button", { name: "1명", exact: false }).click();
+  await page.getByRole("button", { name: "1명", exact: true }).click();
   await page.getByRole("button", { name: "다음", exact: true }).click();
   await page.getByRole("button", { name: /10월 10일/ }).click();
   await page
@@ -116,7 +116,7 @@ for (const [scenario, heading] of [
     await page
       .getByRole("button", { name: "초등 2학년", exact: false })
       .click();
-    await page.getByRole("button", { name: "1명", exact: false }).click();
+    await page.getByRole("button", { name: "1명", exact: true }).click();
     await page.getByRole("button", { name: "다음", exact: true }).click();
     await page.getByRole("button", { name: /10월 10일/ }).click();
     await page
