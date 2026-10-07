@@ -65,7 +65,7 @@ export interface Run {
   mode: "mock" | "live";
   conditions: Conditions;
   scenario: Scenario;
-  status: "completed" | "partial" | "failed";
+  status: "running" | "completed" | "partial" | "failed";
   outcome: "results" | "empty" | "question" | "failed" | "limited";
   question: "grades" | null;
   conditionsRevision?: number;
@@ -100,14 +100,16 @@ export const initialConditions: Conditions = {
   district: "all",
 };
 export const tools = {
+  model: "Nemotron 판단",
   search: "후보 조회",
   detail: "상세 근거 조회",
+  official: "공식 보충 조회",
   validate: "조건 검증",
 };
 export function summarize(c: Conditions) {
   return [
     c.interests.map((x) => interestLabels[x]).join(" · ") || "관심 분야 미선택",
-    c.grades.map((x) => gradeLabels[x]).join(" · ") || "자녀 조건 미정",
+    c.children?.length ? `자녀 ${c.children.length}명 · ${c.children.map(child => `${child.grade ? gradeLabels[child.grade] : '학년 미정'} / ${child.age_years ? `만 ${child.age_years.minimum}${child.age_years.maximum !== child.age_years.minimum ? `~${child.age_years.maximum ?? '?'}` : ''}세` : '나이 미정'}`).join(' · ')}` : c.grades.map((x) => gradeLabels[x]).join(" · ") || "자녀 조건 미정",
     c.guardians === "unknown"
       ? "보호자 미정"
       : `보호자 ${c.guardians === "2+" ? "2명 이상" : c.guardians + "명"}`,

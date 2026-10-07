@@ -26,6 +26,17 @@ class FamilyRuntime(Runtime):
         self.details, self.assessments, self.tool_cache, self.failures = {}, {}, {}, []
         self.search_result, self.tool_steps = None, 0
 
+    def model_request(self, messages, stop=None):
+        if not self.closed and self.steps < self.policy.max_steps:
+            self.events.append({'kind': 'model', 'status': 'running', 'step': self.steps + 1})
+        if len(self.assessments) >= 2:
+            eligible = [cid for cid, result in self.assessments.items() if result['overall'] != 'unsuitable']
+            hint = {'instruction': 'The bounded comparison has enough source observations. Your next action must call finish_discovery. Use outcome hold for unknown candidates, or limited with no candidate_ids if none remain. Use one short Korean reason and question_field null. Do not read more sources.',
+                    'eligible_candidate_ids': eligible,
+                    'verdicts': {cid: result['overall'] for cid, result in self.assessments.items()}}
+            messages = [*messages, {'role': 'user', 'content': json.dumps(hint)}]
+        return super().model_request(messages, stop)
+
     def tool(self, name, argument=None):
         with self.lock:
             if self.closed or self.steps >= self.policy.max_steps:

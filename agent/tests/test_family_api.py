@@ -6,7 +6,8 @@ import time
 import unittest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'src'))
 from fastapi.testclient import TestClient
-from family_agent.api import create_app
+from family_agent.api import create_app, _active_runtimes
+from types import SimpleNamespace
 
 CARDS = {'interests': ['craft'], 'grades': [], 'guardians': 'unknown', 'date': None, 'district': 'all'}
 
@@ -56,3 +57,27 @@ class APITests(unittest.TestCase):
         # Date format errors must cross the HTTP boundary as 422, not server exceptions.
         bad = {**CARDS, 'date': 'not-a-date'}
         self.assertEqual(self.client.post('/api/runs', json=bad).status_code, 422)
+
+    def test_running_observations_require_owner_and_keep_identity(self):
+        started, release = threading.Event(), threading.Event()
+        def worker(job_id, revision, conditions):
+            _active_runtimes[job_id] = SimpleNamespace(events=[{'kind': 'tool', 'name': 'search_experiences', 'status': 'ok'}])
+            started.set()
+            try:
+                release.wait(2)
+                return {'request_id': job_id, 'conditions_revision': revision}
+            finally:
+                _active_runtimes.pop(job_id, None)
+        client = TestClient(create_app(worker))
+        job = client.post('/api/runs', json=CARDS).json()
+        try:
+            self.assertTrue(started.wait(1))
+            url = '/api/runs/' + job['run_id']
+            self.assertEqual(client.get(url).status_code, 404)
+            state = client.get(url, headers={'X-Run-Owner': job['owner_token']}).json()
+            self.assertEqual(state['status'], 'running')
+            self.assertIsNone(state['result'])
+            self.assertEqual(state['events'][0]['request_id'], job['run_id'])
+            self.assertEqual(state['events'][0]['seq'], 1)
+        finally:
+            release.set()

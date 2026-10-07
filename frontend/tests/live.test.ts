@@ -14,3 +14,16 @@ test('live observations retain unknown and official sources without invented fam
   assert.deepEqual(run.candidates[0].grades, []); assert.deepEqual(run.candidates[0].dates, []);
   assert.equal(run.events[1].status, 'hold');
 });
+
+
+test('live progress stays running and preserves observed failures', () => {
+  const run = toRun({ request_id: 'progress', conditions_revision: 2, question: null,
+    action: 'running', reason: '', validator_connected: false, candidates: [],
+    events: [{ kind: 'model', status: 'running' }, { kind: 'model', error_code: 'ValueError' }] },
+    { interests: ['craft'], grades: [], guardians: 'unknown', date: null, district: 'all' });
+  assert.equal(run.status, 'running');
+  assert.equal(run.events[0].status, 'running');
+  assert.equal(run.events[1].status, 'failed');
+  assert.equal(run.conditionsRevision, 2);
+  assert.deepEqual(run.candidates, []);
+});
