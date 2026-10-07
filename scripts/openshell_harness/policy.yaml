@@ -1,0 +1,12 @@
+# Offline synthetic boundary baseline; no model/provider/tool choice is implied.
+version: 1
+filesystem_policy:
+  include_workdir: false
+  read_only: [/usr, /bin, /lib, /etc, /proc, /dev/urandom, /opt/harness, /hackathon/input]
+  read_write: [/hackathon/output, /tmp, /dev/null]
+landlock:
+  compatibility: hard_requirement
+process:
+  run_as_user: "1000"
+  run_as_group: "1000"
+network_policies: {}
