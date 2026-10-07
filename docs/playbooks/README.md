@@ -4,6 +4,8 @@
 
 Brev에 직접 sandbox를 준비하는 절차는 [Brev VM의 OpenShell 설치·검증](brev-openshell-setup.md)을 따른다.
 
+AWS 웹서비스와 Brev 실행 서버를 함께 사용한다면 [AWS–Brev 연동 절차](aws-brev-deployment.md)에서 서버 간 인증·SSH/HTTPS 연결·작업 계약·배포 검증·복구 방법을 확인한다.
+
 공통 원리는 [에이전트 흐름](agent-flow.md), 평가 기준은 [루브릭·스킬](../evaluation/README.md)을 따른다. 운영 방향은 [2인 개발·로컬 시연](../operations/workflow.md), 검색부터 화면까지 점검은 [로컬 리허설](rehearsal.md)을 따른다.
 
 Brev를 검토한다면 [대회 당일 GPU·크레딧 가이드](brev-event-guide.md)에서 API로 충분한 경우, GPU 사용 예시, 등록·접속·백업·종료 순서를 확인한다.
