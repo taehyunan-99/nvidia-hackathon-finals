@@ -8,6 +8,7 @@ RUN mkdir -p /opt/harness /hackathon/input /hackathon/output /hackathon/restrict
     && ln -s /hackathon/secrets/control.txt /hackathon/output/link-secrets \
     && chown -R 1000:1000 /hackathon && chmod 644 /hackathon/*/control.txt
 COPY probe.py /opt/harness/probe.py
+COPY output.py output_probe.py network_probe.py /opt/harness/
 USER 1000:1000
 WORKDIR /hackathon/output
 CMD ["sleep", "infinity"]
