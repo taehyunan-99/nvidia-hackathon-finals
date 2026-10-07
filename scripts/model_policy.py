@@ -1,5 +1,6 @@
 """Shared finals model limits. Reserve every physical request, including 429 retries."""
 from dataclasses import dataclass
+from contextlib import closing
 from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 import json
@@ -51,7 +52,7 @@ def load_policy(settings=None):
 def reserve_daily(path, limit, now=None):
     day = (now or datetime.now(timezone(timedelta(hours=9)))).astimezone(timezone(timedelta(hours=9))).date().isoformat()
     path = Path(path); path.parent.mkdir(parents=True, exist_ok=True)
-    with sqlite3.connect(path, timeout=10) as conn:
+    with closing(sqlite3.connect(path, timeout=10)) as conn, conn:
         conn.execute('CREATE TABLE IF NOT EXISTS requests (day TEXT PRIMARY KEY, used INTEGER NOT NULL)')
         conn.execute('BEGIN IMMEDIATE')
         row = conn.execute('SELECT used FROM requests WHERE day=?', (day,)).fetchone()
