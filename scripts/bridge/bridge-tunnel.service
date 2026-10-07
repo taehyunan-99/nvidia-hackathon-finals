@@ -1,0 +1,23 @@
+[Unit]
+Description=AWS-owned authenticated SSH tunnel to Brev trial API
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=finals-ops
+Group=finals-ops
+ExecStartPre=/opt/nvidia-finals-bridge/bin/brev refresh
+ExecStart=/usr/bin/ssh -F /var/lib/nvidia-finals-ops/.brev/ssh_config -NT -o BatchMode=yes -o ExitOnForwardFailure=yes -o ServerAliveInterval=15 -o ServerAliveCountMax=2 -o StrictHostKeyChecking=yes -o HostKeyAlias=finals-brev -o UserKnownHostsFile=/etc/nvidia-finals-bridge/brev_known_hosts -o ForwardAgent=no -o ControlMaster=no -o ControlPath=none -L 127.0.0.1:28080:127.0.0.1:18080 finals-bridge
+Restart=always
+RestartSec=5
+UMask=0077
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/var/lib/nvidia-finals-ops
+StandardOutput=null
+StandardError=null
+
+[Install]
+WantedBy=multi-user.target
